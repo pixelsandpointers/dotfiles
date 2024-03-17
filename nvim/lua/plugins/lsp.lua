@@ -5,6 +5,14 @@ return { -- LSP Configuration & Plugins
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
+    {
+      'ray-x/lsp_signature.nvim',
+      event = 'VeryLazy',
+      opts = {},
+      config = function(_, opts)
+        require('lsp_signature').setup(opts)
+      end,
+    },
 
     -- Useful status updates for LSP.
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -106,8 +114,11 @@ return { -- LSP Configuration & Plugins
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
+      --cmake_language_server = {},
+      codelldb = {},
       clangd = {},
       pyright = {},
+      debugpy = {},
       ruff = {},
       rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
