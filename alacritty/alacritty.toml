@@ -1,0 +1,41 @@
+# General config: https://alacritty.org/config-alacritty.html
+# imports have to be on top
+import = [
+  "~/.config/alacritty/themes/themes/tokyo-night.toml"
+]
+
+[colors.primary]
+background = "0x263238"
+foreground = "0xeaeaea"
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+
+[env]
+SHELL = "/bin/zsh"
+
+[font]
+size = 12
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Medium"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "N"
+mods = "Command"
+
+[shell]
+program = "/bin/zsh"
+
+[window]
+decorations = "none"
+opacity = 0.7
+startup_mode = "Maximized"
+
+[window.padding]
+x = 5
+y = 5
+
