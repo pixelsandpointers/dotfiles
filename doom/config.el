@@ -36,11 +36,11 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/Notes/Org")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -74,3 +74,80 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(defun org-babel-edit-prep:c (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+
+;; (defun org-babel-edit-prep:cpp (babel-info)
+;;   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+;;   (lsp))
+
+(defun org-babel-edit-prep:python (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
+
+(defun replace-string-in-current-buffer (from-string to-string)
+  "Replace FROM-STRING with TO-STRING in the current buffer."
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward from-string nil t)
+      (replace-match to-string nil t))))
+
+(defun get-number-of-lines ()
+  "Retrieve the current number of lines"
+  (interactive)
+  (count-lines (point-min) (point-max)))
+
+(defun delete-hidden-text ()
+  "Remove all lines from top of the buffer that would be revealed by a call to `widen'"
+  (interactive)
+  (-let [src-lines (get-number-of-lines)]
+    (widen)
+    (setq-local widen-number-of-lines (get-number-of-lines))
+    (goto-char (point-min))
+    (kill-line (- widen-number-of-lines src-lines))))
+
+;; Make sure rustic gets activated in the org-src block and add the original file's source code.
+(defun org-babel-edit-prep:cpp (babel-info)
+  ;; get source code in org source block
+  (setq-local src-code (nth 1 babel-info))
+  ;; get filename
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  ;; go to first point and insert file content
+  (goto-char (point-min))
+  (insert-file-contents buffer-file-name)
+  ;; replace source code if already there
+  (replace-string-in-current-buffer src-code "")
+  ;; count current lines
+  (setq-local n-lines (get-number-of-lines))
+  ;; go to the end of the lines
+  (goto-line n-lines)
+  ;; insert the source block
+  (insert src-code)
+  ;; jump back to the prior position
+  (goto-line n-lines)
+  ;; narrow the region without restriction
+  (narrow-to-region (point) (point-max))
+  (without-restriction)
+  ;; enable major modes
+  (cpp-mode)
+  (org-src-mode))
+
+;; removes narrowed content on exit/save
+;; IMPORTANT: only runs when using C-c C-c!
+(define-advice org-edit-src-exit
+  (:before (&rest _args))
+  (when (buffer-narrowed-p)
+    (delete-hidden-text)))
+
+(define-advice org-edit-src-save
+  (:before (&rest _args))
+  (when (buffer-narrowed-p)
+    (delete-hidden-text)))
+
+(defun org-babel-tangle-block ()
+  "Tangle a single file under cursor"
+  (interactive)
+  (let ((current-prefix-arg '(4)))
+    (call-interactively 'org-babel-tangle)))
