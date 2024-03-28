@@ -108,17 +108,29 @@
     (goto-char (point-min))
     (kill-line (- widen-number-of-lines src-lines))))
 
+(defun string-contains-only-newlines-p (str)
+  "Check if the string contains only newline characters."
+  (unless (or (string-empty-p str)
+              (with-temp-buffer
+                (insert str)
+                (goto-char (point-min))
+                (re-search-forward "[^[:space:]\n]" nil t)))
+    t))
+
 ;; Make sure rustic gets activated in the org-src block and add the original file's source code.
 (defun org-babel-edit-prep:cpp (babel-info)
   ;; get source code in org source block
   (setq-local src-code (nth 1 babel-info))
   ;; get filename
+  ;; TODO: needs edge case when tangle = yes
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (message (format "%s" src-code))
   ;; go to first point and insert file content
   (goto-char (point-min))
   (insert-file-contents buffer-file-name)
-  ;; replace source code if already there
-  (replace-string-in-current-buffer src-code "")
+  ;; replace source code if exists and only if not empty or newlines
+  (unless (string-contains-only-newlines-p (format "%s" src-code))
+    (replace-string-in-current-buffer src-code ""))
   ;; count current lines
   (setq-local n-lines (get-number-of-lines))
   ;; go to the end of the lines
@@ -126,13 +138,13 @@
   ;; insert the source block
   (insert src-code)
   ;; jump back to the prior position
+  (message "This ran for no reason")
   (goto-line n-lines)
   ;; narrow the region without restriction
   (narrow-to-region (point) (point-max))
   (without-restriction)
-  ;; enable major modes
-  (cpp-mode)
-  (org-src-mode))
+  ;; major mode is automatiically enabled by org-edit-src-code
+  )
 
 ;; removes narrowed content on exit/save
 ;; IMPORTANT: only runs when using C-c C-c!
@@ -151,3 +163,5 @@
   (interactive)
   (let ((current-prefix-arg '(4)))
     (call-interactively 'org-babel-tangle)))
+
+;; (defun org-edit-src-code nil)
