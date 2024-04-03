@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
-if [ -f ~/dotfiles/.settings/terminal.sh ]; then
-    terminal="$(cat ~/dotfiles/.settings/terminal.sh)"
+if [ -f $XDG_CONFIG/.settings/terminal.sh ]; then
+    terminal="$(cat $XDG_CONFIG/.settings/terminal.sh)"
     echo ":: Installing $terminal"
     if [ -d ~/.config/xfce4 ]; then
         if [ ! -f ~/.config/xfce4/helpers.rc ]; then
@@ -14,6 +14,6 @@ if [ -f ~/dotfiles/.settings/terminal.sh ]; then
         echo "Then start this script again."
     fi
 else
-    echo "ERROR: ~/dotfiles/.settings/terminal.sh not found"
+    echo "ERROR: $XDG_CONFIG/.settings/terminal.sh not found"
 fi
 sleep 3

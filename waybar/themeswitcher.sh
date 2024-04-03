@@ -11,7 +11,7 @@
 # ----------------------------------------------------- 
 # Default theme folder
 # ----------------------------------------------------- 
-themes_path="$HOME/dotfiles/waybar/themes"
+themes_path="$XDG_CONFIG/waybar/themes"
 
 # ----------------------------------------------------- 
 # Initialize arrays
@@ -26,10 +26,10 @@ sleep 0.2
 options=$(find $themes_path -maxdepth 2 -type d)
 for value in $options
 do
-    if [ ! $value == "$HOME/dotfiles/waybar/themes/assets" ]; then
+    if [ ! $value == "$XDG_CONFIG/waybar/themes/assets" ]; then
         if [ ! $value == "$themes_path" ]; then
             if [ $(find $value -maxdepth 1 -type d | wc -l) = 1 ]; then
-                result=$(echo $value | sed "s#$HOME/dotfiles/waybar/themes/#/#g")
+                result=$(echo $value | sed "s#$XDG_CONFIG/waybar/themes/#/#g")
                 IFS='/' read -ra arrThemes <<< "$result"
                 listThemes[${#listThemes[@]}]="/${arrThemes[1]};$result"
                 if [ -f $themes_path$result/config.sh ]; then
@@ -47,7 +47,7 @@ done
 # Show rofi dialog
 # ----------------------------------------------------- 
 listNames=${listNames::-2}
-choice=$(echo -e "$listNames" | rofi -dmenu -replace -i -config ~/dotfiles/rofi/config-themes.rasi -no-show-icons -width 30 -p "Themes" -format i)
+choice=$(echo -e "$listNames" | rofi -dmenu -replace -i -config $XDG_CONFIG/rofi/config-themes.rasi -no-show-icons -width 30 -p "Themes" -format i)
 
 # ----------------------------------------------------- 
 # Set new theme by writing the theme information to ~/.cache/.themestyle.sh
@@ -55,5 +55,5 @@ choice=$(echo -e "$listNames" | rofi -dmenu -replace -i -config ~/dotfiles/rofi/
 if [ "$choice" ]; then
     echo "Loading waybar theme..."
     echo "${listThemes[$choice+1]}" > ~/.cache/.themestyle.sh
-    ~/dotfiles/waybar/launch.sh
+    $XDG_CONFIG/waybar/launch.sh
 fi

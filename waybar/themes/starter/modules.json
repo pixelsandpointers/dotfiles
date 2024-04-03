@@ -59,9 +59,9 @@
     // Cliphist
     "custom/cliphist": {
         "format": "",
-        "on-click": "sleep 0.1 && ~/dotfiles/scripts/cliphist.sh",
-        "on-click-right": "sleep 0.1 && ~/dotfiles/scripts/cliphist.sh d",
-        "on-click-middle": "sleep 0.1 && ~/dotfiles/scripts/cliphist.sh w",
+        "on-click": "sleep 0.1 && $XDG_CONFIG/scripts/cliphist.sh",
+        "on-click-right": "sleep 0.1 && $XDG_CONFIG/scripts/cliphist.sh d",
+        "on-click-middle": "sleep 0.1 && $XDG_CONFIG/scripts/cliphist.sh w",
         "tooltip": false
     },
 
@@ -71,9 +71,9 @@
         "tooltip-format": "{}",
         "escape": true,
         "return-type": "json",       
-        "exec": "~/dotfiles/scripts/updates.sh",
+        "exec": "$XDG_CONFIG/scripts/updates.sh",
         "restart-interval": 60,
-        "on-click": "alacritty -e ~/dotfiles/scripts/installupdates.sh",
+        "on-click": "alacritty -e $XDG_CONFIG/scripts/installupdates.sh",
         "tooltip": false
     },
 
@@ -86,29 +86,29 @@
     // Wallpaper
     "custom/wallpaper": {
         "format": "",
-        "on-click": "~/dotfiles/hypr/scripts/wallpaper.sh select",
-        "on-click-right": "~/dotfiles/hypr/scripts/wallpaper.sh",
+        "on-click": "$XDG_CONFIG/hypr/scripts/wallpaper.sh select",
+        "on-click-right": "$XDG_CONFIG/hypr/scripts/wallpaper.sh",
         "tooltip": false
     },
 
     // Waybar Themes
     "custom/waybarthemes": {
         "format": "",
-        "on-click": "~/dotfiles/waybar/themeswitcher.sh",
+        "on-click": "$XDG_CONFIG/waybar/themeswitcher.sh",
         "tooltip": false
     },
     
     // Settings
     "custom/settings": {
         "format": "",
-        "on-click": "~/dotfiles/apps/ML4W_Dotfiles_Settings-x86_64.AppImage",
+        "on-click": "$XDG_CONFIG/apps/ML4W_Dotfiles_Settings-x86_64.AppImage",
         "tooltip": false
     },
 
     // Keybindings
     "custom/keybindings": {
         "format": "",
-        "on-click": "~/dotfiles/hypr/scripts/keybindings.sh",
+        "on-click": "$XDG_CONFIG/hypr/scripts/keybindings.sh",
         "tooltip": false
     },
 
@@ -122,13 +122,13 @@
     // Browser Launcher
     "custom/browser": {
         "format": "",
-        "on-click": "~/dotfiles/.settings/browser.sh",
+        "on-click": "$XDG_CONFIG/.settings/browser.sh",
         "tooltip": false
     },    
 
     // ML4W Welcome App
     "custom/ml4w-welcome": {
-        "on-click": "~/dotfiles/apps/ML4W_Welcome-x86_64.AppImage",
+        "on-click": "$XDG_CONFIG/apps/ML4W_Welcome-x86_64.AppImage",
         "format": " ",
         "tooltip": false
     },
@@ -144,7 +144,7 @@
     "custom/appmenu": {
         "format": "Apps",
         "on-click": "rofi -show drun -replace",
-        "on-click-right": "~/dotfiles/hypr/scripts/keybindings.sh",
+        "on-click-right": "$XDG_CONFIG/hypr/scripts/keybindings.sh",
         "tooltip": false
     },
     

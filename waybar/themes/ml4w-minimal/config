@@ -18,7 +18,7 @@
     "spacing": 0,
 
     // Load Modules
-    "include": ["~/dotfiles/waybar/modules.json"],
+    "include": ["$XDG_CONFIG/waybar/modules.json"],
 
     // Modules Left
     "modules-left": [
