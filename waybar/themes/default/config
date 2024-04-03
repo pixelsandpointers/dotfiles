@@ -36,14 +36,14 @@
     },
     // ML4W Welcome App
     "custom/ml4w-welcome": {
-        "on-click": "~/dotfiles/apps/ML4W_Welcome-x86_64.AppImage",
+        "on-click": "$XDG_CONFIG/apps/ML4W_Welcome-x86_64.AppImage",
         "format": " ",
         "tooltip": false
     },    
     // Waybar Themes
     "custom/waybarthemes": {
         "format": "Themes",
-        "on-click": "~/dotfiles/waybar/themeswitcher.sh",
+        "on-click": "$XDG_CONFIG/waybar/themeswitcher.sh",
         "tooltip": false
     },
     "sway/mode": {
