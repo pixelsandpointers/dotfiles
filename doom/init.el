@@ -167,7 +167,7 @@
        (python
         +lsp
         +tree-sitter
-        +conda
+        ;;+conda
         +cython
         +pyright)            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
