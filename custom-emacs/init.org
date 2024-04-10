@@ -1,0 +1,98 @@
+#+TITLE: Emacs Config
+#+options: :tangle yes
+
+* Emacs Config
+Follow this [[https://systemcrafters.net/emacs-from-scratch/key-bindings-and-evil/][link]].
+** Editor
+*** File Cache
+#+begin_src emacs-lisp
+;; allow recent-file caching
+(recentf-mode 1)
+(setq history-length 25)
+(savehist-mode 1)
+(save-place-mode 1)
+
+#+end_src
+** Visuals
+*** UI
+#+begin_src emacs-lisp
+
+;; remove spash screen
+(setq inhibit-startup-message t
+      visible-bell f)
+
+;; remove UI elements
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(global-display-line-numbers-mode 1)
+
+#+end_src
+
+
+*** Theme
+#+begin_src emacs-lisp
+(use-package modus-themes
+  :ensure t
+  :init (setq modus-themes-mode-line '(accented borderless)
+      modus-themes-bold-constructs t
+      modus-themes-italic-constructs t
+      modus-themes-fringes 'subtle
+      modus-themes-tabs-accented t
+      modus-themes-paren-match '(bold intense)
+      modus-themes-prompts '(bold intense)
+      modus-themes-completions 'opinionated
+      modus-themes-org-blocks 'tinted-background
+      modus-themes-scale-headings t
+      modus-themes-region '(bg-only)
+      modus-themes-headings
+      '((1 . (rainbow overline background 1.4))
+        (2 . (rainbow background 1.3))
+        (3 . (rainbow bold 1.2))
+        (t . (semilight 1.1))))
+  :config (load-theme 'modus-vivendi t))
+#+end_src
+** Editing
+#+begin_src emacs-lisp
+(global-auto-revert-mode 1)
+(setq use-dialog-box nil
+      global-auto-revert-non-file-buffers t)
+
+#+end_src
+*** Evil
+#+begin_src emacs-lisp
+(defun rune/evil-hook ()
+  (dolist (mode '(custom-mode
+                  eshell-mode
+                  git-rebase-mode
+                  erc-mode
+                  circe-server-mode
+                  circle-chat-mode
+                  circle-query-mode
+                  sauron-mode
+                  term-mode))
+    (add-to-list 'evil-emacs-state-modes mode)))
+
+(use-package evil
+  :init
+  (setq evil-want-integration t
+        evil-want-keybinding nil
+        evil-want-C-u-scroll t
+        evil-want-C-i-jump nil)
+  :hook (evil-mode . rune/evil-hook)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-h" 'evil-delete-backward-char-and-join))
+
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+#+end_src
+** LSP
+** Autocomplete
