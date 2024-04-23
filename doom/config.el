@@ -32,8 +32,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13))
+(setq doom-theme 'doom-horizon)
+(setq doom-font (font-spec :family "JetBrainsMono NF" :size 13 :weight 'regular))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -139,7 +139,6 @@
   ;; insert the source block
   (insert src-code)
   ;; jump back to the prior position
-  (message "This ran for no reason")
   (goto-line n-lines)
   ;; narrow the region without restriction
   (narrow-to-region (point) (point-max))
