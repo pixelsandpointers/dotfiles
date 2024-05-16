@@ -1,3 +1,4 @@
+
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -42,6 +43,7 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory (concat (getenv "HOME") "/Notes/Org"))
+(add-to-list 'load-path (concat (getenv "doom-user-dir") "/ox-addons/"))
 (toggle-frame-fullscreen)
 
 
@@ -357,6 +359,7 @@
       (org-table-next-field))))
 
 ;; tufte export: https://damitr.org/2014/01/09/latex-tufte-class-in-org-mode/
+(require 'ox-latex)
 (add-to-list 'org-latex-classes
              '("tuftebook"
                "\\documentclass{tufte-book}

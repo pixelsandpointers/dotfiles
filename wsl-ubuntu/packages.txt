@@ -725,6 +725,7 @@ texlive-latex-extra				install
 texlive-latex-recommended			install
 texlive-pictures				install
 texlive-plain-generic				install
+texlive-publishers				install
 texlive-xetex					install
 tilix						install
 tilix-common					install
