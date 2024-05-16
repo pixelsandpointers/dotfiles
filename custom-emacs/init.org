@@ -88,8 +88,6 @@ Follow this [[https://systemcrafters.net/emacs-from-scratch/key-bindings-and-evi
 #+end_src
 ** Editing
 Some requirements:
-- magit
-- lisp-tools
 #+begin_src emacs-lisp :tangle yes
 (global-auto-revert-mode 1)
 (setq use-dialog-box nil
@@ -100,7 +98,6 @@ Some requirements:
 #+begin_src emacs-lisp :tangle yes
   (defun rune/evil-hook ()
     (dolist (mode '(custom-mode
-		  org-mode
                     eshell-mode
                     git-rebase-mode
                     erc-mode
@@ -121,19 +118,19 @@ Some requirements:
     :config
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h" 'evil-delete-backward-char-and-join))
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
 
   (use-package evil-collection
     :after evil
+    :hook (evil-mode . evil-collection-init)
     :config
     (evil-collection-init))
 #+end_src
 
 #+RESULTS:
-: t
 
 *** WhichKey
 #+begin_src emacs-lisp :tangle yes
@@ -246,8 +243,6 @@ Some requirements:
     :hook (LaTeX-mode . turn-on-cdlatex)
     :bind (:map cdlatex-mode-map
                 ("<tab>" . cdlatex-tab)))
-    :hook ((cdlatex-tab . yas-expand)
-           (cdlatex-tab . cdlatex-in-yas-field))
     :config
     (use-package yasnippet
       :bind (:map yas-keymap
@@ -280,7 +275,7 @@ Some requirements:
             (or (bound-and-true-p cdlatex-mode)
                 (bound-and-true-p org-cdlatex-mode))
             (cdlatex-tab)
-          (yas-next-field-or-maybe-expand)))))
+          (yas-next-field-or-maybe-expand))))
 
   ;; Array/tabular input with org-tables and cdlatex
   ;(require 'org-table
@@ -366,6 +361,9 @@ Some requirements:
     ;    (org-table-next-field))))
 
 #+end_src
+
+#+RESULTS:
+: yas-next-field-or-cdlatex
 
 ** Org Everything
 
