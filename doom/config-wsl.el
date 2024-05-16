@@ -357,6 +357,7 @@
       (org-table-next-field))))
 
 ;; tufte export: https://damitr.org/2014/01/09/latex-tufte-class-in-org-mode/
+(require 'ox-latex)
 (add-to-list 'org-latex-classes
              '("tuftebook"
                "\\documentclass{tufte-book}
