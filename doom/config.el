@@ -41,9 +41,13 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory (concat (getenv "HOME") "/Notes/Org"))
-(toggle-frame-fullscreen)
-
+(setq! org-directory (concat (getenv "HOME") "/Notes/Org"))
+(setq org-download-image-dir (concat (getenv "HOME") "/Notes/Assets/"))
+(after! org
+  (remove-hook 'org-mode-hook #'company-mode)
+  (add-hook 'org-mode-hook #'yas-minor-mode))
+(setq company-global-modes '(not text-mode org-mode))
+;;(toggle-frame-fullscreen)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -87,10 +91,6 @@
 ;;   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
 ;;   (lsp))
 
-(defun org-babel-edit-prep:python (babel-info)
-  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
-  (lsp))
-
 (defun replace-string-in-current-buffer (from-string to-string)
   "Replace FROM-STRING with TO-STRING in the current buffer."
   (save-excursion
@@ -123,6 +123,33 @@
 
 ;; Make sure rustic gets activated in the org-src block and add the original file's source code.
 (defun org-babel-edit-prep:cpp (babel-info)
+  ;; get source code in org source block
+  (setq-local src-code (nth 1 babel-info))
+  ;; get filename
+  ;; TODO: needs edge case when tangle = yes
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (message (format "%s" src-code))
+  ;; go to first point and insert file content
+  (goto-char (point-min))
+  (insert-file-contents buffer-file-name)
+  ;; replace source code if exists and only if not empty or newlines
+  (unless (string-contains-only-newlines-p (format "%s" src-code))
+    (replace-string-in-current-buffer src-code ""))
+  ;; count current lines
+  (setq-local n-lines (get-number-of-lines))
+  ;; go to the end of the lines
+  (goto-line n-lines)
+  ;; insert the source block
+  (insert src-code)
+  ;; jump back to the prior position
+  (goto-line n-lines)
+  ;; narrow the region without restriction
+  (narrow-to-region (point) (point-max))
+  (without-restriction)
+  ;; major mode is automatiically enabled by org-edit-src-code
+  )
+
+(defun org-babel-edit-prep:python (babel-info)
   ;; get source code in org source block
   (setq-local src-code (nth 1 babel-info))
   ;; get filename
@@ -210,8 +237,10 @@
 (use-package! cdlatex
   :ensure t
   :hook (LaTeX-mode . turn-on-cdlatex)
-  :bind (:map cdlatex-mode-map
-              ("<tab>" . cdlatex-tab)))
+  :bind ((:map cdlatex-mode-map
+               ("<tab>" . cdlatex-tab))
+         (:map org-cdlatex-mode-map
+               (";" . cdlatex-math-modify))))
 
 ;; Yasnippet settings
 (use-package! yasnippet
@@ -357,29 +386,45 @@
       (org-table-next-field))))
 
 ;; tufte export: https://damitr.org/2014/01/09/latex-tufte-class-in-org-mode/
-(add-to-list 'org-latex-classes
-             '("tuftebook"
-               "\\documentclass{tufte-book}
-\\usepackage{color}
-\\usepackage{amssymb}
-\\usepackage{gensymb}
-\\usepackage{nicefrac}
-\\usepackage{units}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-;; tufte-handout class for writing classy handouts and papers
-(add-to-list 'org-latex-classes
-             '("tuftehandout"
-               "\\documentclass{tufte-handout}
+(after! ox-latex
+  (add-to-list 'org-latex-classes
+               '("tuftebook"
+                 "\\documentclass{tufte-book}
 \\usepackage{color}
 \\usepackage{amssymb}
 \\usepackage{amsmath}
 \\usepackage{gensymb}
 \\usepackage{nicefrac}
 \\usepackage{units}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  ;; tufte-handout class for writing classy handouts and papers
+  (add-to-list 'org-latex-classes
+               '("tuftehandout"
+                 "\\documentclass{tufte-handout}
+\\usepackage{color}
+\\usepackage{amssymb}
+\\usepackage{amsmath}
+\\usepackage{gensymb}
+\\usepackage{nicefrac}
+\\usepackage{units}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+(defun me/screenshot ()
+  "Take a screenshot into a time stamped unique-named file in the
+same directory as the org-buffer and insert a link to this file."
+  (interactive)
+  (setq filename
+        (concat (format-time-string "%Y%m%d_%H%M%S") ".png"))
+  (call-process "screencapture" nil nil nil "-i" (concat org-download-image-dir "/" filename))
+  (insert (concat "../Assets/" filename)))
+
+(map! :after org
+      :map org-mode-map
+      :localleader
+      :desc "Open screencapture and insert file path at current position" "a s" #'me/screenshot)
