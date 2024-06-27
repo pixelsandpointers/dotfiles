@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor : Benjamin Beilharz
+# key : fig*
+# group: environments
+# name : Full width Tufte class figure
+# --
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{${3:"waiting for cdlatex filepath call ..."$(unless yas/modified-p (cdlatex-insert-filename))}}
+  \caption{${1:caption}}
+  \label{${2:"waiting for reftex-label call..."$(unless yas/modified-p (reftex-label nil 'dont-insert))}}
+\end{figure*}
