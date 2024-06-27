@@ -70,7 +70,7 @@
        :emacs
        dired             ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
-       ibuffer         ; interactive buffer management
+       ibuffer           ; interactive buffer management
        undo              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 
@@ -78,7 +78,7 @@
        eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       ;;vterm             ; the best terminal emulation in Emacs
+       vterm             ; the best terminal emulation in Emacs
 
        :checkers
        ;;syntax              ; tasing you for every semicolon you forget
@@ -87,9 +87,9 @@
 
        :tools
        ;;ansible
-       biblio            ; Writes a PhD for you (citation needed)
+       biblio              ; Writes a PhD for you (citation needed)
        ;;collab            ; buffers with friends
-       (debugger          ; FIXME stepping through code, to help you add bugs
+       (debugger           ; FIXME stepping through code, to help you add bugs
         +lsp)
        ;;direnv
        docker
@@ -108,8 +108,8 @@
        taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       tree-sitter       ; syntax and parsing, sitting in a tree...
-       ;;upload            ; map local to remote projects via ssh/ftp
+       tree-sitter        ; syntax and parsing, sitting in a tree...
+       upload            ; map local to remote projects via ssh/ftp
 
        :os
        (:if (featurep :system 'macos) macos)  ; improve compatibility with macOS
@@ -163,14 +163,14 @@
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org
-	 +dragndrop
-         +gnuplot
-         +journal
-         +jupyter
-         +noter
-         +pandoc
-         +present
-         +pretty)             ; organize your plain life in plain text
+	+dragndrop
+        +gnuplot
+        +journal
+        +jupyter
+        +noter
+        +pandoc
+        +present
+        +pretty)             ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
@@ -186,13 +186,12 @@
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust
-        +tree-sitter
-        +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;;(rust
+       ;; +tree-sitter
+       ;; +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
        (sh                ; she sells {ba,z,fi}sh shells on the C xor
-        +powershell
         +lsp)
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
@@ -200,8 +199,8 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        ;;web               ; the tubes
        ;;yaml              ; JSON, but readable
-       (zig               ; C, but simpler
-        +lsp)
+       ;;(zig               ; C, but simpler
+       ;;+lsp)
 
        :email
        ;;(mu4e +org +gmail)
@@ -218,4 +217,5 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+       ;;(default +bindings +smartparens))
+       (default +bindings))
