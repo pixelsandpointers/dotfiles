@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: real numbers
+# key: RR
+# condition: t
+# --
+\mathbb{R}$0

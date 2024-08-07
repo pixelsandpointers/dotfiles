@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: Fullwidth text for Tufte
-# key: fullwidth
+# key: fullw
 # condition: t
 # --
 \begin{fullwidth}

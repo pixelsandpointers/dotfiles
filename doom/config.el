@@ -404,25 +404,41 @@
   (add-to-list 'org-latex-classes
                '("tuftehandout"
                  "\\documentclass{tufte-handout}
-\\usepackage{color}
-\\usepackage{amssymb}
-\\usepackage{amsmath}
-\\usepackage{gensymb}
-\\usepackage{nicefrac}
-\\usepackage{units}"
+                \\usepackage{color}
+                \\usepackage{amssymb}
+                \\usepackage{amsmath}
+                \\usepackage{gensymb}
+                \\usepackage{nicefrac}
+                \\usepackage{units}"
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (add-to-list 'org-latex-classes
+               '("tuftethesis"
+                 "\\documentclass[boxey, colorful]{tufte-style-thesis}")))
 
 (defun me/screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
 same directory as the org-buffer and insert a link to this file."
   (interactive)
+  (setq dirname
+        (file-name-sans-extension (buffer-name)))
+
+  ;; create the dir if it doesnt exist
+  (unless
+      (file-directory-p dirname)
+    (make-directory (concat org-download-image-dir dirname) t))
+
   (setq filename
         (concat (format-time-string "%Y%m%d_%H%M%S") ".png"))
-  (call-process "screencapture" nil nil nil "-i" (concat org-download-image-dir "/" filename))
-  (insert (concat "../Assets/" filename)))
+  (call-process "screencapture" nil nil nil "-i" (concat
+                                                  org-download-image-dir
+                                                  dirname
+                                                  "/"
+                                                  filename))
+  ;; use relative paths to use multiple devices without any trouble
+  (insert (concat "../Assets/" dirname "/" filename)))
 
 (map! :after org
       :map org-mode-map
