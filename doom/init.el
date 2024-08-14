@@ -169,6 +169,7 @@
         +jupyter
         +noter
         +pandoc
+        +roam2
         +present
         +pretty)             ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
@@ -178,7 +179,6 @@
         +cython
         +lsp
         +tree-sitter
-        +pyenv
         +pyright)            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs

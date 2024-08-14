@@ -43,10 +43,9 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq! org-directory (concat (getenv "HOME") "/Notes/Org"))
 (setq org-download-image-dir (concat (getenv "HOME") "/Notes/Assets/"))
+(setq! company-global-modes '(not text-mode))
 (after! org
-  (remove-hook 'org-mode-hook #'company-mode)
   (add-hook 'org-mode-hook #'yas-minor-mode))
-(setq company-global-modes '(not text-mode org-mode))
 ;;(toggle-frame-fullscreen)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
