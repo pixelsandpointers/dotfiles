@@ -1,3 +1,4 @@
+
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -43,9 +44,10 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq! org-directory (concat (getenv "HOME") "/Notes/Org"))
 (setq org-download-image-dir (concat (getenv "HOME") "/Notes/Assets/"))
-(setq! company-global-modes '(not text-mode))
 (after! org
-  (add-hook 'org-mode-hook #'yas-minor-mode))
+  (add-hook 'org-mode-hook #'yas-minor-mode)
+  (set-company-backend! 'org-mode nil)
+  (set-company-backend! 'org-mode 'company-capf 'company-yasnippet))
 ;;(toggle-frame-fullscreen)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
