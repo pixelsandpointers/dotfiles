@@ -445,3 +445,6 @@ same directory as the org-buffer and insert a link to this file."
       :map org-mode-map
       :localleader
       :desc "Open screencapture and insert file path at current position" "a s" #'me/screenshot)
+
+
+(setq! citar-bibliography '("~/Notes/references.bib"))
