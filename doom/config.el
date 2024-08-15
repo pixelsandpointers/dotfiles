@@ -448,3 +448,19 @@ same directory as the org-buffer and insert a link to this file."
 
 
 (setq! citar-bibliography '("~/Notes/references.bib"))
+
+(defun my/pipenv-activate-and-restart-lsp ()
+  "Activate pipenv environment and restart LSP workspace."
+  (interactive)
+  ;; Activate pipenv environment
+  (pipenv-activate)
+  ;; Wait for the pipenv environment to activate
+  (sit-for 2) ;; Adjust the wait time if necessary
+  ;; Restart LSP workspace
+  (lsp-restart-workspace))
+
+;; Optionally, bind it to a key for convenience
+(map! :localleader
+      :mode python-mode
+      :desc "Activate pipenv and restart LSP"
+      "e x" #'my/pipenv-activate-and-restart-lsp)
