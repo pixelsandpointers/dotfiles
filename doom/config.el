@@ -465,7 +465,9 @@ same directory as the org-buffer and insert a link to this file."
       :desc "Activate pipenv and restart LSP" "e x" #'my/pipenv-activate-and-restart-lsp)
 
 (defun my/roam-open-ref ()
+  "Opens the current references for the roam-node. Mainly used to take notes from paper annotations."
   (interactive)
+  (require 'citar-org-roam) ;; necessary: sometimes citar-org-roam is not loaded, thus the function does not exist
   (evil-window-vsplit)
   (citar-org-roam-open-current-refs))
 
