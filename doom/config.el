@@ -439,7 +439,7 @@ same directory as the org-buffer and insert a link to this file."
                                                   "/"
                                                   filename))
   ;; use relative paths to use multiple devices without any trouble
-  (insert (concat "../Assets/" dirname "/" filename)))
+  (insert (concat "~/Notes/Assets/" dirname "/" filename)))
 
 (map! :after org
       :map org-mode-map
