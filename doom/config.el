@@ -471,8 +471,19 @@ same directory as the org-buffer and insert a link to this file."
   (evil-window-vsplit)
   (citar-org-roam-open-current-refs))
 
+(defun my/open-ref ()
+  "Opens the refernce for the current roam node."
+  (interactive)
+  (require 'citar-org-roam)
+  (citar-org-roam-open-current-refs))
+
 
 (map! :after org
       :map org-mode-map
       :localleader
       :desc "Open the reference in vsplit." "m v" #'my/roam-open-ref)
+
+(map! :after org
+      :map org-mode-map
+      :localleader
+      :desc "Open the reference in the roam-node." "m p" #'my/open-ref)
