@@ -33,7 +33,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-horizon)
+(setq doom-theme 'doom-laserwave)
 (setq doom-font (font-spec :family "JetBrainsMono NF" :size 13 :weight 'regular))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -445,6 +445,12 @@ same directory as the org-buffer and insert a link to this file."
       :map org-mode-map
       :localleader
       :desc "Open screencapture and insert file path at current position" "a s" #'me/screenshot)
+
+
+;; required otherwise won't produce the table of contents file
+;; (setq! org-latex-pdf-process
+;;        '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+;;          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 
 (setq! citar-bibliography '("~/Notes/references.bib"))
