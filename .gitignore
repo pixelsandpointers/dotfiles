@@ -1,3 +1,4 @@
 # only exclude binaries in folders
 **/bin/*
 emacs/
+tmux/plugins/
