@@ -32,6 +32,7 @@
 	  "nikitabobko/tap/aerospace"
 	  "proton-drive"
 	  "signal"
+      "jetbrains-toolbox"
 	  "zoom"
 	  "blender"
 	];
@@ -43,7 +44,10 @@
 
       environment.systemPackages = [ 
 	  # System
+      pkgs.alacritty
+      pkgs.oh-my-posh
 	  pkgs.htop
+	  pkgs.imgcat
 	  pkgs.git
 	  pkgs.gh
 	  pkgs.texliveFull
@@ -51,6 +55,7 @@
 	  # Programming
 	  pkgs.cmake
 	  pkgs.llvm
+      pkgs.libllvm
 	  pkgs.rustup
 	  pkgs.python3
 	  pkgs.ruff
@@ -75,9 +80,11 @@
 	  pkgs.brave
 	  pkgs.element-desktop
 	  pkgs.inkscape
+      pkgs.vscode
 	  pkgs.zotero
 
           # VFX
+	  pkgs.openexr
 	  pkgs.openusd
 	  pkgs.python312Packages.openusd
       ];
