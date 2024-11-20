@@ -493,3 +493,8 @@ same directory as the org-buffer and insert a link to this file."
       :map org-mode-map
       :localleader
       :desc "Open the reference in the roam-node." "m p" #'my/open-ref)
+
+
+(use-package! pet
+  :config
+  (add-hook 'python-mode-hook 'pet-mode -10))
