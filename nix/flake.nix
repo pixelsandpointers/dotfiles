@@ -50,6 +50,7 @@
               "obsidian"
 	          ];
 	          masApps = {
+              Keynote = 409183694;
 	          };
           };
 
@@ -58,12 +59,14 @@
 	          # System
 		        pkgs.alacritty
 		        pkgs.oh-my-posh
+            pkgs.mas
 	          pkgs.htop
             pkgs.ripgrep
             pkgs.fd
             pkgs.tmux
             pkgs.git
             pkgs.fh
+            pkgs.direnv
             pkgs.gh
 
 	          # Programming
