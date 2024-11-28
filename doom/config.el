@@ -33,7 +33,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-laserwave)
+(setq doom-theme 'doom-xcode)
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13 :weight 'regular))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -498,3 +498,23 @@ same directory as the org-buffer and insert a link to this file."
 (use-package! pet
   :config
   (add-hook 'python-mode-hook 'pet-mode -10))
+
+(defun set-warning-level-org ()
+  "Sets warning level to ignore ox warnings"
+  (setq-local warning-minimum-level :emergency))
+
+(add-hook! 'org-mode-hook #'set-warning-level-org)
+
+(after! dap-mode
+  (require 'dap-lldb)
+  (setq dap-lldb-debug-program '("lldb-vscode"))
+  (setq dap-lldb-debugged-program-function (lambda () (read-file-name "Select file to debug: ")))
+
+  (dap-register-debug-template
+   "C++ LLDB Debug"
+   (list :type "lldb"
+         :request "launch"
+         :program nil
+         :cwd (projectile-parent (projectile-project-name))
+         :stopOnEntry t
+         :args [])))
