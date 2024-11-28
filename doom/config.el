@@ -506,13 +506,35 @@ same directory as the org-buffer and insert a link to this file."
 (add-hook! 'org-mode-hook #'set-warning-level-org)
 
 (after! dap-mode
+  (require 'dap-python)
   (require 'dap-lldb)
+  (setq dap-python-debugger 'debugpy)
   (setq dap-lldb-debug-program '("lldb-vscode"))
   (setq dap-lldb-debugged-program-function (lambda () (read-file-name "Select file to debug: ")))
+
+  (defun my/set-pythonpath-to-project-root ()
+    "Set PYTHONPATH to the project's root directory for Python debugging."
+    (let ((project-root (or (projectile-project-root)
+                            (lsp-workspace-root)
+                            (default-directory))))
+      (setenv "PYTHONPATH" project-root)
+      (message "Set PYTHONPATH to %s" project-root)))
+
+  (add-hook! 'dap-stopped-hook #'my/set-pythonpath-to-project-root)
 
   (dap-register-debug-template
    "C++ LLDB Debug"
    (list :type "lldb"
+         :request "launch"
+         :program nil
+         :cwd (projectile-parent (projectile-project-name))
+         :stopOnEntry t
+         :args []))
+
+  (dap-register-debug-template
+   "Python Debug"
+   (list :type "python"
+         :debugger "debugpy"
          :request "launch"
          :program nil
          :cwd (projectile-parent (projectile-project-name))
