@@ -520,7 +520,7 @@ same directory as the org-buffer and insert a link to this file."
       (setenv "PYTHONPATH" project-root)
       (message "Set PYTHONPATH to %s" project-root)))
 
-  (add-hook! 'dap-stopped-hook #'my/set-pythonpath-to-project-root)
+  (add-hook 'dap-stopped-hook #'my/set-pythonpath-to-project-root)
 
   (dap-register-debug-template
    "C++ LLDB Debug"
