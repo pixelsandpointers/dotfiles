@@ -24,7 +24,6 @@
 
 	# The platform the configuration will be used on.
 	nixpkgs.config.allowUnfree = true;
-	# nixpkgs.config.allowUnsupportedSystem = true;
 	nixpkgs.hostPlatform = "aarch64-darwin";
 
 	homebrew = {
@@ -37,6 +36,7 @@
 	  brews = [
 	    "assimp"
 	    "borders"
+	"pngpaste"
 	  ];
 
 	  casks = [
@@ -52,6 +52,7 @@
 	  masApps = {
 	    Keynote = 409183694;
 	    Kindle = 302584613;
+	    Xcode = 497799835;
 	  };
 	};
 
@@ -62,16 +63,21 @@
 	  pkgs.oh-my-posh
 	  pkgs.mas
 	  pkgs.htop
+	  pkgs.tree-sitter
 	  pkgs.ripgrep
 	  pkgs.fd
 	  pkgs.tmux
 	  pkgs.git
+	  pkgs.lazygit
 	  pkgs.fh
 	  pkgs.direnv
 	  pkgs.gh
 
 	  # Programming
+	  pkgs.ccache
+	  pkgs.clang-tools
 	  pkgs.cmake
+	  pkgs.cmake-language-server
 	  pkgs.llvm
 	  pkgs.lldb
 	  pkgs.libllvm  # need to manually set LD_LIBRARY_PATH
@@ -86,14 +92,13 @@
 	  # Editors
 	  pkgs.neovim
 
-	  # Latex
-	  pkgs.texliveFull
-	  (pkgs.texlive.withPackages(ps: with ps; [biblatex natbib latexmk bibtools]))
 	  # Emacs PDF Tools Dependencies
 	  pkgs.pkg-config
 	  pkgs.poppler
 	  pkgs.autoconf
 	  pkgs.automake
+	  pkgs.imagemagick
+	  pkgs.jpegoptim
 
 	  # GUI apps, may want to put them into casks for the sake of findability
 	  pkgs.mkalias # required for GUI applications to show up in Finder using aliases
@@ -106,7 +111,7 @@
 	  pkgs.zotero
 
 	  # VFX
-	  pkgs.assimp
+	  # pkgs.assimp
 	  pkgs.openexr
 	  pkgs.openusd
 	  pkgs.python312Packages.openusd
@@ -155,12 +160,12 @@
 	system.defaults = {
 	  dock.autohide = true;
 	  dock.persistent-apps = [
-			"/Applications/Music.app"
+	    "/Applications/Music.app"
 	    "/Applications/Emacs.app"
 	    "/Applications/Brave Browser.app"
 	    "${pkgs.zotero}/Applications/Zotero.app"
-			"/Applications/Kindle.app"
-			"/Applications/Keynote.app"
+	    "/Applications/Kindle.app"
+	    "/Applications/Keynote.app"
 	  ];
 
 	  finder.FXPreferredViewStyle = "clmv";

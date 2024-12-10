@@ -36,6 +36,8 @@
 (setq doom-theme 'doom-xcode)
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 13 :weight 'regular))
 
+(setq fancy-splash-image (concat doom-private-dir "enso.png"))
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
@@ -540,3 +542,25 @@ same directory as the org-buffer and insert a link to this file."
          :cwd (projectile-parent (projectile-project-name))
          :stopOnEntry t
          :args [])))
+
+
+(defun cpp-auto-dot-to-arrow ()
+  "Automatically replace `.` with `->` if it follows a pointer variable."
+  (interactive)
+  (let ((char-before (char-before (point))))
+    (if (and char-before
+             (eq char-before ?.) ; Check if the last character was `.`
+             (save-excursion
+               (backward-char) ; Move back to inspect context
+               (skip-syntax-backward "w_") ; Skip over word/pointer characters
+               (looking-at-p "->"))) ; Check for existing arrow use
+        (progn
+          (delete-char -1) ; Remove the `.`
+          (insert "->"))
+      (insert ".")))) ; Default behavior if not a pointer
+
+(defun enable-auto-dot-to-arrow ()
+  "Enable auto dot-to-arrow conversion for C++ mode."
+  (local-set-key (kbd ".") #'cpp-auto-dot-to-arrow))
+
+;; (add-hook! 'c++-mode-hook #'enable-auto-dot-to-arrow)
