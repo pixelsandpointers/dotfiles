@@ -393,23 +393,19 @@
   (add-to-list 'org-latex-classes
                '("tuftebook"
                  "\\documentclass{tufte-book}
-\\usepackage{color}
-\\usepackage{amssymb}
-\\usepackage{amsmath}
-\\usepackage{gensymb}
-\\usepackage{nicefrac}
-\\usepackage{units}"
+                \\usepackage{color}
+                \\usepackage{gensymb}
+                \\usepackage{nicefrac}
+                \\usepackage{units}"
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
   ;; tufte-handout class for writing classy handouts and papers
   (add-to-list 'org-latex-classes
                '("tuftehandout"
                  "\\documentclass{tufte-handout}
                 \\usepackage{color}
-                \\usepackage{amssymb}
-                \\usepackage{amsmath}
                 \\usepackage{gensymb}
                 \\usepackage{nicefrac}
                 \\usepackage{units}"
@@ -562,5 +558,3 @@ same directory as the org-buffer and insert a link to this file."
 (defun enable-auto-dot-to-arrow ()
   "Enable auto dot-to-arrow conversion for C++ mode."
   (local-set-key (kbd ".") #'cpp-auto-dot-to-arrow))
-
-;; (add-hook! 'c++-mode-hook #'enable-auto-dot-to-arrow)

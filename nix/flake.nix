@@ -52,6 +52,8 @@
 	  masApps = {
 	    Keynote = 409183694;
 	    Kindle = 302584613;
+	    Word = 462054704;
+	    Excel = 462058435;
 	    Xcode = 497799835;
 	  };
 	};
@@ -161,7 +163,7 @@
 	  dock.autohide = true;
 	  dock.persistent-apps = [
 	    "/Applications/Music.app"
-	    "/Applications/Emacs.app"
+	    "${pkgs.alacritty}/Applications/Alacritty.app"
 	    "/Applications/Brave Browser.app"
 	    "${pkgs.zotero}/Applications/Zotero.app"
 	    "/Applications/Kindle.app"
