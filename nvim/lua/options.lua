@@ -87,3 +87,6 @@ function CustomFoldtext()
   table.insert(text, { ' - ' .. n_lines .. text_lines, { 'Folded' } })
   return text
 end
+
+-- concealing
+vim.opt.conceallevel = 2
