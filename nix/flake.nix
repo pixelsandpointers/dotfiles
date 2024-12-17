@@ -36,12 +36,14 @@
 	  brews = [
 	    "assimp"
 	    "borders"
-	"pngpaste"
+	    "pngpaste"
 	  ];
 
 	  casks = [
 	    "emacs"
 	    "nikitabobko/tap/aerospace"
+	    "warp"
+	    "raycast"
 	    "proton-drive"
 	    "signal"
 	    "jetbrains-toolbox"
@@ -69,6 +71,7 @@
 	  pkgs.ripgrep
 	  pkgs.fd
 	  pkgs.tmux
+	  pkgs.wget
 	  pkgs.git
 	  pkgs.lazygit
 	  pkgs.fh
@@ -84,6 +87,8 @@
 	  pkgs.lldb
 	  pkgs.libllvm  # need to manually set LD_LIBRARY_PATH
 	  pkgs.rustup
+	  pkgs.odin
+	  pkgs.ols
 	  pkgs.python3
 	  pkgs.python312Packages.pip
 	  pkgs.ruff
@@ -163,10 +168,13 @@
 	  dock.autohide = true;
 	  dock.persistent-apps = [
 	    "/Applications/Music.app"
-	    "${pkgs.alacritty}/Applications/Alacritty.app"
 	    "/Applications/Brave Browser.app"
+	    "/Applications/Warp.app"
+	    "/Applications/Emacs.app"
+	    "/Applications/Xcode.app"
+	    "/Users/b/Applications/CLion.app"
 	    "${pkgs.zotero}/Applications/Zotero.app"
-	    "/Applications/Kindle.app"
+	    "/Applications/Amazon Kindle.app"
 	    "/Applications/Keynote.app"
 	  ];
 
