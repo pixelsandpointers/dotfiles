@@ -390,17 +390,30 @@
 
 ;; tufte export: https://damitr.org/2014/01/09/latex-tufte-class-in-org-mode/
 (after! ox-latex
+  ;; Add Tufte-book to org-latex-classes
   (add-to-list 'org-latex-classes
                '("tuftebook"
                  "\\documentclass{tufte-book}
-                \\usepackage{color}
-                \\usepackage{gensymb}
-                \\usepackage{nicefrac}
-                \\usepackage{units}"
+\\usepackage{color}
+\\usepackage{gensymb}
+\\usepackage{nicefrac}
+\\usepackage{units}"
                  ("\\chapter{%s}" . "\\chapter*{%s}")
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+                 ;; Leave subsubsection empty, so it's handled manually
+                 ("\\newthought{%s}" . "")))
+
+  ;; Customize the export behavior for subsubsections
+  (defun my-org-latex-newthought-filter (text backend info)
+    "Replace subsubsection headings with \\newthought{} in LaTeX export."
+    (when (and (org-export-derived-backend-p backend 'latex)
+               (string-match "\\\\subsubsection{\\(.*?\\)}" text))
+      (replace-match "\\\\newthought{\\1}" nil nil text)))
+
+  ;; Add the filter to LaTeX export
+  (add-to-list 'org-export-filter-final-output-functions #'my-org-latex-newthought-filter)
+
   ;; tufte-handout class for writing classy handouts and papers
   (add-to-list 'org-latex-classes
                '("tuftehandout"
