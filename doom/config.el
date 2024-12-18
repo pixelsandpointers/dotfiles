@@ -432,8 +432,22 @@
 
   ;; TODO: add siggraph submission class here
   (add-to-list 'org-latex-classes
-               '("acmart"
-                 "\\documentclass{acmart}"
+               '("siggraph"
+                 "\\documentclass[manuscript]{acmart}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")))
+
+  (add-to-list 'org-latex-classes
+               '("siggraph-acmtog"
+                 "\\documentclass[acmtog]{acmart}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")))
+
+  (add-to-list 'org-latex-classes
+               '("siggraph-review"
+                 "\\documentclass[acmtog,anonymous,review]{acmart}"
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}"))))

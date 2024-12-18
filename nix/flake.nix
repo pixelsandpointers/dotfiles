@@ -46,7 +46,6 @@
 			"autoconf"
 			"automake"
 			# - END: PDF TOOLS
-
 	  ];
 
 	  casks = [
