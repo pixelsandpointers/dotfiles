@@ -428,7 +428,15 @@
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   (add-to-list 'org-latex-classes
                '("tuftethesis"
-                 "\\documentclass[boxey, colorful]{tufte-style-thesis}")))
+                 "\\documentclass[boxey, colorful]{tufte-style-thesis}"))
+
+  ;; TODO: add siggraph submission class here
+  (add-to-list 'org-latex-classes
+               '("acmart"
+                 "\\documentclass{acmart}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}"))))
 
 (defun me/screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
