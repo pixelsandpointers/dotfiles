@@ -37,6 +37,16 @@
 	    "assimp"
 	    "borders"
 	    "pngpaste"
+			# - PDF TOOLS
+			# we need this otherwise we have to install pdf-tool dependencies everytime
+			# probably want to check why emacs cannot find nix binaries so we can remove the double
+			# installation
+			"pkg-config"
+			"poppler"
+			"autoconf"
+			"automake"
+			# - END: PDF TOOLS
+
 	  ];
 
 	  casks = [
