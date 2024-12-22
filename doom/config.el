@@ -389,6 +389,20 @@
       (org-table-next-field))))
 
 ;; tufte export: https://damitr.org/2014/01/09/latex-tufte-class-in-org-mode/
+;;
+;; (defun my/org-latex-title-command (info)
+;;   "Custom LaTeX title command to include email."
+;;   (let ((title (org-export-data (plist-get info :title) info))
+;;         (author (org-export-data (plist-get info :author) info))
+;;         (email (plist-get info :email)))
+;;     (concat
+;;      (format "\\title{%s}\n" title)
+;;      (format "\\author{%s}\n" author)
+;;      (if email (format "\\email{%s}\n" email) "")
+;;      "\\maketitle\n")))
+
+;; (setq org-latex-title-command #'my/org-latex-title-command)
+
 (after! ox-latex
   ;; Add Tufte-book to org-latex-classes
   (add-to-list 'org-latex-classes
@@ -430,12 +444,12 @@
                '("tuftethesis"
                  "\\documentclass[boxey, colorful]{tufte-style-thesis}"))
 
-  ;; TODO: add siggraph submission class here
   (add-to-list 'org-latex-classes
                '("siggraph"
-                 "\\documentclass[manuscript]{acmart}"
+                 "\\documentclass[sigconf]{acmart}"
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")))
 
   (add-to-list 'org-latex-classes
@@ -443,6 +457,7 @@
                  "\\documentclass[acmtog]{acmart}"
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")))
 
   (add-to-list 'org-latex-classes
@@ -450,7 +465,9 @@
                  "\\documentclass[acmtog,anonymous,review]{acmart}"
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}"))))
+
 
 (defun me/screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
@@ -593,3 +610,14 @@ same directory as the org-buffer and insert a link to this file."
 (defun enable-auto-dot-to-arrow ()
   "Enable auto dot-to-arrow conversion for C++ mode."
   (local-set-key (kbd ".") #'cpp-auto-dot-to-arrow))
+
+(use-package! gptel
+  :config
+  (gptel-make-anthropic "Claude"
+    :stream t
+    :key (gptel-api-key-from-auth-source "api.anthropic.com"))
+  (gptel-make-openai "ChatGPT"
+    :key (gptel-api-key-from-auth-source "api.openai.com"))
+  :custom
+  (gptel-use-curl nil)
+  (gptel-default-mode 'org-mode))
