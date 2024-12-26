@@ -66,6 +66,7 @@
 	    Word = 462054704;
 	    Excel = 462058435;
 	    Xcode = 497799835;
+	    "ZSA Keymapp" = 6472865291;
 	  };
 	};
 
@@ -176,7 +177,7 @@
 	system.defaults = {
 	  dock.autohide = true;
 	  dock.persistent-apps = [
-	    "/Applications/Music.app"
+	    # FIXME: "/Applications/Music.app"
 	    "/Applications/Brave Browser.app"
 	    "/Applications/Warp.app"
 	    "/Applications/Emacs.app"

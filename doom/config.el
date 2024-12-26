@@ -613,11 +613,27 @@ same directory as the org-buffer and insert a link to this file."
 
 (use-package! gptel
   :config
+  ;; Set the default model and backend
+  (setq!
+   auth-sources '("~/.authinfo")
+   gptel-api-key (auth-source-pick-first-password :host "api.openai.com")
+   gptel-model 'gemini-2.0-flash-exp
+   gptel-backend (gptel-make-gemini "Gemini"
+                   :key (auth-source-pick-first-password :host "generativelanguage.googleapis.com")
+                   :stream t))
+
   (gptel-make-anthropic "Claude"
-    :stream t
-    :key (gptel-api-key-from-auth-source "api.anthropic.com"))
-  (gptel-make-openai "ChatGPT"
-    :key (gptel-api-key-from-auth-source "api.openai.com"))
+    :key (auth-source-pick-first-password :host "api.anthropic.com")
+    :stream t)
+
   :custom
   (gptel-use-curl nil)
   (gptel-default-mode 'org-mode))
+
+
+(use-package! elfeed
+  ;; may also want to add elfeed-org
+  :config
+  (setq! elfeed-feeds
+         ;;                            |- allows us to specify tags for the feed
+         '(("https://gpuopen.com/feed/" graphics))))
