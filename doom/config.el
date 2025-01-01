@@ -636,4 +636,25 @@ same directory as the org-buffer and insert a link to this file."
   :config
   (setq! elfeed-feeds
          ;;                            |- allows us to specify tags for the feed
-         '(("https://gpuopen.com/feed/" graphics))))
+         '(("https://gpuopen.com/feed/" graphics)
+           ("https://jendrikillner.com/tags/weekly/index.xml" graphics))))
+
+(defun my/cpp-auto-arrow ()
+  (interactive)
+  (let ((char (char-before)))
+    (when (and char (eq char ?.))
+      (save-excursion
+        (backward-char)
+        (when (c++-pointer-at-point-p)
+          (delete-char 1)
+          (insert "->"))))))
+
+(defun c++-pointer-at-point-p ()
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol))
+        (when symbol
+          (string-match-p "\\*" (get-text-property 0 'type symbol))))))
+
+(add-hook! 'c++-mode-hook
+  (lambda ()
+    (local-set-key "." #'my/cpp-auto-arrow)))
