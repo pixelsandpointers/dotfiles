@@ -50,6 +50,7 @@
 
 	  casks = [
 	    "emacs"
+	    "thunderbird"
 	    "nikitabobko/tap/aerospace"
 	    "warp"
 	    "raycast"
@@ -87,6 +88,8 @@
 	  pkgs.fh
 	  pkgs.direnv
 	  pkgs.gh
+	  pkgs.nom
+	  pkgs.protonmail-bridge  # only installs cli, there's protonmail-bridge-gui as well if necessary
 
 	  # Programming
 	  pkgs.ccache
@@ -179,10 +182,10 @@
 	  dock.persistent-apps = [
 	    # FIXME: "/Applications/Music.app"
 	    "/Applications/Brave Browser.app"
-	    "/Applications/Warp.app"
-	    "/Applications/Emacs.app"
+	    "/Applications/Obsidian.app"
 	    "/Applications/Xcode.app"
 	    "/Users/b/Applications/CLion.app"
+	    "/Applications/Warp.app"
 	    "${pkgs.zotero}/Applications/Zotero.app"
 	    "/Applications/Amazon Kindle.app"
 	    "/Applications/Keynote.app"
