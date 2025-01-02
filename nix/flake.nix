@@ -125,7 +125,6 @@
 	  pkgs.anki-bin
 	  pkgs.brave
 	  pkgs.discord
-	  pkgs.element-desktop
 	  pkgs.inkscape
 	  pkgs.vscode
 	  pkgs.zotero
