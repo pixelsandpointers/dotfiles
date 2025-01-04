@@ -1,18 +1,19 @@
 return {
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
+      require('which-key').setup {
+        preset = 'modern',
+      }
 
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = 'Code', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = 'Document', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = 'Rename', _ = 'which_key_ignore' },
-        ['<leader>f'] = { name = 'Find', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = 'Workspace', _ = 'which_key_ignore' },
-        ['<leader>m'] = { name = 'Local', _ = 'which_key_ignore' },
+      local wk = require 'which-key'
+
+      wk.add {
+        -- Document existing key chains
+        { '<leader>c', name = 'Code', _ = 'which_key_ignore' },
+        { '<leader>f', group = 'Find', _ = 'which_key_ignore' },
+        { '<localleader>', group = 'Mode', _ = 'which_key_ignore' },
       }
     end,
   },
