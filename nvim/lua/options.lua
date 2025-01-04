@@ -75,18 +75,5 @@ vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 --vim.opt.foldtext = ''
 --vim.opt.fillchars = 'fold: '
 
-function CustomFoldtext()
-  local text = vim.treesitter.foldtext()
-  local n_lines = vim.v.foldend - vim.v.foldstart
-  local text_lines = ' lines'
-
-  if n_lines == 1 then
-    text_lines = ' line'
-  end
-
-  table.insert(text, { ' - ' .. n_lines .. text_lines, { 'Folded' } })
-  return text
-end
-
 -- concealing
 vim.opt.conceallevel = 2
