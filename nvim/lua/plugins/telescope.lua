@@ -81,7 +81,7 @@ return {
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>fo', function()
-      builtin.find_files(themes.get_ivy { cwd = '~/Notes/Obsidian/Vault' })
+      builtin.find_files(themes.get_ivy { cwd = '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault' })
     end, { desc = 'Find file in Obsidian fault' })
 
     -- Shortcut for searching your neovim configuration files
