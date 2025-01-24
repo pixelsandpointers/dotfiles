@@ -49,8 +49,10 @@
 	  ];
 
 	  casks = [
+	    "steam"
 	    "emacs"
 	    "thunderbird"
+	    "font-roboto-mono-nerd-font"
 	    "nikitabobko/tap/aerospace"
 	    "warp"
 	    "raycast"
@@ -104,6 +106,7 @@
 	  pkgs.ols
 	  pkgs.python3
 	  pkgs.python312Packages.pip
+	  pkgs.python312Packages.compiledb  # required to get lsp up and running without cmake
 	  pkgs.ruff
 	  pkgs.uv
 	  pkgs.nodejs_22

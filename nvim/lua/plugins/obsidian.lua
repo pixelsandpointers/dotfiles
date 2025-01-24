@@ -21,7 +21,7 @@ return {
     workspaces = {
       {
         name = 'personal',
-        path = '~/Notes/Obsidian/',
+        path = '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault',
       },
       {
         name = 'labwiki',
