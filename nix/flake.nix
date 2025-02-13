@@ -53,6 +53,7 @@
 	    "emacs"
 	    "thunderbird"
 	    "font-roboto-mono-nerd-font"
+	    "font-meslo-lg-nerd-font"
 	    "nikitabobko/tap/aerospace"
 	    "warp"
 	    "raycast"
@@ -62,6 +63,7 @@
 	    "zoom"
 	    "blender"
 	    "obsidian"
+	    "godot"
 	  ];
 	  masApps = {
 	    Keynote = 409183694;
@@ -77,6 +79,7 @@
 	environment.systemPackages = [
 	  # System
 	  pkgs.alacritty
+	  pkgs.graphviz
 	  pkgs.oh-my-posh
 	  pkgs.mas
 	  pkgs.htop
@@ -140,7 +143,9 @@
 	];
 
 	fonts.packages = [
-	  (pkgs.nerdfonts.override {fonts = [ "JetBrainsMono" ]; })
+	  (pkgs.nerdfonts.override {fonts = [ 
+	    "JetBrainsMono" 
+	  ]; })
 	];
 
 	services.nix-daemon.enable = true;
