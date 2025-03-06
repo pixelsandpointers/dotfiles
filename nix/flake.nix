@@ -37,33 +37,34 @@
 	    "assimp"
 	    "borders"
 	    "pngpaste"
-	    # - PDF TOOLS
-	    # we need this otherwise we have to install pdf-tool dependencies everytime
-	    # probably want to check why emacs cannot find nix binaries so we can remove the double
-	    # installation
-	    "pkg-config"
-	    "poppler"
-	    "autoconf"
-	    "automake"
-	    # - END: PDF TOOLS
 	  ];
 
 	  casks = [
-	    "steam"
-	    "emacs"
-	    "thunderbird"
+	    # fonts 
 	    "font-roboto-mono-nerd-font"
 	    "font-meslo-lg-nerd-font"
+
+	    # dev tools
 	    "nikitabobko/tap/aerospace"
 	    "warp"
 	    "raycast"
-	    "proton-drive"
-	    "signal"
 	    "jetbrains-toolbox"
+
+	    # coms
+	    "signal"
 	    "zoom"
-	    "blender"
-	    "obsidian"
+
+	    # dcc
+	    # "blender" => points to the wrong version at the moment
 	    "godot"
+  
+	    # misc
+	    "inkscape"
+	    "steam"
+	    "emacs"
+	    "thunderbird"
+	    "proton-drive"
+	    "obsidian"
 	  ];
 	  masApps = {
 	    Keynote = 409183694;
@@ -71,6 +72,7 @@
 	    Word = 462054704;
 	    Excel = 462058435;
 	    Xcode = 497799835;
+	    Todoist = 585829637;
 	    "ZSA Keymapp" = 6472865291;
 	  };
 	};
@@ -79,22 +81,22 @@
 	environment.systemPackages = [
 	  # System
 	  pkgs.alacritty
-	  pkgs.graphviz
 	  pkgs.oh-my-posh
+	  pkgs.tmux
+	  pkgs.git
+	  pkgs.git-lfs
+	  pkgs.gh
+	  pkgs.graphviz
 	  pkgs.mas
 	  pkgs.htop
+	  pkgs.wget
+	  pkgs.direnv
 	  pkgs.tree-sitter
 	  pkgs.ripgrep
 	  pkgs.fd
-	  pkgs.tmux
-	  pkgs.wget
-	  pkgs.git
 	  pkgs.lazygit
 	  pkgs.fh
-	  pkgs.direnv
-	  pkgs.gh
-	  pkgs.nom
-	  pkgs.protonmail-bridge  # only installs cli, there's protonmail-bridge-gui as well if necessary
+	  # pkgs.protonmail-bridge  # only installs cli, there's protonmail-bridge-gui as well if necessary
 
 	  # Programming
 	  pkgs.ccache
@@ -113,12 +115,11 @@
 	  pkgs.ruff
 	  pkgs.uv
 	  pkgs.nodejs_22
-	  pkgs.hugo
 
 	  # Editors
 	  pkgs.neovim
 
-	  # Emacs PDF Tools Dependencies
+	  # PDF Tools 
 	  pkgs.pkg-config
 	  pkgs.poppler
 	  pkgs.autoconf
@@ -131,7 +132,6 @@
 	  pkgs.anki-bin
 	  pkgs.brave
 	  pkgs.discord
-	  pkgs.inkscape
 	  pkgs.vscode
 	  pkgs.zotero
 
@@ -188,14 +188,16 @@
 	  dock.autohide = true;
 	  dock.persistent-apps = [
 	    # FIXME: "/Applications/Music.app"
+	    "/Applications/Thunderbird.app"
 	    "/Applications/Brave Browser.app"
-	    "/Applications/Obsidian.app"
-	    "/Applications/Xcode.app"
-	    "/Users/b/Applications/CLion.app"
-	    "/Applications/Warp.app"
+	    "${pkgs.alacritty}/Applications/Alacritty.app"
 	    "${pkgs.zotero}/Applications/Zotero.app"
-	    "/Applications/Amazon Kindle.app"
-	    "/Applications/Keynote.app"
+	    "/Applications/Obsidian.app"
+	    "/Applications/Inkscape.app"
+	    "/Applications/Blender.app"
+	    "/Applications/Godot.app"
+	    "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
+	    "/Applications/Adobe Lightroom CC/Adobe Lightroom.app"
 	  ];
 
 	  finder.FXPreferredViewStyle = "clmv";
