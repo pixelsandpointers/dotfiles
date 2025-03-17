@@ -1,6 +1,6 @@
-general.import = [
-  "~/.config/alacritty/themes/themes/tokyo-night.toml"
-]
+# general.import = [
+#   "~/.config/alacritty/themes/themes/tokyo-night.toml"
+# ]
 
 general.live_config_reload = true
 
@@ -8,41 +8,47 @@ general.live_config_reload = true
 [colors]
 draw_bold_text_with_bright_colors = true
 
-# [[colors.indexed_colors]]
-# color = "0xF8BD96"
-# index = 16
-#
-# [[colors.indexed_colors]]
-# color = "0xF5E0DC"
-# index = 17
-#
-# [colors.bright]
-# black = "0x988BA2"
-# blue = "0x96CDFB"
-# cyan = "0x89DCEB"
-# green = "0xABE9B3"
-# magenta = "0xF5C2E7"
-# red = "0xF28FAD"
-# white = "0xD9E0EE"
-# yellow = "0xFAE3B0"
-#
-# [colors.cursor]
-# cursor = "0xF5E0DC"
-# text = "0x1E1D2F"
-#
-# [colors.normal]
-# black = "0x6E6C7E"
-# blue = "0x96CDFB"
-# cyan = "0x89DCEB"
-# green = "0xABE9B3"
-# magenta = "0xF5C2E7"
-# red = "0xF28FAD"
-# white = "0xD9E0EE"
-# yellow = "0xFAE3B0"
-#
-# [colors.primary]
-# background = "0x1E1D2F"
-# foreground = "0xD9E0EE"
+[[colors.indexed_colors]]
+color = "0xFF2250"
+index = 16
+
+[[colors.indexed_colors]]
+color = "0x00FFFF"
+index = 17
+
+[colors.bright]
+black=   "0x505050"
+red=     "0xFF2250"
+green=   "0x00FFAA"
+yellow=  "0xFFFF00"
+blue=    "0x50BBFF"
+magenta= "0xFF00FF"
+cyan=    "0x00FDFF"
+white=   "0xF0F0F0"
+
+[colors.cursor]
+cursor = "0xF5E0DC"
+text = "0x1E1D2F"
+
+[colors.selection]
+text= "CellForeground"
+background= "0x202020"
+
+
+[colors.normal]
+black=   "0x505050"
+red=     "0xFF2250"
+green=   "0x00FFAA"
+yellow=  "0xFFFF00"
+blue=    "0x50BBFF"
+magenta= "0xFF00FF"
+cyan=    "0x00FDFF"
+white=   "0xF0F0F0"
+
+
+[colors.primary]
+background = "0x000000"
+foreground = "0xF0F0F0"
 
 [cursor]
 blink_interval = 500
@@ -86,16 +92,16 @@ action = "PasteSelection"
 mouse = "Middle"
 
 [selection]
-semantic_escape_chars = ",│`|:\"' ()[]{}<>"
+semantic_escape_chars = ",│`|=\"' ()[]{}<>"
 
 [terminal.shell]
 program = "/bin/zsh"
 
 [window]
 decorations = "full"
-dynamic_title = true
 option_as_alt = "Both"
-#startup_mode = "Maximized"
+title = "ターミナル"
+startup_mode = "Maximized"
 
 [window.dimensions]
 columns = 160

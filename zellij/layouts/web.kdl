@@ -1,0 +1,48 @@
+layout {
+  tab name="WEB" {
+    pane split_direction="vertical" {
+      pane split_direction="horizontal" {
+        pane { name "ターミナル"; }
+        npm { args "run" "dev" "--" "--host"; name "実行"; }
+      }
+      pane {
+        name "ネオビム"
+        edit "./"
+        size "75%"
+      }
+    }
+    pane size=1 borderless=true {
+      plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+        format_left   "{mode}"
+        format_center "#[bg=#000000]{tabs}"
+        format_right  "#[fg=#eaeaea,bold]{session} "
+        format_space  "#[bg=#000000]"
+
+        border_enabled  "false"
+        border_char     "─"
+        border_format   "#[fg=#353535]{char}"
+        border_position "top"
+
+        hide_frame_for_single_pane "false"
+
+        mode_normal  "#[fg=#eaeaea,bg=#000000] ノーマル　 "
+        mode_locked  "#[fg=#eaeaea,bg=#000000] ロック　　 "
+        mode_move    "#[fg=#eaeaea,bg=#000000] 移動　　　 "
+        mode_pane    "#[fg=#eaeaea,bg=#000000] リサイズ　 "
+        mode_scroll  "#[fg=#eaeaea,bg=#000000] スクロール "
+        mode_session "#[fg=#eaeaea,bg=#000000] セッション "
+        mode_tab     "#[fg=#eaeaea,bg=#000000] タブ　　　 "
+        mod_search   "#[fg=#eaeaea,bg=#000000] 探索　　　 "
+        mode_tmux    "#[fg=#eaeaea,bg=#000000] TMUX　　　 "
+
+        tab_normal   "#[fg=#eaeaea,bg=#000000]{index}"
+        tab_active   "#[fg=#ff2250,bg=#000000]{index}"
+        tab_separator    "#[fg=#353535,bg=#000000]　|　"
+      }
+    }
+  }
+  pane_template name="npm" {
+    command "npm"
+    start_suspended true
+  }
+}
