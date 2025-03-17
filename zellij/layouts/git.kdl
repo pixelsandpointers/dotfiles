@@ -1,0 +1,15 @@
+layout {
+    tab name="GIT" {
+      pane split_direction="vertical" {
+        pane {
+          name "差分表示"
+          command "nvim"
+          args "-c" "DiffviewOpen" ""
+          size "75%"
+        }
+      }
+      pane size=1 borderless=true {
+          plugin location="zellij:compact-bar"
+      }
+    }
+}

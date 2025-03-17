@@ -37,6 +37,7 @@
 	    "assimp"
 	    "borders"
 	    "pngpaste"
+	    "helix"
 	  ];
 
 	  casks = [
@@ -49,6 +50,8 @@
 	    "warp"
 	    "raycast"
 	    "jetbrains-toolbox"
+	    "cmake" # => should include the GUI version as well
+	    "keycastr"
 
 	    # coms
 	    "signal"
@@ -66,11 +69,14 @@
 	    "proton-drive"
 	    "obsidian"
 	  ];
+
 	  masApps = {
 	    Keynote = 409183694;
 	    Kindle = 302584613;
+	    LINE = 443904275;
 	    Word = 462054704;
 	    Excel = 462058435;
+	    PowerPoint = 462062816;
 	    Xcode = 497799835;
 	    Todoist = 585829637;
 	    "ZSA Keymapp" = 6472865291;
@@ -81,6 +87,7 @@
 	environment.systemPackages = [
 	  # System
 	  pkgs.alacritty
+	  pkgs.zellij
 	  pkgs.oh-my-posh
 	  pkgs.tmux
 	  pkgs.git
@@ -101,7 +108,7 @@
 	  # Programming
 	  pkgs.ccache
 	  pkgs.clang-tools
-	  pkgs.cmake
+	  # pkgs.cmake
 	  pkgs.cmake-language-server
 	  pkgs.llvm
 	  pkgs.lldb
@@ -110,8 +117,6 @@
 	  pkgs.odin
 	  pkgs.ols
 	  pkgs.python3
-	  pkgs.python312Packages.pip
-	  pkgs.python312Packages.compiledb  # required to get lsp up and running without cmake
 	  pkgs.ruff
 	  pkgs.uv
 	  pkgs.nodejs_22
@@ -143,12 +148,8 @@
 	];
 
 	fonts.packages = [
-	  (pkgs.nerdfonts.override {fonts = [ 
-	    "JetBrainsMono" 
-	  ]; })
+	  pkgs.nerd-fonts.jetbrains-mono
 	];
-
-	services.nix-daemon.enable = true;
 
 	# Necessary for using flakes on this system.
 	nix.settings.experimental-features = "nix-command flakes";
