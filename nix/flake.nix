@@ -149,6 +149,7 @@
 
 	fonts.packages = [
 	  pkgs.nerd-fonts.jetbrains-mono
+	  pkgs.nerd-fonts.blex-mono
 	];
 
 	# Necessary for using flakes on this system.
