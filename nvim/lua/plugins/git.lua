@@ -8,6 +8,16 @@ return {
       -- Only one of these is needed.
       'nvim-telescope/telescope.nvim',
     },
+    config = function()
+      require('neogit').setup {
+        mappings = {
+          popup = {
+            ['P'] = 'PullPopup',
+            ['p'] = 'PushPopup',
+          },
+        },
+      }
+    end,
     keys = {
       {
         '<leader>gg',
