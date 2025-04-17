@@ -93,6 +93,7 @@ return {
     dap.adapters.codelldb = {
       id = 'codelldb',
       type = 'executable',
+      -- INFO: needs start-up command use, check checkhealth dap
     }
 
     -- NOTE: these are debug configurations

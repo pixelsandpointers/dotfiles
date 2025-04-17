@@ -83,6 +83,7 @@ return { -- LSP Configuration & Plugins
     { 'j-hui/fidget.nvim', opts = {} },
   },
   config = function()
+    vim.notify = require 'notify'
     --  This function gets run when an LSP attaches to a particular buffer.
     --    That is to say, every time a new file is opened that is associated with
     --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -179,21 +180,22 @@ return { -- LSP Configuration & Plugins
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
       -- cmake_language_server = {},
-      codelldb = {},
       texlab = {},
       clangd = {
         cmd = {
           'clangd',
           '--background-index',
           '--clang-tidy',
+          '--offset-encoding=utf-8',
         },
+        root_markers = { '.clangd', 'compile_commands.json' },
+        filetypes = { 'c', 'cpp', 'cxx', 'hxx', 'cc', 'hh' },
       },
 
       astro = {},
       pyright = {},
       debugpy = {},
       ruff = {},
-      rust_analyzer = {},
       lua_ls = {
         -- cmd = {...},
         -- filetypes { ...},
@@ -235,13 +237,14 @@ return { -- LSP Configuration & Plugins
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format lua code
+      'codelldb', -- debugger
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
       -- ensure_installed = true,
       -- automatic_installation = true,
-      ensure_installed = { 'lua_ls' },
+      ensure_installed = { 'lua_ls', 'clangd', 'pyright' },
       automatic_installation = true,
       handlers = {
         function(server_name)
