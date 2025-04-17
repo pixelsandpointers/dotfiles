@@ -49,3 +49,4 @@ require('lazy').setup {
 -- INFO: Remove this if not needed
 package.loaded['arasaka'] = nil
 require 'arasaka'
+require('overseer').setup()

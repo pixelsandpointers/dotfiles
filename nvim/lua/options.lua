@@ -6,6 +6,7 @@ vim.g.maplocalleader = ' m'
 
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
+vim.opt.termguicolors = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -70,10 +71,23 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 
 -- setup folding
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client then
+      if client:supports_method 'textDocument/foldingRange' then
+        local win = vim.api.nvim_get_current_win()
+        vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+      end
+    end
+  end,
+})
 --vim.opt.foldtext = ''
 --vim.opt.fillchars = 'fold: '
 
 -- concealing
 vim.opt.conceallevel = 2
+
+vim.diagnostic.config { virtual_lines = { current_line = true } }

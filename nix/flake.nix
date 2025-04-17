@@ -38,6 +38,7 @@
 	    "borders"
 	    "pngpaste"
 	    "helix"
+	    "docker-completion"
 	  ];
 
 	  casks = [
@@ -51,6 +52,7 @@
 	    "raycast"
 	    "jetbrains-toolbox"
 	    "cmake" # => should include the GUI version as well
+	    "docker"
 	    "keycastr"
 
 	    # coms
@@ -79,6 +81,7 @@
 	    PowerPoint = 462062816;
 	    Xcode = 497799835;
 	    Todoist = 585829637;
+	    Goodnotes = 1444383602;
 	    "ZSA Keymapp" = 6472865291;
 	  };
 	};
@@ -86,7 +89,6 @@
 
 	environment.systemPackages = [
 	  # System
-	  pkgs.alacritty
 	  pkgs.zellij
 	  pkgs.oh-my-posh
 	  pkgs.tmux
@@ -103,12 +105,11 @@
 	  pkgs.fd
 	  pkgs.lazygit
 	  pkgs.fh
-	  # pkgs.protonmail-bridge  # only installs cli, there's protonmail-bridge-gui as well if necessary
 
 	  # Programming
+	  pkgs.neovim
 	  pkgs.ccache
 	  pkgs.clang-tools
-	  # pkgs.cmake
 	  pkgs.cmake-language-server
 	  pkgs.llvm
 	  pkgs.lldb
@@ -120,9 +121,6 @@
 	  pkgs.ruff
 	  pkgs.uv
 	  pkgs.nodejs_22
-
-	  # Editors
-	  pkgs.neovim
 
 	  # PDF Tools 
 	  pkgs.pkg-config
@@ -190,9 +188,8 @@
 	  dock.autohide = true;
 	  dock.persistent-apps = [
 	    # FIXME: "/Applications/Music.app"
-	    "/Applications/Thunderbird.app"
 	    "/Applications/Brave Browser.app"
-	    "${pkgs.alacritty}/Applications/Alacritty.app"
+	    "/Applications/Ghostty.app"
 	    "${pkgs.zotero}/Applications/Zotero.app"
 	    "/Applications/Obsidian.app"
 	    "/Applications/Inkscape.app"

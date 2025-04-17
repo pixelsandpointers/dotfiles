@@ -1,18 +1,32 @@
 return {
-  'NeogitOrg/neogit',
-  dependencies = {
-    'nvim-lua/plenary.nvim', -- required
-    'sindrets/diffview.nvim', -- optional - Diff integration
+  {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
 
-    -- Only one of these is needed.
-    'nvim-telescope/telescope.nvim',
+      -- Only one of these is needed.
+      'nvim-telescope/telescope.nvim',
+    },
+    keys = {
+      {
+        '<leader>gg',
+        function()
+          require('neogit').open()
+        end,
+        desc = 'Git: Status',
+      },
+    },
   },
-  config = function()
-    local map = function(keys, func, desc)
-      vim.keymap.set('n', keys, func, { desc = 'Git: ' .. desc })
-    end
-
-    -- keymap
-    map('<leader>g', require('neogit').open, 'Setup')
-  end,
+  {
+    'rbong/vim-flog',
+    lazy = true,
+    cmd = { 'Flog', 'Flogsplit', 'Floggit' },
+    dependencies = {
+      'tpope/vim-fugitive',
+    },
+    keys = {
+      { '<leader>gs', '<cmd>Flog<CR>', desc = 'Git: Graph' },
+    },
+  },
 }
