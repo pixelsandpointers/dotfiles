@@ -101,7 +101,6 @@ program = "/bin/zsh"
 decorations = "full"
 option_as_alt = "Both"
 title = "ターミナル"
-startup_mode = "Maximized"
 
 [window.dimensions]
 columns = 160
