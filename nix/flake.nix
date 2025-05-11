@@ -38,7 +38,7 @@
 	    "borders"
 	    "pngpaste"
 	    "helix"
-	    "docker-completion"
+	    "z"
 	  ];
 
 	  casks = [
@@ -60,7 +60,6 @@
 	    "zoom"
 
 	    # dcc
-	    # "blender" => points to the wrong version at the moment
 	    "godot"
   
 	    # misc
@@ -72,82 +71,87 @@
 	    "obsidian"
 	  ];
 
-	  masApps = {
-	    Keynote = 409183694;
-	    Kindle = 302584613;
-	    LINE = 443904275;
-	    Word = 462054704;
-	    Excel = 462058435;
-	    PowerPoint = 462062816;
-	    Xcode = 497799835;
-	    Todoist = 585829637;
-	    Goodnotes = 1444383602;
-	    "ZSA Keymapp" = 6472865291;
-	  };
+	  # INFO: only enable them once, because MAS apps
+	  # will be reinstalled everytime
+	  # masApps = {
+	  #   Keynote = 409183694;
+	  #   Kindle = 302584613;
+	  #   LINE = 443904275;
+	  #   Word = 462054704;
+	  #   Excel = 462058435;
+	  #   PowerPoint = 462062816;
+	  #   Xcode = 497799835;
+	  #   Todoist = 585829637;
+	  #   Goodnotes = 1444383602;
+	  #   "ZSA Keymapp" = 6472865291;
+	  # };
 	};
 
 
-	environment.systemPackages = [
+	environment.systemPackages = with pkgs; [
 	  # System
-	  pkgs.zellij
-	  pkgs.oh-my-posh
-	  pkgs.tmux
-	  pkgs.git
-	  pkgs.git-lfs
-	  pkgs.gh
-	  pkgs.graphviz
-	  pkgs.mas
-	  pkgs.htop
-	  pkgs.wget
-	  pkgs.direnv
-	  pkgs.tree-sitter
-	  pkgs.ripgrep
-	  pkgs.fd
-	  pkgs.lazygit
-	  pkgs.fh
+	  zellij
+	  oh-my-posh
+	  tmux
+	  git
+	  git-lfs
+	  gh
+	  graphviz
+	  mas
+	  htop
+	  wget
+	  direnv
+	  tree-sitter
+	  ripgrep
+	  fd
+	  lazygit
+	  fh
+	  fzf
+	  zsh-z
 
 	  # Programming
-	  pkgs.neovim
-	  pkgs.ccache
-	  pkgs.clang-tools
-	  pkgs.cmake-language-server
-	  pkgs.llvm
-	  pkgs.lldb
-	  pkgs.libllvm  # need to manually set LD_LIBRARY_PATH
-	  pkgs.rustup
-	  pkgs.odin
-	  pkgs.ols
-	  pkgs.python3
-	  pkgs.ruff
-	  pkgs.uv
-	  pkgs.nodejs_22
+	  neovim
+	  ccache
+	  clang-tools
+	  cmake-language-server
+	  llvm
+	  lldb
+	  libllvm  # need to manually set LD_LIBRARY_PATH
+	  rustup
+	  odin
+	  ols
+	  python3
+	  marimo
+	  ruff
+	  uv
+	  nodejs_22
 
 	  # PDF Tools 
-	  pkgs.pkg-config
-	  pkgs.poppler
-	  pkgs.autoconf
-	  pkgs.automake
-	  pkgs.imagemagick
-	  pkgs.jpegoptim
+	  pkg-config
+	  poppler
+	  autoconf
+	  automake
+	  imagemagick
+	  jpegoptim
 
 	  # GUI apps, may want to put them into casks for the sake of findability
-	  pkgs.mkalias # required for GUI applications to show up in Finder using aliases
-	  pkgs.anki-bin
-	  pkgs.brave
-	  pkgs.discord
-	  pkgs.vscode
-	  pkgs.zotero
+	  mkalias # required for GUI applications to show up in Finder using aliases
+	  anki-bin
+	  brave
+	  discord
+	  vscode
+	  zotero
 
 	  # VFX
 	  # pkgs.assimp
-	  pkgs.openexr
-	  pkgs.openusd
-	  pkgs.python312Packages.openusd
+	  openexr
+	  openusd
+	  python312Packages.openusd
 	];
 
-	fonts.packages = [
-	  pkgs.nerd-fonts.jetbrains-mono
-	  pkgs.nerd-fonts.blex-mono
+	fonts.packages = with pkgs; [
+	  nerd-fonts.jetbrains-mono
+	  nerd-fonts.blex-mono
 	];
 
 	# Necessary for using flakes on this system.
@@ -189,12 +193,13 @@
 	  dock.persistent-apps = [
 	    # FIXME: "/Applications/Music.app"
 	    "/Applications/Brave Browser.app"
-	    "/Applications/Ghostty.app"
 	    "${pkgs.zotero}/Applications/Zotero.app"
 	    "/Applications/Obsidian.app"
-	    "/Applications/Inkscape.app"
+	    "/Applications/Ghostty.app"
+	    "/Users/b/Applications/CLion.app"
+	    "/Users/b/Applications/Rider.app"
 	    "/Applications/Blender.app"
-	    "/Applications/Godot.app"
+	    "/Users/Shared/Epic Games/UE_5.5/Engine/Binaries/Mac/UnrealEditor.app"
 	    "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
 	    "/Applications/Adobe Lightroom CC/Adobe Lightroom.app"
 	  ];
