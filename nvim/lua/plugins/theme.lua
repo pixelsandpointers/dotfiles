@@ -3,9 +3,6 @@ return {
   {
     'rose-pine/neovim',
     name = 'rose-pine',
-    config = function()
-      vim.cmd 'colorscheme rose-pine'
-    end,
   },
   {
     'rebelot/kanagawa.nvim',
@@ -14,5 +11,10 @@ return {
     -- end,
   },
   { 'akinsho/horizon.nvim', version = '*' },
-  { 'EdenEast/nightfox.nvim' }, -- lazy
+  {
+    'EdenEast/nightfox.nvim',
+    config = function()
+      vim.cmd 'colorscheme terafox'
+    end,
+  }, -- lazy
 }
