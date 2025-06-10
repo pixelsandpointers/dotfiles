@@ -180,6 +180,7 @@ return { -- LSP Configuration & Plugins
     local servers = {
       -- cmake_language_server = {},
       texlab = {},
+      tailwindcss = {},
       clangd = {
         cmd = {
           'clangd',
@@ -243,7 +244,7 @@ return { -- LSP Configuration & Plugins
     require('mason-lspconfig').setup {
       -- ensure_installed = true,
       -- automatic_installation = true,
-      ensure_installed = { 'lua_ls', 'clangd', 'pyright' },
+      ensure_installed = servers,
       automatic_installation = true,
       handlers = {
         function(server_name)
