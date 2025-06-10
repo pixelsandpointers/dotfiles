@@ -90,8 +90,7 @@
 
 	environment.systemPackages = with pkgs; [
 	  # System
-	  zellij
-	  oh-my-posh
+	  oh-my-zsh
 	  tmux
 	  git
 	  git-lfs
@@ -112,14 +111,13 @@
 	  # Programming
 	  neovim
 	  ccache
+	  ninja
 	  clang-tools
 	  cmake-language-server
 	  llvm
 	  lldb
 	  libllvm  # need to manually set LD_LIBRARY_PATH
 	  rustup
-	  odin
-	  ols
 	  python3
 	  marimo
 	  ruff
@@ -143,7 +141,6 @@
 	  zotero
 
 	  # VFX
-	  # pkgs.assimp
 	  openexr
 	  openusd
 	  python312Packages.openusd
@@ -152,6 +149,7 @@
 	fonts.packages = with pkgs; [
 	  nerd-fonts.jetbrains-mono
 	  nerd-fonts.blex-mono
+	  libertine
 	];
 
 	# Necessary for using flakes on this system.
@@ -196,6 +194,7 @@
 	    "${pkgs.zotero}/Applications/Zotero.app"
 	    "/Applications/Obsidian.app"
 	    "/Applications/Ghostty.app"
+	    "/Users/b/Applications/PyCharm.app"
 	    "/Users/b/Applications/CLion.app"
 	    "/Users/b/Applications/Rider.app"
 	    "/Applications/Blender.app"

@@ -52,5 +52,5 @@ require('lazy').setup {
 
 -- INFO: Overseer area
 require('overseer').setup {
-  templates = { 'builtin', 'user.cpp_build' },
+  templates = { 'builtin', 'user.cpp_build', 'user.run_blender', 'user.blender_debug_build' },
 }
