@@ -189,7 +189,7 @@ return { -- LSP Configuration & Plugins
           '--offset-encoding=utf-8',
         },
         root_markers = { '.clangd', 'compile_commands.json' },
-        filetypes = { 'c', 'cpp', 'cxx', 'hxx', 'cc', 'hh' },
+        filetypes = { 'c', 'cpp', 'cxx', 'hxx', 'cc', 'hh', 'hpp' },
       },
 
       astro = {},
@@ -257,5 +257,7 @@ return { -- LSP Configuration & Plugins
         end,
       },
     }
+
+    require('lspconfig').slangd.setup {}
   end,
 }
