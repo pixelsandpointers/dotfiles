@@ -6,6 +6,7 @@ return {
       preset = 'helix',
       spec = {
         -- Document existing key chains
+        { '<leader>z', name = 'ZenMode' },
         { '<leader>c', name = 'Code' },
         { '<leader>d', name = 'Debug' },
         { '<leader>f', group = 'Find' },

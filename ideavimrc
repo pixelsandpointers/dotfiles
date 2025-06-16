@@ -2,13 +2,21 @@
 let mapleader=" "
 
 """ Plugins  --------------------------------
+Plug 'justinmk/vim-sneak'
 set surround
+set NERDTree
 set multiple-cursors
 set commentary
 set argtextobj
-set easymotion
 set textobj-entire
 set ReplaceWithRegister
+set which-key
+
+" disable the timeout option
+set notimeout
+
+" increase the timeoutlen (default: 1000), don't add space around the equal sign
+set timeoutlen=5000
 
 """ Plugin settings -------------------------
 let g:argtextobj_pairs="[:],(:),<:>"
@@ -18,6 +26,7 @@ set showmode
 set so=5
 set incsearch
 set nu
+    cudawait
 set relativenumber
 
 """ Idea specific settings ------------------
@@ -26,18 +35,36 @@ set ideastatusicon=gray
 set idearefactormode=keep
 
 """ Mappings --------------------------------
-map <leader>f <Plug>(easymotion-s)
-map <leader>e <Plug>(easymotion-f)
+"" AI bindings
+map <leader>ag <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
+map <leader>ac <Action>(AIAssistant.Chat.AIPopupChat)
+map <leader>aj <Action>()
 
-map <leader>d <Action>(Debug)
-map <leader>r <Action>(RenameElement)
-map <leader>c <Action>(Stop)
+"" Code actions
+map <leader>ca <Action>(ShowIntentionActions)
+map <leader>ci <Action>(ImplementMethods)
+map <leader>cr <Action>(RenameElement)
+
+"" Git actions
+map <leader>ga <Action>(Annotate)
+map <leader>gg <Action>(Git.MainMenu)
+map <leader>gh <Action>(ActivateVersionControlToolWindow)
+
+"" Run actions
+map <leader>rd <Action>(Debug)
+map <leader>rr <Action>(Run)
+map <leader>rs <Action>(Stop)
 map <leader>z <Action>(ToggleDistractionFreeMode)
 
 map <leader>s <Action>(SelectInProjectView)
-map <leader>a <Action>(Annotate)
-map <leader>h <Action>(Vcs.ShowTabbedFileHistory)
 map <S-Space> <Action>(GotoNextError)
 
 map <leader>b <Action>(ToggleLineBreakpoint)
 map <leader>o <Action>(FileStructurePopup)
+
+
+
+""" which-key
+"""let g:WhichKeyDesc_windows        = "<Space>w  Windows"
+"""let g:WhichKeyDesc_windows_delete = "<Space>wd delete"
+"""let g:WhichKeyDesc_windows_split  = "<Space>ws split below"
