@@ -71,16 +71,24 @@ return {
     vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = 'Find Marks' })
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find Help' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Find Keymaps' })
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
-    vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = 'Find Select Telescope' })
+    vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = 'Find Files' })
+    vim.keymap.set('n', '<leader>fa', builtin.lsp_workspace_symbols, { desc = 'Find Workspace Symbols' })
     vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = 'Find current Word' })
     vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Find by Grep' })
     vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find Diagnostics' })
     vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Find Resume' })
-    vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = 'Find Recent Files ("." for repeat)' })
+    vim.keymap.set('n', '<leader>ff', builtin.oldfiles, { desc = 'Find Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Existing Buffers' })
 
     -- Slightly advanced example of overriding default behavior and theme
+    vim.keymap.set('n', '<leader>fs', function()
+      builtin.lsp_document_symbols(themes.get_ivy { desc = 'Find Document Symbols' })
+    end, { desc = 'Find Document Symbols' })
+
+    vim.keymap.set('n', '<leader>fa', function()
+      builtin.lsp_workspace_symbols(themes.get_ivy { desc = 'Find Workspace Symbols' })
+    end, { desc = 'Find Workspace Symbols' })
+
     vim.keymap.set('n', '<leader>fo', function()
       builtin.find_files(themes.get_ivy { cwd = '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault' })
     end, { desc = 'Find file in Obsidian fault' })
