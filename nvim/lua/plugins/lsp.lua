@@ -188,10 +188,9 @@ return { -- LSP Configuration & Plugins
           '--clang-tidy',
           '--offset-encoding=utf-8',
         },
-        root_markers = { '.clangd', 'compile_commands.json' },
+        root_markers = { '.git', '.clangd', 'compile_commands.json' },
         filetypes = { 'c', 'cpp', 'cxx', 'hxx', 'cc', 'hh', 'hpp' },
       },
-
       astro = {},
       pyright = {},
       debugpy = {},
@@ -258,6 +257,6 @@ return { -- LSP Configuration & Plugins
       },
     }
 
-    require('lspconfig').slangd.setup {}
+    --require('lspconfig').slangd.setup {}
   end,
 }
