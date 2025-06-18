@@ -68,6 +68,7 @@ return {
     local builtin = require 'telescope.builtin'
     local themes = require 'telescope.themes'
 
+    vim.keymap.set('n', '<leader>f.', builtin.builtin, { desc = 'Find builtin methods' })
     vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = 'Find Marks' })
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find Help' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Find Keymaps' })
