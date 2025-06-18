@@ -257,6 +257,6 @@ return { -- LSP Configuration & Plugins
       },
     }
 
-    --require('lspconfig').slangd.setup {}
+    require('lspconfig').slangd.setup {}
   end,
 }
