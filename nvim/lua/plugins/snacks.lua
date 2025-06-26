@@ -8,15 +8,21 @@ return {
     dashboard = {
       enabled = true,
       sections = {
-        { section = 'header' },
         {
-          pane = 2,
+          pane = 1,
           section = 'terminal',
           cmd = 'colorscript -e square',
           height = 5,
-          padding = 1,
+          --padding = 1,
         },
-        { section = 'keys', gap = 1, padding = 1 },
+        -- {
+        --   section = 'terminal',
+        --   cmd = 'chafa ~/Desktop/bw.jpg --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1',
+        --   height = 17,
+        --   padding = 1,
+        -- },
+        -- { section = 'keys', gap = 1, padding = 1 },
+        { section = 'projects' },
         {
           pane = 2,
           icon = ' ',
@@ -39,6 +45,7 @@ return {
               key = 'n',
               icon = ' ',
               height = 5,
+              pane = 2,
               enabled = true,
             },
             {
@@ -59,27 +66,21 @@ return {
               action = function()
                 vim.fn.jobstart('gh pr list --web', { detach = true })
               end,
+              pane = 2,
               height = 7,
-            },
-            {
-              icon = ' ',
-              title = 'Git Status',
-              cmd = 'git --no-pager diff --stat -B -M -C',
-              height = 10,
             },
           }
           return vim.tbl_map(function(cmd)
             return vim.tbl_extend('force', {
-              pane = 2,
               section = 'terminal',
               enabled = in_git,
-              padding = 1,
+              padding = 2,
               ttl = 5 * 60,
               indent = 3,
             }, cmd)
           end, cmds)
         end,
-        { section = 'startup' },
+        --{ section = 'startup' },
       },
     },
     -- explorer = { enabled = true },
