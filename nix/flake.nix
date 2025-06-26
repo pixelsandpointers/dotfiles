@@ -160,6 +160,7 @@
 	programs.zsh.enable = true;
 
 	# Set Git commit hash for darwin-version.
+	system.primaryUser = "b";
 	system.configurationRevision = self.rev or self.dirtyRev or null;
 
 	# set up aliases
