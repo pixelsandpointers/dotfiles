@@ -95,6 +95,8 @@
 	  git
 	  git-lfs
 	  gh
+	  chafa
+	  dwt1-shell-color-scripts
 	  graphviz
 	  mas
 	  htop
