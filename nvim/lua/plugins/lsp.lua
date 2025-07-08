@@ -258,5 +258,6 @@ return { -- LSP Configuration & Plugins
     }
 
     require('lspconfig').slangd.setup {}
+    require('lspconfig').mojo.setup {}
   end,
 }
