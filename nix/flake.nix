@@ -37,7 +37,6 @@
 	    "assimp"
 	    "borders"
 	    "pngpaste"
-	    "helix"
 	    "z"
 	  ];
 
@@ -58,6 +57,7 @@
 	    # coms
 	    "signal"
 	    "zoom"
+	    "loom"
 
 	    # dcc
 	    "godot"
@@ -91,6 +91,8 @@
 	environment.systemPackages = with pkgs; [
 	  # System
 	  oh-my-zsh
+	  nushell
+	  bat
 	  tmux
 	  git
 	  git-lfs
@@ -112,6 +114,7 @@
 
 	  # Programming
 	  neovim
+	  pixi
 	  ccache
 	  ninja
 	  clang-tools
@@ -197,13 +200,12 @@
 	    "${pkgs.zotero}/Applications/Zotero.app"
 	    "/Applications/Obsidian.app"
 	    "/Applications/Ghostty.app"
-	    "/Users/b/Applications/PyCharm.app"
 	    "/Users/b/Applications/CLion.app"
 	    "/Users/b/Applications/Rider.app"
 	    "/Applications/Blender.app"
-	    "/Users/Shared/Epic Games/UE_5.5/Engine/Binaries/Mac/UnrealEditor.app"
+	    "/Users/Shared/Epic Games/UE_5.6/Engine/Binaries/Mac/UnrealEditor.app"
 	    "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
-	    "/Applications/Adobe Lightroom CC/Adobe Lightroom.app"
+	    "/Applications/Adobe Lightroom Classic/Adobe Lightroom Classic.app"
 	  ];
 
 	  finder.FXPreferredViewStyle = "clmv";

@@ -15,4 +15,8 @@ return {
   {
     'preservim/vim-pencil',
   },
+  {
+    'tihawk/mdwa.nvim',
+    version = '*',
+  },
 }
