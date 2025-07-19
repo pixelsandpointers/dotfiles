@@ -11,18 +11,7 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
     let
       configuration = { pkgs, config, ... }: let
-	# FIXME: tex xis not recognized as a variable, which is valid because it is not used in in
-	# This will probably need to rewritten, that we pass the combined package into
-	# the environment systemPackages. For now, live without biblatex.
-	# tex = texlive.withPackages (ps: [ps.biblatex ps.collection-bibtexextra]);
-	# tex = pkgs.texlive.combine {
-	#   inherit (pkgs.texlive) scheme-full latexmk biblatex;
-	#};
       in {
-	# List packages installed in system profile. To search by name, run:
-	# $ nix-env -qaP | grep wget
-
-	# The platform the configuration will be used on.
 	nixpkgs.config.allowUnfree = true;
 	nixpkgs.hostPlatform = "aarch64-darwin";
 
@@ -89,32 +78,39 @@
 
 
 	environment.systemPackages = with pkgs; [
-	  # System
-	  oh-my-zsh
-	  nushell
-	  bat
-	  tmux
+	  # Git
 	  git
 	  git-lfs
 	  gh
-	  chafa
-	  dwt1-shell-color-scripts
-	  graphviz
-	  mas
-	  htop
-	  wget
-	  direnv
-	  tree-sitter
-	  ripgrep
-	  fd
 	  lazygit
-	  fh
-	  fzf
+
+	  # Shell
+	  tmux
+	  oh-my-zsh
+	  nushell
 	  zsh-z
 
-	  # Programming
+	  # CLI
+	  bat
+	  chafa
+	  dwt1-shell-color-scripts
+	  htop
+	  wget
+
+	  # NVim
 	  neovim
-	  pixi
+	  ripgrep
+	  fd
+	  fzf
+	  tree-sitter
+	  graphviz
+
+	  # NIX
+	  direnv
+	  fh
+	  mas
+
+	  # C++
 	  ccache
 	  ninja
 	  clang-tools
@@ -122,14 +118,21 @@
 	  llvm
 	  lldb
 	  libllvm  # need to manually set LD_LIBRARY_PATH
+
+	  # Rust 
 	  rustup
+
+	  # Python
 	  python3
 	  marimo
 	  ruff
 	  uv
+
+	  # Node
 	  nodejs_22
 
 	  # PDF Tools 
+	  noweb
 	  pkg-config
 	  poppler
 	  autoconf
@@ -137,18 +140,12 @@
 	  imagemagick
 	  jpegoptim
 
-	  # GUI apps, may want to put them into casks for the sake of findability
-	  mkalias # required for GUI applications to show up in Finder using aliases
+	  # GUI
+	  mkalias
 	  anki-bin
-	  brave
 	  discord
 	  vscode
 	  zotero
-
-	  # VFX
-	  openexr
-	  openusd
-	  python312Packages.openusd
 	];
 
 	fonts.packages = with pkgs; [
@@ -161,7 +158,6 @@
 	nix.settings.experimental-features = "nix-command flakes";
 
 	# Enable alternative shell support in nix-darwin.
-	# programs.fish.enable = true;
 	programs.zsh.enable = true;
 
 	# Set Git commit hash for darwin-version.
@@ -195,17 +191,18 @@
 	system.defaults = {
 	  dock.autohide = true;
 	  dock.persistent-apps = [
-	    # FIXME: "/Applications/Music.app"
+	    "/System/Applications/Music.app"
 	    "/Applications/Brave Browser.app"
+	    "/Applications/Keynote.app"
+	    "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
+	    "/Applications/Adobe Lightroom Classic/Adobe Lightroom Classic.app"
+	    "/Applications/Adobe Illustrator 2025/Adobe Illustrator.app"
+	    "/Applications/Adobe InDesign 2025/Adobe InDesign 2025.app"
 	    "${pkgs.zotero}/Applications/Zotero.app"
 	    "/Applications/Obsidian.app"
 	    "/Applications/Ghostty.app"
-	    "/Users/b/Applications/CLion.app"
-	    "/Users/b/Applications/Rider.app"
 	    "/Applications/Blender.app"
 	    "/Users/Shared/Epic Games/UE_5.6/Engine/Binaries/Mac/UnrealEditor.app"
-	    "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
-	    "/Applications/Adobe Lightroom Classic/Adobe Lightroom Classic.app"
 	  ];
 
 	  finder.FXPreferredViewStyle = "clmv";
@@ -214,8 +211,6 @@
       };
     in
       {
-      # Build darwin flake using:
-      # $ darwin-rebuild build --flake .#simple
       darwinConfigurations."zen" = nix-darwin.lib.darwinSystem {
 	modules = [
 	  configuration
