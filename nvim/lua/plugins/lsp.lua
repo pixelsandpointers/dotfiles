@@ -259,5 +259,14 @@ return { -- LSP Configuration & Plugins
 
     require('lspconfig').slangd.setup {}
     require('lspconfig').mojo.setup {}
+    require('lspconfig').sourcekit.setup {
+      capabilities = {
+        workspace = {
+          didChangeWatchedFiles = {
+            dynamicRegistration = true,
+          },
+        },
+      },
+    }
   end,
 }
