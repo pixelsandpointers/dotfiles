@@ -201,6 +201,7 @@
 	    "${pkgs.zotero}/Applications/Zotero.app"
 	    "/Applications/Obsidian.app"
 	    "/Applications/Ghostty.app"
+	    "/Applications/Warp.app"
 	    "/Applications/Blender.app"
 	    "/Users/Shared/Epic Games/UE_5.6/Engine/Binaries/Mac/UnrealEditor.app"
 	  ];
