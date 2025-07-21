@@ -104,7 +104,7 @@ return {
   },
   keys = {
     {
-      '<leader>fP',
+      '<leader>p',
       function()
         Snacks.picker.projects()
       end,
