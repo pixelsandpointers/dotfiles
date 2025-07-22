@@ -47,3 +47,5 @@ theme = rose-pine
 background-opacity = 0.8
 #background-image = "./bg-blurred.png"
 #command = /run/current-system/sw/bin/nu -l
+
+keybind = shift+enter=csi: shift+enter
