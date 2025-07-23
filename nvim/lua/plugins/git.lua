@@ -2,7 +2,9 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     config = function()
-      require('gitsigns').setup {}
+      local gitsigns = require 'gitsigns'
+      vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset region' })
+      gitsigns.setup()
     end,
   },
   {
