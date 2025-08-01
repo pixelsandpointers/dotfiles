@@ -3,8 +3,18 @@ return {
     'lewis6991/gitsigns.nvim',
     config = function()
       local gitsigns = require 'gitsigns'
-      vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset region' })
+      vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Git: Reset region' })
+      vim.keymap.set('n', '<leader>gb', gitsigns.blame, { desc = 'Git: Blame' })
       gitsigns.setup()
+    end,
+  },
+  {
+    'sindrets/diffview.nvim',
+    config = function()
+      local diff = require 'diffview'
+      vim.keymap.set('n', '<leader>gd', ':OpenDiffview ', { desc = 'Git: Open Diffview' })
+      vim.keymap.set('n', '<leader>gh', '<cmd>DiffviewFileHistory %<CR>', { desc = 'Git: Open file history' })
+      diff.setup()
     end,
   },
   {
