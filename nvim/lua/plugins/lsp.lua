@@ -148,6 +148,6 @@ return { -- LSP Configuration & Plugins
         },
       },
     })
-    lspconfig['sourcekit'].setup { capabilities = sourcekit_capabilities }
+    lspconfig['sourcekit'].setup { capabilities = sourcekit_capabilities, filetypes = 'swift' }
   end,
 }
