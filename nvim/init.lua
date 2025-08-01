@@ -43,3 +43,17 @@ require('overseer').setup {
 }
 
 vim.cmd 'colorscheme cyberdream'
+-- Place this in your Neovim config (e.g., init.lua or plugin setup)
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'DiffviewFiles',
+  callback = function()
+    vim.keymap.set('n', 'q', '<cmd>DiffviewClose<CR>', { buffer = true, silent = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'DiffviewFileHistory',
+  callback = function()
+    vim.keymap.set('n', 'q', '<cmd>DiffviewClose<CR>', { buffer = true, silent = true })
+  end,
+})
