@@ -33,6 +33,7 @@
 	    # fonts 
 	    "font-roboto-mono-nerd-font"
 	    "font-meslo-lg-nerd-font"
+	    "font-ubuntu-mono-nerd-font"
 
 	    # dev tools
 	    "nikitabobko/tap/aerospace"
