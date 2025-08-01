@@ -45,7 +45,8 @@
 #theme = Horizon
 theme = rose-pine
 background-opacity = 0.8
+font-family = UbuntuMono Nerd Font
+window-inherit-font-size = false
+font-size = 14
 #background-image = "./bg-blurred.png"
 #command = /run/current-system/sw/bin/nu -l
-
-keybind = shift+enter=csi: shift+enter
