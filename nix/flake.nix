@@ -85,6 +85,8 @@
 	  git-lfs
 	  gh
 	  lazygit
+	  jujutsu
+	  lazyjj
 
 	  # Shell
 	  tmux
