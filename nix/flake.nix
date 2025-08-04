@@ -26,7 +26,8 @@
 	    "assimp"
 	    "borders"
 	    "pngpaste"
-	    "z"
+	    "fzf"
+	    "zoxide"
 	  ];
 
 	  casks = [
