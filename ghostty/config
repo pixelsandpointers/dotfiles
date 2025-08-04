@@ -45,8 +45,10 @@
 #theme = Horizon
 theme = rose-pine
 background-opacity = 0.8
-font-family = UbuntuMono Nerd Font
+# font-family = Osaka
+# font-style = Mono
+font-family = FiraCode Nerd Font
 window-inherit-font-size = false
-font-size = 14
+font-size = 13
 #background-image = "./bg-blurred.png"
 #command = /run/current-system/sw/bin/nu -l
