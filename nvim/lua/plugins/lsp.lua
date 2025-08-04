@@ -73,6 +73,7 @@ return { -- LSP Configuration & Plugins
             callback = vim.lsp.buf.clear_references,
           })
         end
+        vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename symbol' })
       end,
     })
 
@@ -90,12 +91,15 @@ return { -- LSP Configuration & Plugins
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format lua code
       'codelldb', -- debugger
+      'nil',
+      'nixpkgs-fmt',
     })
     require('mason').setup()
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     -- manual LSP config (cannot be installed by Mason)
     lspconfig['slangd'].setup { capabilities = capabilities }
+    lspconfig['nil'].setup { capabilities = capabilities }
     -- local sourcekit_capabilities = vim.tbl_deep_extend('force', native_capabilities, {
     --   filetypes = 'swift',
     --   workspace = {
