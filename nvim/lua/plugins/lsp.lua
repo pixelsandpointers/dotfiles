@@ -30,7 +30,6 @@ return { -- LSP Configuration & Plugins
       astro = {},
       pyright = {},
       debugpy = {},
-      ruff = {},
       lua_ls = {
         settings = {
           Lua = {
