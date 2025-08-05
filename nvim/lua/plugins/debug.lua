@@ -1,10 +1,15 @@
--- debug.lua
---
--- Shows how to use the DAP plugin to debug your code.
---
--- Primarily focused on configuring the debugger for Go, but can
--- be extended to other languages as well. That's why it's called
--- kickstart.nvim and not kitchen-sink.nvim ;)
+-- INFO: Define all DAP adapters in a separate file
+DAP_ADAPTERS = {
+  codelldb = {
+    type = 'server',
+    port = '${port}',
+    executable = {
+      command = 'codelldb',
+      args = { '--port', '${port}' },
+    },
+  },
+}
+
 return {
   'mfussenegger/nvim-dap',
   dependencies = {
@@ -24,7 +29,36 @@ return {
     local dapui = require 'dapui'
     local dap_virtual_text_status = require 'nvim-dap-virtual-text'
 
-    -- mason setup
+    -- Some signs
+    local sign = vim.fn.sign_define
+    sign('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+    sign('DapBreakpointCondition', { text = '●', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' })
+    sign('DapLogPoint', { text = '◆', texthl = 'DapLogPoint', linehl = '', numhl = '' })
+    sign('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
+
+    -- INFO: Automatic setup can be modified using the following:
+    -- require ('mason-nvim-dap').setup({
+    --     ensure_installed = {'stylua', 'jq'},
+    --     handlers = {
+    --         function(config)
+    --           -- all sources with no handler get passed here
+    --
+    --           -- Keep original functionality
+    --           require('mason-nvim-dap').default_setup(config)
+    --         end,
+    --         python = function(config)
+    --             config.adapters = {
+    -- 	            type = "executable",
+    -- 	            command = "/usr/bin/python3",
+    -- 	            args = {
+    -- 		            "-m",
+    -- 		            "debugpy.adapter",
+    -- 	            },
+    --             }
+    --             require('mason-nvim-dap').default_setup(config) -- don't forget this!
+    --         end,
+    --     },
+    -- })
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
@@ -43,19 +77,14 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
         'debugpy',
         'codelldb',
-        --'cpptools',
       },
     }
     --
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
       controls = {
         icons = {
@@ -91,45 +120,18 @@ return {
     }
 
     -- INFO: Adapter Configurations
-    dap.adapters.codelldb = {
-      type = 'server',
-      port = '${port}',
-      executable = {
-        command = 'codelldb',
-        args = { '--port', '${port}' },
-      },
-    }
-    -- for _, lang in ipairs { 'c', 'cpp', 'rust' } do
-    --   dap.configurations[lang] = {
-    --     {
-    --       type = 'codelldb',
-    --       request = 'launch',
-    --       name = 'Launch file',
-    --       stopOnEntry = true,
-    --       program = function()
-    --         return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    --       end,
-    --       cwd = '${workspaceFolder}',
-    --     },
-    --     {
-    --       type = 'codelldb',
-    --       request = 'attach',
-    --       name = 'Attach to process',
-    --       pid = require('dap.utils').pick_process,
-    --       cwd = '${workspaceFolder}',
-    --     },
-    --   }
-    -- end
+    for adapter, adapter_cfg in pairs(DAP_ADAPTERS) do
+      dap.adapters[adapter] = adapter_cfg
+    end
 
-    -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
-    vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
-    vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
-    vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
+    vim.keymap.set('n', '<F10>', dap.step_into, { desc = 'Debug: Step Into' })
+    vim.keymap.set('n', '<F11>', dap.step_over, { desc = 'Debug: Step Over' })
+    vim.keymap.set('n', '<F12>', dap.step_out, { desc = 'Debug: Step Out' })
     vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
     vim.keymap.set('n', '<leader>B', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-    end, { desc = 'Debug: Set Breakpoint' })
+    end, { desc = 'Debug: Set Conditional Breakpoint' })
 
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
