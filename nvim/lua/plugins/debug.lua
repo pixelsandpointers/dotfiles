@@ -5,11 +5,8 @@
 -- Primarily focused on configuring the debugger for Go, but can
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
-
 return {
-  -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
-  -- NOTE: And you can specify dependencies as well
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
@@ -36,8 +33,12 @@ return {
 
       -- You can provide additional configuration to the handlers,
       -- see mason-nvim-dap README for more information
-      handlers = {},
-
+      handlers = {
+        function(config)
+          -- Default handler for other debuggers
+          require('mason-nvim-dap').default_setup(config)
+        end,
+      },
       -- You'll need to check that you have the required things installed
       -- online, please don't ask me how to install them :)
       ensure_installed = {
@@ -45,7 +46,7 @@ return {
         'delve',
         'debugpy',
         'codelldb',
-        'cpptools',
+        --'cpptools',
       },
     }
     --
@@ -91,27 +92,34 @@ return {
 
     -- INFO: Adapter Configurations
     dap.adapters.codelldb = {
-      id = 'codelldb',
-      type = 'executable',
-      -- INFO: needs start-up command use, check checkhealth dap
-    }
-
-    -- NOTE: these are debug configurations
-    dap.configurations.cpp = {
-      {
-        name = 'Launch file',
-        type = 'codelldb',
-        request = 'launch',
-        program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = '${workspaceFolder}',
-        stopAtEntry = true,
+      type = 'server',
+      port = '${port}',
+      executable = {
+        command = 'codelldb',
+        args = { '--port', '${port}' },
       },
     }
-
-    dap.configurations.c = dap.configurations.cpp
-    dap.configurations.rust = dap.configurations.cpp
+    -- for _, lang in ipairs { 'c', 'cpp', 'rust' } do
+    --   dap.configurations[lang] = {
+    --     {
+    --       type = 'codelldb',
+    --       request = 'launch',
+    --       name = 'Launch file',
+    --       stopOnEntry = true,
+    --       program = function()
+    --         return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    --       end,
+    --       cwd = '${workspaceFolder}',
+    --     },
+    --     {
+    --       type = 'codelldb',
+    --       request = 'attach',
+    --       name = 'Attach to process',
+    --       pid = require('dap.utils').pick_process,
+    --       cwd = '${workspaceFolder}',
+    --     },
+    --   }
+    -- end
 
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
