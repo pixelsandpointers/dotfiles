@@ -28,8 +28,8 @@ return { -- LSP Configuration & Plugins
         filetypes = { 'c', 'cpp', 'cxx', 'hxx', 'cc', 'hh', 'hpp' },
       },
       astro = {},
+      ruff = {},
       pyright = {},
-      debugpy = {},
       lua_ls = {
         settings = {
           Lua = {
@@ -73,7 +73,9 @@ return { -- LSP Configuration & Plugins
             callback = vim.lsp.buf.clear_references,
           })
         end
+
         vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename symbol' })
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code actions' })
       end,
     })
 
@@ -88,8 +90,10 @@ return { -- LSP Configuration & Plugins
 
     print(vim.tbl_keys(opts.servers))
     local ensure_installed = vim.tbl_keys(opts.servers)
+    -- Mason installs without setup required
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format lua code
+      'ruff',
       'codelldb', -- debugger
       'nil',
       'nixpkgs-fmt',
