@@ -1,0 +1,51 @@
+# eval "$(oh-my-posh init zsh --config https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/tokyonight_storm.omp.json)"
+# eval "$(oh-my-posh init zsh --config https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/spaceship.omp.json)"
+bindkey -v
+
+source $HOME/.config/zsh/spaceship/spaceship.zsh
+export SPACESHIP_CONFIG="$HOME/.config/zsh/spaceship.zsh"
+eval "$(zoxide init zsh)"
+source <(fzf --zsh)
+export FZF_DEFAULT_COMMAND='history'
+
+export LDFLAGS="-L/opt/homebrew/lib"
+export CPPFLAGS="-I/opt/homebrew/include -I$HOME/dev/sdk/OptiX/include"
+
+export EDITOR='nvim'
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export SESSION_MANAGER=
+export SAVEHIST=10000
+export HISTSIZE=50000
+export HISTFILESIZE=1000000
+
+# Mitsuba/Drjit
+export DRJIT_LIBLLVM_PATH='/nix/store/sz8qygmv83v0m96r6na3lvl3wlan1nnk-llvm-16.0.6-lib/lib/libLLVM.dylib'
+export DEFAULT_MI_VARIANT='llvm_ad_rgb'
+
+export PATH="/Users/b/.local/bin:$PATH"
+export PATH="/Library/TeX/texbin:$PATH"
+export PATH="/Users/b/dev/slang/build/Release/bin:$PATH"
+
+export MODULAR_HOME="/Users/b/.modular"
+
+export CMAKE_GENERATOR=Ninja
+export NINJA_STATUS="[%u/%r/%f] "
+
+# API Keys
+source ~/.env
+
+# Aliases
+source ~/.config/term/aliases.sh
+
+# Convenience flags to switch between release and debug mode
+# direnv
+eval "$(direnv hook zsh)"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/b/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+autoload -U compinit
+compinit
+source <(jj util completion zsh)
+# Select cuda based on https://stackoverflow.com/questions/39649102/how-do-i-select-which-gpu-to-run-a-job-on
