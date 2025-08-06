@@ -5,7 +5,8 @@ return {
       inline_hints = true,
     },
     config = function()
-      require('clangd_extensions').setup {
+      local clangdx = require 'clangd_extensions'
+      clangdx.setup {
         ast = {
           -- These are unicode, should be available in any font
           role_icons = {
