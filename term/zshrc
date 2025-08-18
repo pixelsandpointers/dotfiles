@@ -26,6 +26,7 @@ export DEFAULT_MI_VARIANT='llvm_ad_rgb'
 export PATH="/Users/b/.local/bin:$PATH"
 export PATH="/Library/TeX/texbin:$PATH"
 export PATH="/Users/b/dev/slang/build/Release/bin:$PATH"
+export PATH="/Users/b/.config/term/bin:$PATH"
 
 export MODULAR_HOME="/Users/b/.modular"
 

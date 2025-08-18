@@ -123,6 +123,9 @@
 	  lldb
 	  libllvm  # need to manually set LD_LIBRARY_PATH
 
+	  # Odin
+	  odin
+
 	  # Rust 
 	  rustup
 
