@@ -76,6 +76,7 @@ return {
       -- Change this at some point to the native API
       servers = {
         -- cmake_language_server = {},
+        ols = {},
         texlab = {},
         tailwindcss = {},
         -- Ensure mason installs the server
