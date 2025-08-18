@@ -56,9 +56,7 @@
 	    # misc
 	    "inkscape"
 	    "steam"
-	    "emacs"
 	    "thunderbird"
-	    "proton-drive"
 	    "obsidian"
 	  ];
 
@@ -118,23 +116,16 @@
 	  ccache
 	  ninja
 	  clang-tools
-	  cmake-language-server
 	  llvm
 	  lldb
 	  libllvm  # need to manually set LD_LIBRARY_PATH
-
-	  # Odin
-	  odin
 
 	  # Rust 
 	  rustup
 
 	  # Python
 	  python3
-	  marimo
-	  ruff
-	  uv
-
+	  uv 
 	  # Node
 	  nodejs_22
 
@@ -202,15 +193,15 @@
 	    "/System/Applications/Music.app"
 	    "/Applications/Brave Browser.app"
 	    "/Applications/Keynote.app"
+	    "/Applications/Obsidian.app"
+	    "/Applications/Ghostty.app"
+	    "/Applications/Xcode.app/"
+	    "/Applications/Xcode.app/Contents/Applications/Instruments.app"
 	    "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
 	    "/Applications/Adobe Lightroom Classic/Adobe Lightroom Classic.app"
 	    "/Applications/Adobe Illustrator 2025/Adobe Illustrator.app"
 	    "/Applications/Adobe InDesign 2025/Adobe InDesign 2025.app"
-	    "${pkgs.zotero}/Applications/Zotero.app"
-	    "/Applications/Obsidian.app"
-	    "/Applications/Ghostty.app"
-	    "/Applications/Warp.app"
-	    "/Applications/Blender.app"
+	    "/Users/b/dev/blender-git/build_darwin_release/bin/Blender.app"
 	    "/Users/Shared/Epic Games/UE_5.6/Engine/Binaries/Mac/UnrealEditor.app"
 	  ];
 
