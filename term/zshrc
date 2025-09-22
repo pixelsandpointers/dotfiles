@@ -28,6 +28,12 @@ export PATH="/Library/TeX/texbin:$PATH"
 export PATH="/Users/b/dev/slang/build/Release/bin:$PATH"
 export PATH="/Users/b/.config/term/bin:$PATH"
 
+export VULKAN_SDK=/Users/b/VulkanSDK/1.4.321.0/macOS/
+export PATH=$VULKAN_SDK/bin:$PATH
+export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH
+export VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json
+export VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d
+
 export MODULAR_HOME="/Users/b/.modular"
 
 export CMAKE_GENERATOR=Ninja
