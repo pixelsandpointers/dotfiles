@@ -76,7 +76,8 @@ return {
       -- Change this at some point to the native API
       servers = {
         -- cmake_language_server = {},
-        ols = {},
+        zls = {},
+        nil_ls = {},
         texlab = {},
         tailwindcss = {},
         -- Ensure mason installs the server
@@ -169,7 +170,6 @@ return {
         end,
       })
 
-      local native_capabilities = vim.lsp.protocol.make_client_capabilities()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local lspconfig = require 'lspconfig'
@@ -178,14 +178,12 @@ return {
         lspconfig[server].setup(config)
       end
 
-      print(vim.tbl_keys(opts.servers))
       local ensure_installed = vim.tbl_keys(opts.servers)
       -- Mason installs without setup required
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format lua code
         'ruff',
         'codelldb', -- debugger
-        'nil',
         'nixpkgs-fmt',
       })
       require('mason').setup()
@@ -193,7 +191,6 @@ return {
 
       -- manual LSP config (cannot be installed by Mason)
       lspconfig['slangd'].setup { capabilities = capabilities }
-      lspconfig['nil'].setup { capabilities = capabilities }
       -- local sourcekit_capabilities = vim.tbl_deep_extend('force', native_capabilities, {
       --   filetypes = 'swift',
       --   workspace = {
