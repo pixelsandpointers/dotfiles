@@ -11,6 +11,7 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
     let
       configuration = { pkgs, config, ... }: let
+	# Here could be the different variables to set
       in {
 	nixpkgs.config.allowUnfree = true;
 	nixpkgs.hostPlatform = "aarch64-darwin";
@@ -25,6 +26,8 @@
 	  brews = [
 	    "assimp"
 	    "borders"
+	    "colmap"
+	    "imagemagick"
 	    "pngpaste"
 	    "fzf"
 	    "zoxide"
@@ -98,6 +101,7 @@
 	  dwt1-shell-color-scripts
 	  htop
 	  wget
+	  yazi
 
 	  # NVim
 	  neovim
@@ -108,6 +112,7 @@
 	  graphviz
 
 	  # NIX
+	  nixpkgs-fmt
 	  direnv
 	  fh
 	  mas
@@ -120,22 +125,22 @@
 	  lldb
 	  libllvm  # need to manually set LD_LIBRARY_PATH
 
-	  # Rust 
+	  # Languages
 	  rustup
+	  zig
 
 	  # Python
-	  python3
-	  uv 
+	  (python3.withPackages (ps: with ps; [ uv pyvenv ]))
 	  # Node
 	  nodejs_22
 
 	  # PDF Tools 
 	  noweb
+	  gnuplot
 	  pkg-config
 	  poppler
 	  autoconf
 	  automake
-	  imagemagick
 	  jpegoptim
 
 	  # GUI
@@ -195,13 +200,14 @@
 	    "/Applications/Keynote.app"
 	    "/Applications/Obsidian.app"
 	    "/Applications/Ghostty.app"
+	    "/Applications/Warp.app"
 	    "/Applications/Xcode.app/"
 	    "/Applications/Xcode.app/Contents/Applications/Instruments.app"
 	    "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
 	    "/Applications/Adobe Lightroom Classic/Adobe Lightroom Classic.app"
 	    "/Applications/Adobe Illustrator 2025/Adobe Illustrator.app"
 	    "/Applications/Adobe InDesign 2025/Adobe InDesign 2025.app"
-	    "/Users/b/dev/blender-git/build_darwin_release/bin/Blender.app"
+	    "/Users/b/dev/blender-git/build_darwin_release_main/bin/Blender.app"
 	    "/Users/Shared/Epic Games/UE_5.6/Engine/Binaries/Mac/UnrealEditor.app"
 	  ];
 
