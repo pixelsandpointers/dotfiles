@@ -130,7 +130,7 @@
 	  zig
 
 	  # Python
-	  (python3.withPackages (ps: with ps; [ uv pyvenv ]))
+	  (python3.withPackages (ps: with ps; [ uv ]))
 	  # Node
 	  nodejs_22
 
@@ -207,7 +207,7 @@
 	    "/Applications/Adobe Lightroom Classic/Adobe Lightroom Classic.app"
 	    "/Applications/Adobe Illustrator 2025/Adobe Illustrator.app"
 	    "/Applications/Adobe InDesign 2025/Adobe InDesign 2025.app"
-	    "/Users/b/dev/blender-git/build_darwin_release_main/bin/Blender.app"
+	    "/Users/b/dev/blender-git/main_release_build/bin/Blender.app"
 	    "/Users/Shared/Epic Games/UE_5.6/Engine/Binaries/Mac/UnrealEditor.app"
 	  ];
 
