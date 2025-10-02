@@ -43,7 +43,7 @@
 # resize-overlay-duration = 4s 200ms
 
 #theme = Horizon
-theme = rose-pine
+theme = Horizon
 background-opacity = 0.8
 # font-family = Osaka
 # font-style = Mono
