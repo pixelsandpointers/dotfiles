@@ -19,10 +19,13 @@ return {
       -- see below for full list of optional dependencies 👇
     },
     opts = {
+      completion = {
+        blink = true,
+      },
       workspaces = {
         {
           name = 'Vault',
-          path = '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault',
+          path = vim.fn.expand '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault',
         },
         -- {
         --   name = 'labwiki',
@@ -36,7 +39,7 @@ return {
         folder = '+ Dailies',
         date_format = '%Y-%m-%d-%a', -- e.g. 2025-09-22-Mon
         alias_format = '%B %-d, %Y', -- e.g. September 22, 2025
-        template = '+ Templates/daily_obs.md',
+        template = 'daily_obs.md',
       },
       legacy_commands = false,
     },
