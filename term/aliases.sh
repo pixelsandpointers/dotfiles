@@ -19,3 +19,4 @@ alias cuda-select='export CUDA_VISIBLE_DEVICES=$(nvidia-smi --query-gpu=memory.f
 alias hud='MTL_HUD_ENABLED=1'
 alias hud-log='MTL_HUD_ENABLED=1 MTL_HUD_LOG_ENABLED=1 MTL_HUD_LOG_SHADER_ENABLED=1'
 alias y='yazi'
+#alias ns="nix-search-tv print | fzf --preview 'nix-search-tv preview {}' --scheme history"

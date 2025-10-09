@@ -52,3 +52,7 @@ window-inherit-font-size = false
 font-size = 13
 #background-image = "./bg-blurred.png"
 #command = /run/current-system/sw/bin/nu -l
+
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+macos-option-as-alt = true
