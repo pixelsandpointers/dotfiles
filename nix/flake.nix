@@ -33,6 +33,9 @@
           ];
         };
 
+        # Overlays
+        nixpkgs.overlays = [ (import ./overlays/overlay-zotero-latest.nix) ];
+
         environment.systemPackages = with pkgs; [
           git git-lfs gh lazygit jujutsu lazyjj
           tmux oh-my-zsh nushell zsh-z
