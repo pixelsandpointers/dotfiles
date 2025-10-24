@@ -1,9 +1,6 @@
-# eval "$(oh-my-posh init zsh --config https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/tokyonight_storm.omp.json)"
-# eval "$(oh-my-posh init zsh --config https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/spaceship.omp.json)"
 bindkey -v
 
-source $HOME/.config/zsh/spaceship/spaceship.zsh
-export SPACESHIP_CONFIG="$HOME/.config/zsh/spaceship.zsh"
+source $HOME/.config/term/spaceship-prompt/spaceship.zsh
 eval "$(zoxide init zsh)"
 source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND='history'
