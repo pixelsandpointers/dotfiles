@@ -182,7 +182,7 @@ return {
       -- Mason installs without setup required
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format lua code
-        'ruff',
+        --'ruff',
         'codelldb', -- debugger
         'nixpkgs-fmt',
       })

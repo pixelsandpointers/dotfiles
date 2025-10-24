@@ -1,8 +1,8 @@
 return {
   'dmtrKovalenko/fff.nvim',
-  build = 'cargo build --release',
+  --build = 'cargo build --release',
   -- or if you are using nixos
-  -- build = "nix run .#release",
+  build = 'nix run .#release',
   opts = {
     prompt = '>> ',
   },
