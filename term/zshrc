@@ -25,7 +25,7 @@ export PATH="/Library/TeX/texbin:$PATH"
 export PATH="/Users/b/dev/slang/build/Release/bin:$PATH"
 export PATH="/Users/b/.config/term/bin:$PATH"
 
-export VULKAN_SDK=/Users/b/VulkanSDK/1.4.321.0/macOS/
+export VULKAN_SDK=/Users/b/VulkanSDK/1.4.321.0/macOS
 export PATH=$VULKAN_SDK/bin:$PATH
 export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH
 export VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json
@@ -51,5 +51,4 @@ autoload -Uz compinit
 compinit
 autoload -U compinit
 compinit
-source <(jj util completion zsh)
 # Select cuda based on https://stackoverflow.com/questions/39649102/how-do-i-select-which-gpu-to-run-a-job-on

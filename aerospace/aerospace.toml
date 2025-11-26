@@ -11,16 +11,15 @@ after-login-command = []
 
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
-# Available commands : https://nikitabobko.github.io/AeroSpace/commands
+# Available commands : 
 after-startup-command = [
-    'exec-and-forget sketchybar',
+    #'exec-and-forget sketchybar -c ~/.config/sketchybar/sketchybarrc',
     'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
-    'exec-and-forget emacs --daemon'
 ]
 
-exec-on-workspace-change = ['/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
-]
+# exec-on-workspace-change = ['/bin/bash', '-c',
+#     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+# ]
 
 
 # Start AeroSpace at login
@@ -104,7 +103,6 @@ outer.right =      8
 #     activate
 # end tell'
 # '''
-alt-shift-e = 'exec-and-forget emacsclient -r'
 #alt-shift-enter = 'exec-and-forget alacritty &'
 
 # Disabling some application shortcuts
