@@ -20,16 +20,27 @@
           enable = true;
           onActivation.cleanup = "zap";
           taps = [ "FelixKratz/formulae" ];
-          brews = [ "assimp" "borders" "colmap" "imagemagick" "pngpaste" "fzf" "zoxide" ];
+          brews = [ "assimp" "borders" "glfw" "imagemagick" "pngpaste" "fzf" "zoxide" "sketchybar" ];
           casks = [
+            "font-hack-nerd-font"
+            "font-source-code-pro"
             "font-roboto-mono-nerd-font"
             "font-meslo-lg-nerd-font"
             "font-ubuntu-mono-nerd-font"
             "nikitabobko/tap/aerospace"
-            "warp" "raycast" "jetbrains-toolbox" "cmake" "docker" "keycastr"
-            "signal" "zoom" "loom"
-            "godot" "tev"
-            "inkscape" "steam" "thunderbird" "obsidian"
+            "warp"
+            "raycast"
+            "jetbrains-toolbox" 
+            "cmake"
+            "docker"
+            "keycastr"
+            "signal"
+            "zoom"
+            "loom"
+            "godot"
+            "tev"
+            "thunderbird"
+            "obsidian"
           ];
         };
 
@@ -37,19 +48,15 @@
         nixpkgs.overlays = [ (import ./overlays/overlay-zotero-latest.nix) ];
 
         environment.systemPackages = with pkgs; [
-          git git-lfs gh lazygit jujutsu lazyjj
-          tmux oh-my-zsh nushell zsh-z
+          git git-lfs gh lazygit
+          tmux oh-my-zsh zsh-z
           bat chafa dwt1-shell-color-scripts htop wget yazi
           neovim ripgrep fd fzf tree-sitter graphviz
-          nixpkgs-fmt direnv fh mas ns
-          # FIX: reference hyphenated attr via pkgs."…"
-          (inputs.nix-search-tv.packages.${pkgs.system}.default)
-          ccache ninja clang-tools llvm lldb libllvm
-          rustup zig
-          (python3.withPackages (ps: with ps; [ uv ]))
-          nodejs_22
-          noweb gnuplot pkg-config poppler autoconf automake jpegoptim
-          mkalias anki-bin discord vscode zotero
+          nixpkgs-fmt devenv direnv nixd fh nh mas ns (inputs.nix-search-tv.packages.${pkgs.system}.default)
+          ccache ninja clang-tools llvm lldb libllvm rustup claude-code
+          (python3.withPackages (ps: with ps; [ uv ])) nodejs_22
+          pkg-config poppler autoconf automake jpegoptim
+          mkalias anki-bin discord vscode zotero nom
         ];
 
         fonts.packages = with pkgs; [
@@ -89,18 +96,11 @@
           dock.persistent-apps = [
             "/System/Applications/Music.app"
             "/Applications/Brave Browser.app"
-            "/Applications/Keynote.app"
-            "/Applications/Obsidian.app"
             "/Applications/Ghostty.app"
-            "/Applications/Warp.app"
-            "/Applications/Xcode.app/"
-            "/Applications/Xcode.app/Contents/Applications/Instruments.app"
-            "/Applications/Adobe Photoshop 2025/Adobe Photoshop 2025.app"
+            "/Applications/Arm_Performance_Studio_2025.6/renderdoc_for_arm_gpus/RenderDoc.app"
             "/Applications/Adobe Lightroom Classic/Adobe Lightroom Classic.app"
-            "/Applications/Adobe Illustrator 2025/Adobe Illustrator.app"
-            "/Applications/Adobe InDesign 2025/Adobe InDesign 2025.app"
-            "/Users/b/dev/blender-git/main_release_build/bin/Blender.app"
-            "/Users/Shared/Epic Games/UE_5.6/Engine/Binaries/Mac/UnrealEditor.app"
+            "/Applications/Blender45.app/"
+            "/Applications/Houdini/Houdini21.0.512/Houdini Apprentice 21.0.512.app/"
           ];
           finder.FXPreferredViewStyle = "clmv";
           NSGlobalDomain.AppleInterfaceStyle = "Dark";

@@ -48,7 +48,7 @@ in {
   else
     # --- Linux: just bump version/src of the existing package ---
     prev.zotero.overrideAttrs (old: let
-      version = "7.0.28"; # <- same version
+      version = "7.0.27"; # <- same version
       tarUrl  = "https://download.zotero.org/client/release/${version}/Zotero-${version}_linux-x86_64.tar.bz2";
     in {
       inherit version;
