@@ -60,7 +60,6 @@ map <leader>s <Action>(SelectInProjectView)
 map <S-Space> <Action>(GotoNextError)
 
 map <leader>b <Action>(ToggleLineBreakpoint)
-map <leader>o <Action>(FileStructurePopup)
 map gs <Action>(FileStructurePopup)
 
 
