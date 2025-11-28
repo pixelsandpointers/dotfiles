@@ -61,7 +61,7 @@ in
   users.users.ben = {
     isNormalUser = true;
     description = "ben";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
     shell = pkgs.zsh;
   };
 
@@ -112,6 +112,7 @@ in
 
     # Enable sound with pipewire.
     pulseaudio.enable = false;
+    pulseaudio.package = pkgs.pulseaudioFull;
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -123,7 +124,43 @@ in
       # use the example session manager (no others are packaged yet so this is enabled by default,
       # no need to redefine it in your config for now)
       #media-session.enable = true;
+      #
+      # wireplumber.extraConfig.bluetoothEnhancements = {
+      #   "monitor.bluez.properties" = {
+      #     "bluez5.enable-sbc-xq" = true;
+      #     "bluez5.enable-msbc" = true;
+      #     "bluez5.enable-hw-volume" = true;
+      #     "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+      #   };
+      # };
     };
+
+    udev.extraRules = ''
+      # Rules for Oryx web flashing and live training
+KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
+KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
+
+# Legacy rules for live training over webusb (Not needed for firmware v21+)
+  # Rule for all ZSA keyboards
+  SUBSYSTEM=="usb", ATTR{idVendor}=="3297", GROUP="plugdev"
+  # Rule for the Moonlander
+  SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
+  # Rule for the Ergodox EZ
+  SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"
+  # Rule for the Planck EZ
+  SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="6060", GROUP="plugdev"
+
+# Wally Flashing rules for the Ergodox EZ
+ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
+KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
+
+# Keymapp / Wally Flashing rules for the Moonlander and Planck EZ
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE:="0666", SYMLINK+="stm32_dfu"
+# Keymapp Flashing rules for the Voyager
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu"
+      '';
   };
 
   # Enable networking
@@ -152,7 +189,7 @@ in
         addons = with pkgs; [
           fcitx5-mozc
           fcitx5-gtk
-          fcitx5-chinese-addons
+          qt6Packages.fcitx5-chinese-addons
           kdePackages.fcitx5-configtool
         ];
       };
@@ -174,7 +211,7 @@ in
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.blex-mono
@@ -189,12 +226,15 @@ in
     # Nix tooling
     cachix
     devenv
+    devbox
     direnv
     fh
     nix-search-tv
     nix-tree
     nixpkgs-fmt
+    nh
     ns
+    nixd
 
     # CLI
     autoconf
@@ -232,9 +272,12 @@ in
     signal-desktop
 
     # other apps
+    anki-bin
     brave
     darktable
+    cider-2
     ghostty
+    mpv
     obsidian
     openconnect
     renderdoc
@@ -242,18 +285,33 @@ in
     zoom-us
     zotero
 
+    # KDE extensions
+    rclone
+    kdePackages.partitionmanager
+
+    # development
+    blender
+    claude-code
+    godotPackages_4_5.godot
+    jetbrains-toolbox
+    vscode
+
     # gaming
     mangohud
-    protonup
+    protonup-ng
+
+    # audio
+    pulseaudioFull
+    pulsemixer
+    easyeffects
 
     stdenv.cc
     cudaPackages.nsight_systems
     cudaPackages.nsight_compute
     cudaPackages.cudatoolkit
     cudaPackages.cuda_cudart
-    cudaPackages.cuda_cudart.static
     nvtopPackages.full
-  ];
+  ] ++ [ config.boot.kernelPackages.perf ] ;
 
   environment.sessionVariables = {
     KWIN_DRM_DEVICES = lib.mkDefault "/dev/dri/card1:/dev/dri/card2"; # prioritise the first card (GPU)
@@ -316,6 +374,73 @@ in
   };
 
 
+  # Systemd
+  systemd.tmpfiles.rules = [
+    "d /home/ben/gdrive 0755 ben users -"
+  ];
+
+  systemd.services.rclone-drive-sync-up = {
+    description = "Sync local Drive folder to Google Drive";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "ben";
+      Group = "users";
+      Environment = [
+        "PATH=/run/wrappers/bin:${pkgs.rclone}/bin"
+      ];
+      ExecStart = ''
+        ${pkgs.rclone}/bin/rclone sync \
+        /home/ben/gdrive gdrive: \
+        --transfers=8 \
+        --checkers=8 \
+        --log-file=/home/ben/.cache/rclone-sync-up.log \
+        --log-level=INFO
+      '';
+    };
+  };
+  systemd.timers.rclone-drive-sync-up = {
+    wantedBy = [ "timers.target" ];
+    partOf = [ "rclone-drive-sync-up.service" ];
+    timerConfig = {
+      OnBootSec = "2m";
+      OnUnitActiveSec = "1m";
+    };
+  };
+
+
+  systemd.services.rclone-drive-sync-down = {
+    description = "Sync Google Drive to local Drive folder";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "ben";
+      Group = "users";
+      Environment = [
+        "PATH=/run/wrappers/bin:${pkgs.rclone}/bin"
+      ];
+      ExecStart = ''
+        ${pkgs.rclone}/bin/rclone sync \
+        gdrive: /home/ben/gdrive \
+        --transfers=8 \
+        --checkers=8 \
+        --log-file=/home/ben/.cache/rclone-sync-down.log \
+        --log-level=INFO
+      '';
+    };
+  };
+  systemd.timers.rclone-drive-sync-down = {
+    wantedBy = [ "timers.target" ];
+    partOf = [ "rclone-drive-sync-down.service" ];
+    timerConfig = {
+      OnBootSec = "3m";
+      OnUnitActiveSec = "5m";
+    };
+  };
+
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -328,5 +453,5 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
 }
