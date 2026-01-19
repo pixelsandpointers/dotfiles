@@ -72,12 +72,8 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
     },
     opts = {
-      -- TODO: https://neovim.io/doc/user/lsp.html#lsp-config
-      -- Change this at some point to the native API
+      -- Using native Neovim 0.11+ API
       servers = {
-        -- cmake_language_server = {},
-        zls = {},
-        nil_ls = {},
         texlab = {},
         tailwindcss = {},
         -- Ensure mason installs the server
@@ -87,18 +83,23 @@ return {
           },
           root_markers = { '.git', '.clangd', 'compile_commands.json' },
           filetypes = { 'c', 'cpp', 'cxx', 'hxx', 'cc', 'hh', 'hpp' },
-          root_dir = function(fname)
-            return require('lspconfig.util').root_pattern(
+          root_dir = function(bufnr, on_dir)
+            local fname = vim.api.nvim_buf_get_name(bufnr)
+            local root = vim.fs.root(fname, {
               'Makefile',
               'configure.ac',
               'configure.in',
               'config.h.in',
               'meson.build',
               'meson_options.txt',
-              'build.ninja'
-            )(fname) or require('lspconfig.util').root_pattern('compile_commands.json', 'compile_flags.txt')(fname) or require('lspconfig.util').find_git_ancestor(
-              fname
-            )
+              'build.ninja',
+              'compile_commands.json',
+              'compile_flags.txt',
+              '.git',
+            })
+            if root then
+              on_dir(root)
+            end
           end,
           capabilities = {
             offsetEncoding = { 'utf-16' },
@@ -172,34 +173,61 @@ return {
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      local lspconfig = require 'lspconfig'
+      -- Configure all servers using native vim.lsp.config
       for server, config in pairs(opts.servers) do
         config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-        lspconfig[server].setup(config)
+        vim.lsp.config(server, config)
       end
 
       local ensure_installed = vim.tbl_keys(opts.servers)
       -- Mason installs without setup required
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format lua code
+        'neocmake',
         --'ruff',
         'codelldb', -- debugger
         'nixpkgs-fmt',
       })
+
       require('mason').setup()
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       -- manual LSP config (cannot be installed by Mason)
-      lspconfig['slangd'].setup { capabilities = capabilities }
-      -- local sourcekit_capabilities = vim.tbl_deep_extend('force', native_capabilities, {
-      --   filetypes = 'swift',
-      --   workspace = {
-      --     didChangeWatchedFiles = {
-      --       dynamicRegistration = true,
-      --     },
-      --   },
-      -- })
-      -- lspconfig['sourcekit'].setup { capabilities = sourcekit_capabilities }
+      vim.lsp.config('slangd', { capabilities = capabilities })
+      vim.lsp.config('nixd', { capabilities = capabilities })
+
+      -- neocmakelsp configuration
+      vim.lsp.config('neocmake', {
+        cmd = { vim.fn.stdpath('data') .. '/mason/bin/neocmakelsp', 'stdio' },
+        filetypes = { 'cmake' },
+        root_dir = function(bufnr, on_dir)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local root = vim.fs.root(fname, '.git')
+          if root then
+            on_dir(root)
+          else
+            -- Support standalone CMake files
+            on_dir(vim.fn.fnamemodify(fname, ':p:h'))
+          end
+        end,
+        init_options = {
+          format = {
+            enable = true,
+          },
+          lint = {
+            enable = true,
+          },
+          scan_cmake_in_package = true,
+        },
+      })
+
+      -- Enable all configured LSP servers
+      for server, _ in pairs(opts.servers) do
+        vim.lsp.enable(server)
+      end
+      vim.lsp.enable('slangd')
+      vim.lsp.enable('nixd')
+      vim.lsp.enable('neocmake')
     end,
   },
 }
