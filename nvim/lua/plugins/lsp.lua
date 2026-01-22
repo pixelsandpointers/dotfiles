@@ -184,7 +184,6 @@ return {
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format lua code
         'neocmake',
-        --'ruff',
         'codelldb', -- debugger
         'nixpkgs-fmt',
       })
@@ -198,7 +197,7 @@ return {
 
       -- neocmakelsp configuration
       vim.lsp.config('neocmake', {
-        cmd = { vim.fn.stdpath('data') .. '/mason/bin/neocmakelsp', 'stdio' },
+        cmd = { vim.fn.stdpath 'data' .. '/mason/bin/neocmakelsp', 'stdio' },
         filetypes = { 'cmake' },
         root_dir = function(bufnr, on_dir)
           local fname = vim.api.nvim_buf_get_name(bufnr)
@@ -225,9 +224,9 @@ return {
       for server, _ in pairs(opts.servers) do
         vim.lsp.enable(server)
       end
-      vim.lsp.enable('slangd')
-      vim.lsp.enable('nixd')
-      vim.lsp.enable('neocmake')
+      vim.lsp.enable 'slangd'
+      vim.lsp.enable 'nixd'
+      vim.lsp.enable 'neocmake'
     end,
   },
 }

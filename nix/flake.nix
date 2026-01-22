@@ -28,6 +28,7 @@
             "font-meslo-lg-nerd-font"
             "font-ubuntu-mono-nerd-font"
             "nikitabobko/tap/aerospace"
+            "slack"
             "warp"
             "raycast"
             "jetbrains-toolbox" 
@@ -76,7 +77,7 @@
           env = pkgs.buildEnv {
             name = "system-applications";
             paths = config.environment.systemPackages;
-            pathsToLink = "/Applications";
+            pathsToLink = [ "/Applications" ];
           };
         in pkgs.lib.mkForce ''
           echo "setting up /Applications..." >&2

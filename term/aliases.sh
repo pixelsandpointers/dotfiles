@@ -14,9 +14,10 @@ alias v='nvim'
 alias vc='cd $HOME/.config && nvim .'
 alias tn='tmux new -s zen'
 alias ta='tmux attach -t zen'
-alias ov='nvim ~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault/+ Home.md'
 alias cuda-select='export CUDA_VISIBLE_DEVICES=$(nvidia-smi --query-gpu=memory.free,index --format=csv,nounits,noheader | sort -nr | head -1 | awk "{ print \$NF }")'
 alias hud='MTL_HUD_ENABLED=1'
 alias hud-log='MTL_HUD_ENABLED=1 MTL_HUD_LOG_ENABLED=1 MTL_HUD_LOG_SHADER_ENABLED=1'
 alias y='yazi'
 #alias ns="nix-search-tv print | fzf --preview 'nix-search-tv preview {}' --scheme history"
+
+alias vo='cd "$HOME/Google Drive/My Drive/Vault" && nvim -c "set ft=markdown" -c "Obsidian today"'
