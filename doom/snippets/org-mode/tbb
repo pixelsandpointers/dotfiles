@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: textbb
-# key: tbb
-# condition: t
-# --
-\textbb{$1}$0

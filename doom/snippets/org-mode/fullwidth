@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: Fullwidth text for Tufte
-# key: fullw
-# condition: t
-# --
-\begin{fullwidth}
-$1
-\end{fullwidth}
