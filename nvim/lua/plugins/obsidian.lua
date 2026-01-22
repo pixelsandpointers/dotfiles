@@ -4,6 +4,16 @@ return {
     version = '*', -- recommended, use latest release instead of latest commit
     lazy = true,
     ft = 'markdown',
+    init = function()
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'markdown',
+        callback = function()
+          vim.opt_local.shiftwidth = 4
+          vim.opt_local.tabstop = 4
+          vim.opt_local.expandtab = true
+        end,
+      })
+    end,
     -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
     -- event = {
     --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
@@ -18,6 +28,19 @@ return {
 
       -- see below for full list of optional dependencies 👇
     },
+    keys = {
+      { '<leader>mt', '<cmd>Obsidian today<cr>', desc = 'Today' },
+      { '<leader>my', '<cmd>Obsidian yesterday<cr>', desc = 'Yesterday' },
+      { '<leader>mo', '<cmd>Obsidian quick_switch<cr>', desc = 'Open note' },
+      { '<leader>mn', '<cmd>Obsidian new<cr>', desc = 'New note' },
+      { '<leader>ms', '<cmd>Obsidian search<cr>', desc = 'Search' },
+      { '<leader>mb', '<cmd>Obsidian backlinks<cr>', desc = 'Backlinks' },
+      { '<leader>ml', '<cmd>Obsidian links<cr>', desc = 'Links' },
+      { '<leader>mg', '<cmd>Obsidian tags<cr>', desc = 'Tags' },
+      { '<leader>mp', '<cmd>Obsidian paste_img<cr>', desc = 'Paste image' },
+      { '<leader>mr', '<cmd>Obsidian rename<cr>', desc = 'Rename' },
+      { '<leader>me', '<cmd>Obsidian template<cr>', desc = 'Insert template' },
+    },
     opts = {
       completion = {
         blink = true,
@@ -26,6 +49,10 @@ return {
         {
           name = 'Vault',
           path = vim.fn.expand '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault',
+        },
+        {
+          name = 'Google Drive Vault',
+          path = vim.fn.expand '~/Google Drive/My Drive/Vault',
         },
         -- {
         --   name = 'labwiki',
@@ -40,50 +67,35 @@ return {
         date_format = '%Y-%m-%d-%a', -- e.g. 2025-09-22-Mon
         alias_format = '%B %-d, %Y', -- e.g. September 22, 2025
         template = 'daily_obs.md',
+        default_tags = {},
       },
       legacy_commands = false,
+      attachments = {
+        img_folder = '+ Inbox/Images',
+      },
     },
   },
-  -- {
-  --   '3rd/image.nvim',
-  --   opts = {
-  --     backend = 'kitty', -- or "ueberzug" or "sixel"
-  --     processor = 'magick_cli', -- or "magick_rock"
-  --     integrations = {
-  --       markdown = {
-  --         enabled = true,
-  --         clear_in_insert_mode = false,
-  --         download_remote_images = true,
-  --         only_render_image_at_cursor = true,
-  --         only_render_image_at_cursor_mode = 'popup', -- or "inline"
-  --         floating_windows = false, -- if true, images will be rendered in floating markdown windows
-  --         filetypes = { 'markdown', 'vimwiki' }, -- markdown extensions (ie. quarto) can go here
-  --       },
-  --       neorg = {
-  --         enabled = false,
-  --         filetypes = { 'norg' },
-  --       },
-  --       typst = {
-  --         enabled = false,
-  --         filetypes = { 'typst' },
-  --       },
-  --       html = {
-  --         enabled = false,
-  --       },
-  --       css = {
-  --         enabled = false,
-  --       },
-  --     },
-  --     max_width = nil,
-  --     max_height = nil,
-  --     max_width_window_percentage = nil,
-  --     max_height_window_percentage = 50,
-  --     scale_factor = 1.0,
-  --     window_overlap_clear_enabled = false, -- toggles images when windows are overlapped
-  --     window_overlap_clear_ft_ignore = { 'cmp_menu', 'cmp_docs', 'snacks_notif', 'scrollview', 'scrollview_sign' },
-  --     editor_only_render_when_focused = false, -- auto show/hide images when the editor gains/looses focus
-  --     tmux_show_only_in_active_window = true, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
-  --     hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp', '*.avif' }, -- render image files as images when opened
-  --   },
-  -- },
+  {
+    '3rd/image.nvim',
+    ft = 'markdown',
+    opts = {
+      backend = 'kitty',
+      processor = 'magick_cli',
+      integrations = {
+        markdown = {
+          enabled = true,
+          clear_in_insert_mode = false,
+          download_remote_images = true,
+          only_render_image_at_cursor = true,
+          only_render_image_at_cursor_mode = 'popup',
+          floating_windows = false,
+          filetypes = { 'markdown', 'vimwiki' },
+        },
+      },
+      max_height_window_percentage = 50,
+      window_overlap_clear_enabled = false,
+      window_overlap_clear_ft_ignore = { 'cmp_menu', 'cmp_docs', 'snacks_notif', 'scrollview', 'scrollview_sign' },
+      hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp', '*.avif' },
+    },
+  },
 }

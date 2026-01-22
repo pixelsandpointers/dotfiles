@@ -14,7 +14,8 @@ after-login-command = []
 # Available commands : 
 after-startup-command = [
     #'exec-and-forget sketchybar -c ~/.config/sketchybar/sketchybarrc',
-    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+    # on MacOS Tahoe this is somewhat bad
+    #'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
 ]
 
 # exec-on-workspace-change = ['/bin/bash', '-c',
