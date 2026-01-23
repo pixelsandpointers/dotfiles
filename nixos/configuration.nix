@@ -336,8 +336,6 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu
 
     zsh = {
       enable = true;
-      ohMyZsh.enable = true;
-      ohMyZsh.theme = "spaceship";
     };
 
     steam = {
@@ -379,66 +377,69 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu
   # Systemd
   systemd.tmpfiles.rules = [
     "d /home/ben/gdrive 0755 ben users -"
+    "d /home/ben/Vault 0755 ben users -"
   ];
 
-  systemd.services.rclone-drive-sync-up = {
-    description = "Sync local Drive folder to Google Drive";
+  systemd.services.rclone-drive-mount = {
+    description = "Mount Google Drive with rclone";
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      Type = "oneshot";
+      Type = "notify";
       User = "ben";
       Group = "users";
       Environment = [
         "PATH=/run/wrappers/bin:${pkgs.rclone}/bin"
       ];
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/ben/gdrive";
       ExecStart = ''
-        ${pkgs.rclone}/bin/rclone sync \
-        /home/ben/gdrive gdrive: \
-        --transfers=8 \
-        --checkers=8 \
-        --log-file=/home/ben/.cache/rclone-sync-up.log \
+        ${pkgs.rclone}/bin/rclone mount gdrive: /home/ben/gdrive \
+        --vfs-cache-mode writes \
+        --vfs-cache-max-age 24h \
+        --vfs-write-back 5s \
+        --buffer-size 256M \
+        --dir-cache-time 24h \
+        --poll-interval 15s \
+        --allow-non-empty \
+        --log-file=/home/ben/.cache/rclone-mount.log \
         --log-level=INFO
       '';
-    };
-  };
-  systemd.timers.rclone-drive-sync-up = {
-    wantedBy = [ "timers.target" ];
-    partOf = [ "rclone-drive-sync-up.service" ];
-    timerConfig = {
-      OnBootSec = "2m";
-      OnUnitActiveSec = "1m";
+      ExecStop = "${pkgs.util-linux}/bin/fusermount -u /home/ben/gdrive";
+      Restart = "on-failure";
+      RestartSec = "10s";
     };
   };
 
-
-  systemd.services.rclone-drive-sync-down = {
-    description = "Sync Google Drive to local Drive folder";
+  systemd.services.rclone-vault-mount = {
+    description = "Mount Obsidian Vault with full offline caching";
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
-      Type = "oneshot";
+      Type = "notify";
       User = "ben";
       Group = "users";
       Environment = [
         "PATH=/run/wrappers/bin:${pkgs.rclone}/bin"
       ];
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/ben/Vault";
       ExecStart = ''
-        ${pkgs.rclone}/bin/rclone sync \
-        gdrive: /home/ben/gdrive \
-        --transfers=8 \
-        --checkers=8 \
-        --log-file=/home/ben/.cache/rclone-sync-down.log \
+        ${pkgs.rclone}/bin/rclone mount gdrive:/Vault /home/ben/Vault \
+        --vfs-cache-mode full \
+        --vfs-cache-max-age 168h \
+        --vfs-cache-max-size 5G \
+        --vfs-write-back 5s \
+        --buffer-size 256M \
+        --dir-cache-time 24h \
+        --poll-interval 15s \
+        --allow-non-empty \
+        --log-file=/home/ben/.cache/rclone-vault-mount.log \
         --log-level=INFO
       '';
-    };
-  };
-  systemd.timers.rclone-drive-sync-down = {
-    wantedBy = [ "timers.target" ];
-    partOf = [ "rclone-drive-sync-down.service" ];
-    timerConfig = {
-      OnBootSec = "3m";
-      OnUnitActiveSec = "5m";
+      ExecStop = "${pkgs.util-linux}/bin/fusermount -u /home/ben/Vault";
+      Restart = "on-failure";
+      RestartSec = "10s";
     };
   };
 
