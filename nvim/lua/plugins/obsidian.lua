@@ -54,6 +54,10 @@ return {
           name = 'Google Drive Vault',
           path = vim.fn.expand '~/Google Drive/My Drive/Vault',
         },
+        {
+          name = 'NixOS Cached Vault',
+          path = vim.fn.expand '~/Vault/',
+        },
         -- {
         --   name = 'labwiki',
         --   path = '~/lab/perception_wiki/',
@@ -75,27 +79,27 @@ return {
       },
     },
   },
-  {
-    '3rd/image.nvim',
-    ft = 'markdown',
-    opts = {
-      backend = 'kitty',
-      processor = 'magick_cli',
-      integrations = {
-        markdown = {
-          enabled = true,
-          clear_in_insert_mode = false,
-          download_remote_images = true,
-          only_render_image_at_cursor = true,
-          only_render_image_at_cursor_mode = 'popup',
-          floating_windows = false,
-          filetypes = { 'markdown', 'vimwiki' },
-        },
-      },
-      max_height_window_percentage = 50,
-      window_overlap_clear_enabled = false,
-      window_overlap_clear_ft_ignore = { 'cmp_menu', 'cmp_docs', 'snacks_notif', 'scrollview', 'scrollview_sign' },
-      hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp', '*.avif' },
-    },
-  },
+  -- {
+  --   '3rd/image.nvim',
+  --   ft = 'markdown',
+  --   opts = {
+  --     backend = 'kitty',
+  --     processor = 'magick_cli',
+  --     integrations = {
+  --       markdown = {
+  --         enabled = true,
+  --         clear_in_insert_mode = false,
+  --         download_remote_images = true,
+  --         only_render_image_at_cursor = true,
+  --         only_render_image_at_cursor_mode = 'popup',
+  --         floating_windows = false,
+  --         filetypes = { 'markdown', 'vimwiki' },
+  --       },
+  --     },
+  --     max_height_window_percentage = 50,
+  --     window_overlap_clear_enabled = false,
+  --     window_overlap_clear_ft_ignore = { 'cmp_menu', 'cmp_docs', 'snacks_notif', 'scrollview', 'scrollview_sign' },
+  --     hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp', '*.avif' },
+  --   },
+  -- },
 }
