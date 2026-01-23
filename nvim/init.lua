@@ -42,7 +42,6 @@ require('overseer').setup {
   templates = { 'builtin', 'user.cpp_build', 'user.run_blender', 'user.blender_debug_build' },
 }
 
-vim.cmd 'colorscheme cyberdream'
 -- Place this in your Neovim config (e.g., init.lua or plugin setup)
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'DiffviewFiles',
