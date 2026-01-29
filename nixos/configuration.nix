@@ -21,6 +21,18 @@ in
       systemd-boot.configurationLimit = 5;
       efi.canTouchEfiVariables = true;
     };
+
+    # Kernel modules for Asus I2C touchpad
+    kernelModules = [ "hid-multitouch" "hid-asus" "i2c-hid-acpi" ];
+
+    # Kernel parameters for touchpad support
+    kernelParams = [
+      "i2c_hid.dyndbg=+p"  # Enable debug for i2c_hid
+      "hid_asus.enable=1"   # Enable hid-asus driver
+    ];
+
+    # Blacklist hid-generic for the Asus touchpad device to force hid-asus
+    blacklistedKernelModules = [ "hid-generic" ];
   };
 
   nix = {
@@ -91,6 +103,14 @@ in
   services = {
     # Enable the X11 windowing system.
     # You can disable this if you're only using the Wayland session.
+    libinput = {
+      enable = true;
+      touchpad = {
+        tapping = true;
+        naturalScrolling = false;
+        disableWhileTyping = true;
+      };
+    };
     xserver = {
       enable = true;
       videoDrivers = [ "amdgpu" "nvidia" ];
@@ -136,6 +156,9 @@ in
     };
 
     udev.extraRules = ''
+      # Asus I2C Touchpad - force hid-asus driver
+      ATTRS{name}=="ASUS2020:00 0B05:0220", RUN+="${pkgs.kmod}/bin/modprobe hid-asus", RUN+="${pkgs.bash}/bin/sh -c 'echo 0018:0B05:0220.0001 > /sys/bus/hid/drivers/hid-generic/unbind; echo 0018:0B05:0220.0001 > /sys/bus/hid/drivers/hid-asus/bind'"
+
       # Rules for Oryx web flashing and live training
 KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
 KERNEL=="hidraw*", ATTRS{idVendor}=="3297", MODE="0664", GROUP="plugdev"
@@ -254,6 +277,7 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu
     gnumake
     imagemagick
     lazygit
+    libinput
     pciutils
     pkg-config
     ripgrep
@@ -277,6 +301,7 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu
     darktable
     cider-2
     ghostty
+    houdini
     filezilla
     mpv
     moonlight-qt
@@ -313,7 +338,8 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu
     cudaPackages.cudatoolkit
     cudaPackages.cuda_cudart
     nvtopPackages.full
-  ] ++ [ config.boot.kernelPackages.perf ] ;
+    perf
+  ];
 
   environment.sessionVariables = {
     KWIN_DRM_DEVICES = lib.mkDefault "/dev/dri/card1:/dev/dri/card2"; # prioritise the first card (GPU)
