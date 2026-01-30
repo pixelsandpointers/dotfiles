@@ -30,9 +30,6 @@ in
       "i2c_hid.dyndbg=+p"  # Enable debug for i2c_hid
       "hid_asus.enable=1"   # Enable hid-asus driver
     ];
-
-    # Blacklist hid-generic for the Asus touchpad device to force hid-asus
-    blacklistedKernelModules = [ "hid-generic" ];
   };
 
   nix = {
@@ -73,7 +70,7 @@ in
   users.users.ben = {
     isNormalUser = true;
     description = "ben";
-    extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "audio" "plugdev" ];
     shell = pkgs.zsh;
   };
 
@@ -158,6 +155,10 @@ in
     udev.extraRules = ''
       # Asus I2C Touchpad - force hid-asus driver
       ATTRS{name}=="ASUS2020:00 0B05:0220", RUN+="${pkgs.kmod}/bin/modprobe hid-asus", RUN+="${pkgs.bash}/bin/sh -c 'echo 0018:0B05:0220.0001 > /sys/bus/hid/drivers/hid-generic/unbind; echo 0018:0B05:0220.0001 > /sys/bus/hid/drivers/hid-asus/bind'"
+
+      # HHKB keyboard support (HHKB-Hybrid uses vendor ID 04fe)
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="04fe", MODE="0664", GROUP="plugdev"
+      SUBSYSTEM=="input", ATTRS{idVendor}=="04fe", MODE="0664", GROUP="plugdev"
 
       # Rules for Oryx web flashing and live training
 KERNEL=="hidraw*", ATTRS{idVendor}=="16c0", MODE="0664", GROUP="plugdev"
@@ -316,6 +317,20 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu
     rclone
     kdePackages.partitionmanager
 
+    # Niri utilities
+    fuzzel                   # Application launcher
+    grim                     # Screenshot utility
+    slurp                    # Screen area selector
+    wl-clipboard             # Wayland clipboard
+    swaylock                 # Screen locker
+    wlogout                  # Logout menu
+    waybar                   # Status bar
+    mako                     # Notification daemon
+    networkmanagerapplet     # NetworkManager system tray
+    pavucontrol              # PulseAudio volume control GUI
+    brightnessctl            # Brightness control
+    playerctl                # Media player control
+
     # development
     blender
     claude-code
@@ -359,6 +374,11 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", MODE:="0666", SYMLINK+="ignition_dfu
     gamemode.enable = true;
     chromium.enable = true;
     thunderbird.enable = true;
+
+    niri = {
+      enable = true;
+      package = pkgs.niri;
+    };
 
     zsh = {
       enable = true;
