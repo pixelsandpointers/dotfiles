@@ -11,3 +11,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- Slang filetype detection
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '*.slang', '*.slangh' },
+  callback = function()
+    vim.bo.filetype = 'slang'
+  end,
+})
