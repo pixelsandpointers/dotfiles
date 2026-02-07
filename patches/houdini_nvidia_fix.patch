@@ -1,0 +1,10 @@
+--- houdini_setup_bash.original
++++ houdini_setup_bash
+@@ -117,4 +117,8 @@
+     export HIH="${HOME}/houdini${HOUDINI_MAJOR_RELEASE}.${HOUDINI_MINOR_RELEASE}"
+     export HIS="$HH"
++
++    # NVIDIA Wayland compatibility fixes
++    export __GLX_VENDOR_LIBRARY_NAME=nvidia
++    export __NV_PRIME_RENDER_OFFLOAD=0
+ fi
