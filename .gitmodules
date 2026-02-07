@@ -1,0 +1,3 @@
+[submodule "term/spaceship-prompt"]
+	path = term/spaceship-prompt
+	url = https://github.com/spaceship-prompt/spaceship-prompt
