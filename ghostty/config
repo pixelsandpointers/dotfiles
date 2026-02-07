@@ -1,3 +1,5 @@
+# Automatic download for Ubuntu
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 # This is the configuration file for Ghostty.
 #
 # This template file has been automatically created at the following
@@ -42,11 +44,8 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-#theme = Horizon
-theme = Horizon
-background-opacity = 0.8
-# font-family = Osaka
-# font-style = Mono
+theme = Carbonfox
+#background-opacity = 0.8
 font-family = FiraCode Nerd Font
 window-inherit-font-size = false
 font-size = 9
