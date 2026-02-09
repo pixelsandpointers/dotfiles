@@ -147,10 +147,9 @@ return {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     config = function()
-      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-      -- Install parsers
-      require('nvim-treesitter').install { 'asm', 'bash', 'c', 'cpp', 'cmake', 'cuda', 'slang', 'html', 'lua', 'markdown', 'vim', 'vimdoc' }
+      require('nvim-treesitter').setup {
+        ensure_installed = { 'asm', 'bash', 'c', 'cpp', 'cmake', 'cuda', 'slang', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
+      }
 
       -- Enable treesitter highlighting for all filetypes
       vim.api.nvim_create_autocmd('FileType', {
