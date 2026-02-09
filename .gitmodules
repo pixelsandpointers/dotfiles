@@ -1,3 +1,7 @@
 [submodule "term/spaceship-prompt"]
 	path = term/spaceship-prompt
 	url = https://github.com/spaceship-prompt/spaceship-prompt
+
+[submodule "nvim/dev/slang.nvim"]
+	path = nvim/dev/slang.nvim
+	url = https://github.com/pixelsandpointers/slang.nvim
