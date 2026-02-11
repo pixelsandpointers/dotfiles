@@ -31,6 +31,13 @@ vim.opt.clipboard = 'unnamedplus'
 -- Enable break indent
 vim.opt.breakindent = true
 
+-- Indentation settings
+vim.opt.tabstop = 2        -- Number of spaces a tab counts for
+vim.opt.shiftwidth = 2     -- Number of spaces for each indentation level
+vim.opt.softtabstop = 2    -- Number of spaces for tab in insert mode
+vim.opt.expandtab = true   -- Use spaces instead of tabs
+vim.opt.smartindent = true -- Smart autoindenting on new lines
+
 -- Save undo history
 vim.opt.undofile = true
 
