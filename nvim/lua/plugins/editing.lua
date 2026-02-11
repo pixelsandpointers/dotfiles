@@ -1,24 +1,8 @@
 return {
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
-
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  --
-  -- Use `opts = {}` to force a plugin to be loaded.
-  --
-  --  This is equivalent to:
-  --    require('Comment').setup({})
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
-
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`. This is equivalent to the following lua:
-  --    require('gitsigns').setup({ ... })
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -31,7 +15,20 @@ return {
       },
     },
   },
-
+  {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    ---@type Flash.Config
+    opts = {
+      modes = {
+        search = {
+          enabled = true,
+        },
+      },
+    },
+    -- stylua: ignore
+    keys = {},
+  },
   {
     'folke/trouble.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -57,14 +54,6 @@ return {
   -- Then, because we use the `config` key, the configuration only runs
   -- after the plugin has been loaded:
   --  config = function() ... end
-
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
-
   { -- Autoformat
     'stevearc/conform.nvim',
     opts = {
@@ -76,33 +65,10 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'ruff' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        slang = { 'clang-format' },
       },
     },
   },
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-    -- 'folke/tokyonight.nvim',
-    -- priority = 1000, -- make sure to load this before all the other start plugins
-    -- init = function()
-    --   -- Load the colorscheme here.
-    --   -- Like many other themes, this one has different styles, and you could load
-    --   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-    --   vim.cmd.colorscheme 'tokyonight-moon'
-    --
-    --   -- You can configure highlights by doing something like
-    --   vim.cmd.hi 'Comment gui=none'
-    -- end,
-  },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = true } },
 
@@ -159,14 +125,13 @@ return {
         end,
       })
 
-      -- Enable treesitter-based indentation
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = '*',
-        callback = function()
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end,
-      })
-
+      -- Enable treesitter-based indentation (still doesn't work too well)
+      -- vim.api.nvim_create_autocmd('FileType', {
+      --   pattern = '*',
+      --   callback = function()
+      --     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      --   end,
+      -- })
       -- There are additional nvim-treesitter modules that you can use to interact
       -- with nvim-treesitter. You should go explore a few and see what interests you:
       --
@@ -175,26 +140,14 @@ return {
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
-
-  -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- put them in the right spots if you want.
-
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for kickstart
-  --
-  --  Here are some example plugins that I've included in the kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  {
-    'kylechui/nvim-surround',
-    version = '^3.0.0', -- Use for stability; omit to use `main` branch for the latest features
-    event = 'VeryLazy',
-    config = function()
-      require('nvim-surround').setup {
-        -- Configuration here, or leave empty to use defaults
-      }
-    end,
-  },
+  -- {
+  --   'kylechui/nvim-surround',
+  --   version = '^3.0.0', -- Use for stability; omit to use `main` branch for the latest features
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     require('nvim-surround').setup {
+  --       -- Configuration here, or leave empty to use defaults
+  --     }
+  --   end,
+  -- },
 }

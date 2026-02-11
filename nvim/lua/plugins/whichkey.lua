@@ -7,13 +7,14 @@ return {
       spec = {
         -- Document existing key chains
         { '<leader>a', name = 'Claude' },
+        { '<leader>t', name = 'Toggle' },
         { '<leader>z', name = 'ZenMode' },
         { '<leader>c', name = 'Code' },
         { '<leader>d', name = 'Debug' },
         { '<leader>f', group = 'Find' },
         { '<leader>g', group = 'Git' },
-        { '<leader>o', group = 'Task Runner' },
-        { '<localleader>', group = 'Mode' },
+        { '<leader>r', group = 'Run' },
+        { '<localleader>', group = 'Local' },
       },
     },
   },
