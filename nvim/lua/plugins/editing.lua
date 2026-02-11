@@ -65,7 +65,7 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'ruff' },
-        slang = { 'clang-format' },
+        --slang = { 'clang-format' },
       },
     },
   },
