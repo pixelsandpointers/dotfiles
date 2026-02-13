@@ -19,3 +19,23 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.bo.filetype = 'slang'
   end,
 })
+
+-- Auto-activate uv virtual environment
+local function activate_venv()
+  local venv_path = vim.fn.getcwd() .. '/.venv'
+  if vim.fn.isdirectory(venv_path) == 1 then
+    local python_path = venv_path .. '/bin/python'
+    if vim.fn.filereadable(python_path) == 1 then
+      vim.g.python3_host_prog = python_path
+      -- Also set VIRTUAL_ENV for tools that check it
+      vim.env.VIRTUAL_ENV = venv_path
+      vim.env.PATH = venv_path .. '/bin:' .. vim.env.PATH
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd({ 'VimEnter', 'DirChanged' }, {
+  desc = 'Automatically activate .venv when present',
+  group = vim.api.nvim_create_augroup('auto-activate-venv', { clear = true }),
+  callback = activate_venv,
+})

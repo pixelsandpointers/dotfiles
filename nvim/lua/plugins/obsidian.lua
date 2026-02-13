@@ -55,8 +55,8 @@ return {
           path = vim.fn.expand '~/Google Drive/My Drive/Vault',
         },
         {
-          name = 'NixOS Cached Vault',
-          path = vim.fn.expand '~/Vault/',
+          name = 'Linux Vault',
+          path = vim.fn.expand '~/Insync/google@ben.graphics/Google Drive/Vault',
         },
         -- {
         --   name = 'labwiki',
@@ -75,7 +75,7 @@ return {
       },
       legacy_commands = false,
       attachments = {
-        img_folder = '+ Inbox/Images',
+        folder = '+ Inbox/Images',
       },
     },
   },

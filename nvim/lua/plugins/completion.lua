@@ -97,7 +97,8 @@ return {
   -- snippets
   {
     'L3MON4D3/LuaSnip',
-    build = (not jit.os:find 'Windows') and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp" or nil,
+    build = 'make install_jsregexp',
+    event = 'InsertEnter',
     dependencies = {
       {
         'rafamadriz/friendly-snippets',
@@ -105,27 +106,44 @@ return {
           require('luasnip.loaders.from_vscode').lazy_load()
         end,
       },
-      opts = {
-        history = true,
-        delete_check_events = 'TextChanged',
-      },
+    },
+    opts = {
+      history = true,
+      delete_check_events = 'TextChanged',
+    },
+    config = function(_, opts)
+      require('luasnip').setup(opts)
+    end,
     -- stylua: ignore
     keys = function()
-    return {}
+      return {}
     end,
-    },
+  },
+  {
+    'iurimateus/luasnip-latex-snippets.nvim',
+    dependencies = { 'L3MON4D3/LuaSnip', 'lervag/vimtex' },
+    ft = { 'tex', 'markdown' },
+    config = function()
+      require('luasnip').config.setup { enable_autosnippets = true }
 
-    -- INFO: Gilles like snippets for LuaSnip
-    {
-      'iurimateus/luasnip-latex-snippets.nvim',
-      -- vimtex isn't required if using treesitter
-      requires = { 'L3MON4D3/LuaSnip', 'lervag/vimtex' },
-      config = function()
-        require('luasnip-latex-snippets').setup {
-          use_treesitter = true,
-        }
-        require('luasnip').config.setup { enable_autosnippets = true }
-      end,
-    },
+      -- Patch treesitter detection to support markdown $ $ syntax
+      local ts_utils = require 'luasnip-latex-snippets.util.ts_utils'
+      local original_in_mathzone = ts_utils.in_mathzone
+
+      ts_utils.in_mathzone = function()
+        -- Use regex detection for markdown
+        if vim.bo.filetype == 'markdown' or vim.bo.filetype == 'quarto' then
+          return require('utils').in_mathzone()
+        end
+        -- Use original treesitter detection for LaTeX
+        return original_in_mathzone()
+      end
+
+      -- Setup plugin with markdown support
+      require('luasnip-latex-snippets').setup {
+        use_treesitter = false, -- vimtex for LaTeX
+        allow_on_markdown = true, -- but markdown will use our patched detection
+      }
+    end,
   },
 }
