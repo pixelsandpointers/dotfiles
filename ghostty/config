@@ -56,3 +56,13 @@ keybind = alt+left=unbind
 keybind = alt+right=unbind
 macos-option-as-alt = true
 keybind = shift+enter=text:\x1b\r
+
+# Clipboard configuration for Wayland/Pop!OS Cosmic
+clipboard-read = allow
+clipboard-write = allow
+clipboard-paste-protection = false
+clipboard-paste-bracketed-safe = false
+
+# Disable confirmation popups
+confirm-close-surface = false
+window-save-state = never
