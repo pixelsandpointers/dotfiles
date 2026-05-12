@@ -48,7 +48,7 @@ theme = Carbonfox
 #background-opacity = 0.8
 font-family = FiraCode Nerd Font
 window-inherit-font-size = false
-font-size = 13
+font-size = 9
 #background-image = "./bg-blurred.png"
 #command = /run/current-system/sw/bin/nu -l
 
