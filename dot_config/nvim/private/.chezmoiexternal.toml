@@ -1,0 +1,4 @@
+["luasnip-latex-snippets.nvim"]
+    type = "git-repo"
+    url = "https://github.com/evesdropper/luasnip-latex-snippets.nvim.git"
+    refreshPeriod = "168h"

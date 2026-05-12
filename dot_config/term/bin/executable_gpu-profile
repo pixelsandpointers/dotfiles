@@ -1,0 +1,32 @@
+#!/bin/sh
+set -o errexit -o nounset
+
+if [ "$#" -lt 1 ]; then
+  echo "Usage: $0 <program> [args...]" 1>&2
+  exit 1
+fi
+
+PROGRAM="$1"; shift
+OUTPUT="/tmp/gpu_profile_$(whoami)_$(basename "$PROGRAM").trace"
+TEMPLATE="${XCTRACE_TEMPLATE:-Metal System Trace}"  # or set to "GPU Counters"
+
+echo "Profiling GPU for $PROGRAM using template '$TEMPLATE' into $OUTPUT" 1>&2
+rm -rf "$OUTPUT"
+
+# Start your exact binary and capture its PID
+"$PROGRAM" "$@" &
+PID=$!
+
+# Give it a moment to start (tweak if needed)
+sleep 0.5
+
+# Attach to that PID with a GPU-focused template
+xcrun xctrace record \
+  --template "$TEMPLATE" \
+  --no-prompt \
+  --output "$OUTPUT" \
+  --attach "$PID"
+
+# Wait for the target to exit (so tracing stops cleanly)
+wait "$PID" || true
+open "$OUTPUT"

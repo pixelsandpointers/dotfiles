@@ -1,0 +1,70 @@
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Plugins  --------------------------------
+Plug 'justinmk/vim-sneak'
+set surround
+set NERDTree
+set multiple-cursors
+set commentary
+set argtextobj
+set textobj-entire
+set ReplaceWithRegister
+set which-key
+
+" disable the timeout option
+set notimeout
+
+" increase the timeoutlen (default: 1000), don't add space around the equal sign
+set timeoutlen=5000
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+    cudawait
+set relativenumber
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+""" Mappings --------------------------------
+"" AI bindings
+map <leader>ag <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
+map <leader>ac <Action>(AIAssistant.Chat.AIPopupChat)
+map <leader>aj <Action>()
+
+"" Code actions
+map <leader>ca <Action>(ShowIntentionActions)
+map <leader>ci <Action>(ImplementMethods)
+map <leader>cr <Action>(RenameElement)
+
+"" Git actions
+map <leader>ga <Action>(Annotate)
+map <leader>gg <Action>(Git.MainMenu)
+map <leader>gh <Action>(ActivateVersionControlToolWindow)
+
+"" Run actions
+map <leader>rd <Action>(Debug)
+map <leader>rr <Action>(Run)
+map <leader>rs <Action>(Stop)
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+map <leader>s <Action>(SelectInProjectView)
+map <S-Space> <Action>(GotoNextError)
+
+map <leader>b <Action>(ToggleLineBreakpoint)
+map gs <Action>(FileStructurePopup)
+
+
+
+""" which-key
+"""let g:WhichKeyDesc_windows        = "<Space>w  Windows"
+"""let g:WhichKeyDesc_windows_delete = "<Space>wd delete"
+"""let g:WhichKeyDesc_windows_split  = "<Space>ws split below"

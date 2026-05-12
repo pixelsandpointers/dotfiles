@@ -1,0 +1,13 @@
+# Secrets managed by chezmoi + Proton Pass.
+#
+# To add a new secret:
+#   1. pass-cli item create login --vault-name "Personal" --title "My Secret" --password "value"
+#      → prints the item ID
+#   2. Add a line below using the vault and item IDs:
+#      export MY_VAR="{{ "{{" }} protonPass "pass://VAULT_ID/ITEM_ID/password" | trim {{ "}}" }}"
+#   3. chezmoi apply
+#
+# Vault ID: b4-aazP7Dm9584DzlFOcj3yK0hLkHgquc0cGJQMFg6LmjKk3_mNaK9dQp1zRYxleuzhQf3KBy-EeEYvGjXKOJA==
+
+export UV_PUBLISH_USERNAME="__token__"
+export UV_PUBLISH_PASSWORD="{{ protonPass "pass://b4-aazP7Dm9584DzlFOcj3yK0hLkHgquc0cGJQMFg6LmjKk3_mNaK9dQp1zRYxleuzhQf3KBy-EeEYvGjXKOJA==/RyOrcxIF9m5LBMGwfwgIge4grZ3vcLaNkx9z96s5XcBDaKT9W4KpzyU2hQSNn-TSQjJix46eISXNG6xby1HjGg==/password" | trim }}"
