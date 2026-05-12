@@ -1,6 +1,9 @@
 bindkey -v
 
 source $HOME/.config/term/spaceship-prompt/spaceship.zsh
+
+SPACESHIP_XCENV_SHOW=false
+SPACESHIP_SWIFTENV_SHOW=false
 eval "$(zoxide init zsh)"
 source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND='history'
@@ -16,36 +19,36 @@ export SAVEHIST=10000
 export HISTSIZE=50000
 export HISTFILESIZE=1000000
 
-# Mitsuba/Drjit
-export DRJIT_LIBLLVM_PATH='/nix/store/sz8qygmv83v0m96r6na3lvl3wlan1nnk-llvm-16.0.6-lib/lib/libLLVM.dylib'
+# Mitsuba/Drjit — uses brew llvm instead of nix store path
+export DRJIT_LIBLLVM_PATH="$(brew --prefix llvm)/lib/libLLVM.dylib"
 export DEFAULT_MI_VARIANT='llvm_ad_rgb'
 
 export PATH="/Users/b/.local/bin:$PATH"
 export PATH="/Library/TeX/texbin:$PATH"
 export PATH="/Users/b/dev/slang/build/Release/bin:$PATH"
 export PATH="/Users/b/.config/term/bin:$PATH"
+export PATH="$(brew --prefix llvm)/bin:$PATH"
+export PATH="/opt/homebrew/opt/ccache/libexec:$PATH"
 
-#export VULKAN_SDK=/Users/b/VulkanSDK/1.4.321.0/macOS/
-#export PATH=$VULKAN_SDK/bin:$PATH
-#export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH
-#export VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json
-#export VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d
-
-export MODULAR_HOME="/Users/b/.modular"
+export VULKAN_SDK=/Users/b/dev/sdk/VulkanSDK/1.4.321.0/macOS/
+export PATH=$VULKAN_SDK/bin:$PATH
+export DYLD_LIBRARY_PATH=$VULKAN_SDK/lib:$DYLD_LIBRARY_PATH
+export VK_ICD_FILENAMES=$VULKAN_SDK/share/vulkan/icd.d/MoltenVK_icd.json
+export VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d
 
 export CMAKE_GENERATOR=Ninja
 export NINJA_STATUS="[%u/%r/%f] "
 
-# API Keys
+# API Keys (managed by chezmoi — see dot_env.tmpl)
 source ~/.env
 
 # Aliases
 source ~/.config/term/aliases.sh
 
-# Convenience flags to switch between release and debug mode
 # direnv
 eval "$(direnv hook zsh)"
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+
+# Docker CLI completions
 fpath=(/Users/b/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
