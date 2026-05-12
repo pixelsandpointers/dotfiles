@@ -74,7 +74,6 @@ return {
     opts = {
       -- Using native Neovim 0.11+ API
       servers = {
-        rust_analyzer = {},
         texlab = {},
         tailwindcss = {},
         -- Ensure mason installs the server
@@ -147,7 +146,6 @@ return {
           },
         },
       },
-      zls = {},
     },
     config = function(_, opts)
       -- Load this on LSP attach (otherwise we don't need it)
@@ -227,7 +225,6 @@ return {
       end
       vim.lsp.enable 'slangd'
       vim.lsp.enable 'neocmake'
-      vim.lsp.enable 'zls'
     end,
   },
 }

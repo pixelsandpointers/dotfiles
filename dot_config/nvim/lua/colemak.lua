@@ -4,13 +4,11 @@
 
 local M = {}
 
---- Check if a ZSA keyboard is connected (vendor ID 0x3297 = 12951 decimal)
+--- Check if a ZSA keyboard is connected (vendor ID 0x3297)
 function M.zsa_connected()
   local result
   if vim.fn.has('mac') == 1 then
-    -- Use ioreg instead of system_profiler (much faster and more reliable)
-    -- Look for vendor ID 12951 (0x3297) or product names Moonlander/Voyager
-    result = vim.fn.system('ioreg -p IOUSB -l -w 0 2>/dev/null | grep -E "idVendor.*12951|Moonlander|Voyager"')
+    result = vim.fn.system('system_profiler SPUSBDataType 2>/dev/null | grep -i "ZSA"')
   else
     result = vim.fn.system('lsusb 2>/dev/null | grep -i 3297')
   end
