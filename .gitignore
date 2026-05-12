@@ -2,3 +2,14 @@
 **/bin/*
 emacs/
 tmux/plugins/
+
+# Don't commit secrets even if accidentally added
+private_dot_env
+dot_env
+*.secret
+
+# Backup files
+*.bak
+
+# Chezmoi cache
+.cache/

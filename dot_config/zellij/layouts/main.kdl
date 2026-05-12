@@ -1,0 +1,34 @@
+layout {
+  pane name="ターミナル"
+  pane {
+    size 1
+    borderless true
+    plugin location="file:/Users/b/.config/zellij/plugins/zjstatus.wasm" {
+      format_left   "{mode}"
+      format_center "#[bg=#000000]{tabs}"
+      format_right  "#[fg=#eaeaea,bold]{session} "
+      format_space  "#[bg=#000000]"
+
+      border_enabled false
+      border_char     "─"
+      border_format   "#[fg=#353535]{char}"
+      border_position "top"
+
+      hide_frame_for_single_pane false
+
+      mode_normal  "#[fg=#eaeaea,bg=#000000] ノーマル　 "
+      mode_locked  "#[fg=#eaeaea,bg=#000000] ロック　　 "
+      mode_move    "#[fg=#eaeaea,bg=#000000] 移動　　　 "
+      mode_pane    "#[fg=#eaeaea,bg=#000000] リサイズ　 "
+      mode_scroll  "#[fg=#eaeaea,bg=#000000] スクロール "
+      mode_session "#[fg=#eaeaea,bg=#000000] セッション "
+      mode_tab     "#[fg=#eaeaea,bg=#000000] タブ　　　 "
+      mode_search  "#[fg=#eaeaea,bg=#000000] 探索　　　 "
+      mode_tmux    "#[fg=#eaeaea,bg=#000000] TMUX　　　 "
+
+      tab_normal   "#[fg=#eaeaea,bg=#000000]{index}"
+      tab_active   "#[fg=#ff2250,bg=#000000]{index}"
+      tab_separator    "#[fg=#353535,bg=#000000]　|　"
+    }
+  }
+}

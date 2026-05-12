@@ -1,0 +1,4 @@
+["slang.nvim"]
+    type = "git-repo"
+    url = "https://github.com/pixelsandpointers/slang.nvim.git"
+    refreshPeriod = "168h"

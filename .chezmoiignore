@@ -1,0 +1,12 @@
+# These live in the repo for reference/tooling but shouldn't be linked into ~/
+Makefile
+Brewfile
+ansible
+archive
+README.md
+
+# Plugin dirs managed by their own plugin managers — not chezmoi's job
+dot_config/tmux/plugins
+dot_config/nvim/lazy-lock.json
+# chezmoi executes files with run_ prefix; overseer templates use that naming convention
+dot_config/nvim/lua/overseer/template/user/run_*
