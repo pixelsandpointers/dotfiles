@@ -21,7 +21,8 @@ alias y='yazi'
 #alias ns="nix-search-tv print | fzf --preview 'nix-search-tv preview {}' --scheme history"
 
 if [[ "$(uname)" == "Darwin" ]]; then
-    alias vo='cd "$HOME/Google Drive/My Drive/Vault" && nvim -c "set ft=markdown" -c "Obsidian today"'
+    alias vo='cd "$HOME/Proton/Vault" && nvim -c "set ft=markdown" -c "Obsidian today"'
+    alias htop=macmon
 else
     alias vo='cd "$HOME/gdrive/Vault" && nvim -c "set ft=markdown" -c "Obsidian today"'
     alias open='xdg-open'

@@ -48,20 +48,8 @@ return {
       workspaces = {
         {
           name = 'Vault',
-          path = vim.fn.expand '~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vault',
+          path = vim.fn.expand '~/Proton/Vault',
         },
-        {
-          name = 'Google Drive Vault',
-          path = vim.fn.expand '~/Google Drive/My Drive/Vault',
-        },
-        {
-          name = 'Linux Vault',
-          path = vim.fn.expand '~/Insync/google@ben.graphics/Google Drive/Vault',
-        },
-        -- {
-        --   name = 'labwiki',
-        --   path = '~/lab/perception_wiki/',
-        -- },
       },
       templates = {
         folder = '+ Templates',

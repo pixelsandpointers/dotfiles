@@ -74,6 +74,7 @@ return {
     opts = {
       -- Using native Neovim 0.11+ API
       servers = {
+        rust_analyzer = {},
         texlab = {},
         tailwindcss = {},
         -- Ensure mason installs the server
@@ -186,13 +187,10 @@ return {
         'ruff', -- Python formatter/linter
         'neocmake',
         'codelldb', -- debugger
-        'nixpkgs-fmt',
       })
 
       require('mason').setup()
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-      vim.lsp.config('nixd', { capabilities = capabilities })
 
       -- neocmakelsp configuration
       vim.lsp.config('neocmake', {
