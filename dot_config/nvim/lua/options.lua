@@ -32,10 +32,10 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.breakindent = true
 
 -- Indentation settings
-vim.opt.tabstop = 2        -- Number of spaces a tab counts for
-vim.opt.shiftwidth = 2     -- Number of spaces for each indentation level
-vim.opt.softtabstop = 2    -- Number of spaces for tab in insert mode
-vim.opt.expandtab = true   -- Use spaces instead of tabs
+vim.opt.tabstop = 2 -- Number of spaces a tab counts for
+vim.opt.shiftwidth = 2 -- Number of spaces for each indentation level
+vim.opt.softtabstop = 2 -- Number of spaces for tab in insert mode
+vim.opt.expandtab = true -- Use spaces instead of tabs
 vim.opt.smartindent = true -- Smart autoindenting on new lines
 
 -- Save undo history
@@ -96,5 +96,4 @@ vim.opt.hlsearch = true
 
 -- concealing
 vim.opt.conceallevel = 2
-
 vim.diagnostic.config { virtual_lines = { current_line = true } }

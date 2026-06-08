@@ -1,32 +1,32 @@
 return {
-  {
-    'p00f/clangd_extensions.nvim',
-    opts = {
-      inline_hints = true,
-    },
-    config = function()
-      local clangdx = require 'clangd_extensions'
-      clangdx.setup {
-        ast = {
-          -- These are unicode, should be available in any font
-          role_icons = {
-            type = '🄣',
-            declaration = '🄓',
-            expression = '🄔',
-            statement = ';',
-            specifier = '🄢',
-            ['template argument'] = '🆃',
-          },
-          kind_icons = {
-            Compound = '🄲',
-            Recovery = '🅁',
-            TranslationUnit = '🅄',
-            PackExpansion = '🄿',
-            TemplateTypeParm = '🅃',
-            TemplateTemplateParm = '🅃',
-            TemplateParamObject = '🅃',
-          },
-          --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
+	{
+		"p00f/clangd_extensions.nvim",
+		opts = {
+			inline_hints = true,
+		},
+		config = function()
+			local clangdx = require("clangd_extensions")
+			clangdx.setup({
+				ast = {
+					-- These are unicode, should be available in any font
+					role_icons = {
+						type = "🄣",
+						declaration = "🄓",
+						expression = "🄔",
+						statement = ";",
+						specifier = "🄢",
+						["template argument"] = "🆃",
+					},
+					kind_icons = {
+						Compound = "🄲",
+						Recovery = "🅁",
+						TranslationUnit = "🅄",
+						PackExpansion = "🄿",
+						TemplateTypeParm = "🅃",
+						TemplateTemplateParm = "🅃",
+						TemplateParamObject = "🅃",
+					},
+					--[[ These require codicons (https://github.com/microsoft/vscode-codicons)
             role_icons = {
                 type = "",
                 declaration = "",
@@ -46,183 +46,188 @@ return {
                 TemplateParamObject = "",
             }, ]]
 
-          highlights = {
-            detail = 'Comment',
-          },
-        },
-        memory_usage = {
-          border = 'none',
-        },
-        symbol_info = {
-          border = 'none',
-        },
-      }
-    end,
-  },
-  { -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      'saghen/blink.cmp',
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
-    },
-    opts = {
-      -- Using native Neovim 0.11+ API
-      servers = {
-        rust_analyzer = {},
-        texlab = {},
-        tailwindcss = {},
-        -- Ensure mason installs the server
-        clangd = {
-          keys = {
-            { '<localleader>h', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' },
-          },
-          root_markers = { '.git', '.clangd', 'compile_commands.json' },
-          filetypes = { 'c', 'cpp', 'cxx', 'hxx', 'cc', 'hh', 'hpp' },
-          root_dir = function(bufnr, on_dir)
-            local fname = vim.api.nvim_buf_get_name(bufnr)
-            local root = vim.fs.root(fname, {
-              'Makefile',
-              'configure.ac',
-              'configure.in',
-              'config.h.in',
-              'meson.build',
-              'meson_options.txt',
-              'build.ninja',
-              'compile_commands.json',
-              'compile_flags.txt',
-              '.git',
-            })
-            if root then
-              on_dir(root)
-            end
-          end,
-          capabilities = {
-            offsetEncoding = { 'utf-16' },
-          },
-          cmd = {
-            'clangd',
-            '--background-index',
-            '--clang-tidy',
-            '--offset-encoding=utf-8',
-            '--header-insertion=iwyu',
-            '--completion-style=detailed',
-            '--function-arg-placeholders',
-            '--fallback-style=llvm',
-          },
-          init_options = {
-            usePlaceholders = true,
-            completeUnimported = true,
-            clangdFileStatus = true,
-          },
-        },
-        astro = {},
-        basedpyright = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              runtime = { version = 'LuaJIT' },
-              workspace = {
-                checkThirdParty = false,
-                -- Tells lua_ls where to find all the Lua files that you have loaded
-                -- for your neovim configuration.
-                library = {
-                  '${3rd}/luv/library',
-                  unpack(vim.api.nvim_get_runtime_file('', true)),
-                },
-                -- If lua_ls is really slow on your computer, you can try this instead:
-                -- library = { vim.env.VIMRUNTIME },
-              },
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-      },
-    },
-    config = function(_, opts)
-      -- Load this on LSP attach (otherwise we don't need it)
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-        callback = function(event)
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.server_capabilities.documentHighlightProvider then
-            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-              buffer = event.buf,
-              callback = vim.lsp.buf.document_highlight,
-            })
+					highlights = {
+						detail = "Comment",
+					},
+				},
+				memory_usage = {
+					border = "none",
+				},
+				symbol_info = {
+					border = "none",
+				},
+			})
+		end,
+	},
+	{ -- LSP Configuration & Plugins
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			-- Automatically install LSPs and related tools to stdpath for neovim
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			"saghen/blink.cmp",
+			-- Useful status updates for LSP.
+			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+			{ "j-hui/fidget.nvim", opts = {} },
+		},
+		opts = {
+			-- Using native Neovim 0.11+ API
+			servers = {
+				zls = {},
+				rust_analyzer = {},
+				texlab = {},
+				tailwindcss = {},
+				-- Ensure mason installs the server
+				clangd = {
+					keys = {
+						{
+							"<localleader>h",
+							"<cmd>ClangdSwitchSourceHeader<cr>",
+							desc = "Switch Source/Header (C/C++)",
+						},
+					},
+					root_markers = { ".git", ".clangd", "compile_commands.json" },
+					filetypes = { "c", "cpp", "cxx", "hxx", "cc", "hh", "hpp" },
+					root_dir = function(bufnr, on_dir)
+						local fname = vim.api.nvim_buf_get_name(bufnr)
+						local root = vim.fs.root(fname, {
+							"Makefile",
+							"configure.ac",
+							"configure.in",
+							"config.h.in",
+							"meson.build",
+							"meson_options.txt",
+							"build.ninja",
+							"compile_commands.json",
+							"compile_flags.txt",
+							".git",
+						})
+						if root then
+							on_dir(root)
+						end
+					end,
+					capabilities = {
+						offsetEncoding = { "utf-16" },
+					},
+					cmd = {
+						"clangd",
+						"--background-index",
+						"--clang-tidy",
+						"--offset-encoding=utf-8",
+						"--header-insertion=iwyu",
+						"--completion-style=detailed",
+						"--function-arg-placeholders",
+						"--fallback-style=llvm",
+					},
+					init_options = {
+						usePlaceholders = true,
+						completeUnimported = true,
+						clangdFileStatus = true,
+					},
+				},
+				astro = {},
+				basedpyright = {},
+				lua_ls = {
+					settings = {
+						Lua = {
+							runtime = { version = "LuaJIT" },
+							workspace = {
+								checkThirdParty = false,
+								-- Tells lua_ls where to find all the Lua files that you have loaded
+								-- for your neovim configuration.
+								library = {
+									"${3rd}/luv/library",
+									unpack(vim.api.nvim_get_runtime_file("", true)),
+								},
+								-- If lua_ls is really slow on your computer, you can try this instead:
+								-- library = { vim.env.VIMRUNTIME },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+							-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+							-- diagnostics = { disable = { 'missing-fields' } },
+						},
+					},
+				},
+			},
+		},
+		config = function(_, opts)
+			-- Load this on LSP attach (otherwise we don't need it)
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+				callback = function(event)
+					-- When you move your cursor, the highlights will be cleared (the second autocommand).
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if client and client.server_capabilities.documentHighlightProvider then
+						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+							buffer = event.buf,
+							callback = vim.lsp.buf.document_highlight,
+						})
 
-            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-              buffer = event.buf,
-              callback = vim.lsp.buf.clear_references,
-            })
-          end
+						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+							buffer = event.buf,
+							callback = vim.lsp.buf.clear_references,
+						})
+					end
 
-          vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename symbol' })
-          vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code actions' })
-        end,
-      })
+					vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename symbol" })
+					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+				end,
+			})
 
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-      -- Configure all servers using native vim.lsp.config
-      for server, config in pairs(opts.servers) do
-        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-        vim.lsp.config(server, config)
-      end
+			-- Configure all servers using native vim.lsp.config
+			for server, config in pairs(opts.servers) do
+				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+				vim.lsp.config(server, config)
+			end
 
-      local ensure_installed = vim.tbl_keys(opts.servers)
-      -- Mason installs without setup required
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format lua code
-        'ruff', -- Python formatter/linter
-        'neocmake',
-        'codelldb', -- debugger
-      })
+			local ensure_installed = vim.tbl_keys(opts.servers)
+			-- Mason installs without setup required
+			vim.list_extend(ensure_installed, {
+				"stylua", -- Used to format lua code
+				"ruff", -- Python formatter/linter
+				"neocmake",
+				"codelldb", -- debugger
+			})
 
-      require('mason').setup()
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+			require("mason").setup()
+			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-      -- neocmakelsp configuration
-      vim.lsp.config('neocmake', {
-        cmd = { vim.fn.stdpath 'data' .. '/mason/bin/neocmakelsp', 'stdio' },
-        filetypes = { 'cmake' },
-        root_dir = function(bufnr, on_dir)
-          local fname = vim.api.nvim_buf_get_name(bufnr)
-          local root = vim.fs.root(fname, '.git')
-          if root then
-            on_dir(root)
-          else
-            -- Support standalone CMake files
-            on_dir(vim.fn.fnamemodify(fname, ':p:h'))
-          end
-        end,
-        init_options = {
-          format = {
-            enable = true,
-          },
-          lint = {
-            enable = true,
-          },
-          scan_cmake_in_package = true,
-        },
-      })
+			-- neocmakelsp configuration
+			vim.lsp.config("neocmake", {
+				cmd = { vim.fn.stdpath("data") .. "/mason/bin/neocmakelsp", "stdio" },
+				filetypes = { "cmake" },
+				root_dir = function(bufnr, on_dir)
+					local fname = vim.api.nvim_buf_get_name(bufnr)
+					local root = vim.fs.root(fname, ".git")
+					if root then
+						on_dir(root)
+					else
+						-- Support standalone CMake files
+						on_dir(vim.fn.fnamemodify(fname, ":p:h"))
+					end
+				end,
+				init_options = {
+					format = {
+						enable = true,
+					},
+					lint = {
+						enable = true,
+					},
+					scan_cmake_in_package = true,
+				},
+			})
 
-      -- Enable all configured LSP servers
-      for server, _ in pairs(opts.servers) do
-        vim.lsp.enable(server)
-      end
-      vim.lsp.enable 'slangd'
-      vim.lsp.enable 'neocmake'
-    end,
-  },
+			-- Enable all configured LSP servers
+			for server, _ in pairs(opts.servers) do
+				vim.lsp.enable(server)
+			end
+			vim.lsp.enable("slangd")
+			vim.lsp.enable("neocmake")
+		end,
+	},
 }
