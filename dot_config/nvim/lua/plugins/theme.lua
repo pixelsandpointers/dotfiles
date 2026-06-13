@@ -2,10 +2,18 @@
 return {
   {
     'EdenEast/nightfox.nvim',
-    config = function()
-      vim.cmd.colorscheme 'carbonfox'
-    end,
+    config = function() end,
   }, -- lazy
+  {
+    'tiagovla/tokyodark.nvim',
+    opts = {
+      -- custom options here
+    },
+    config = function(_, opts)
+      require('tokyodark').setup(opts) -- calling setup is optional
+      vim.cmd [[colorscheme tokyodark]]
+    end,
+  },
   {
     'Mofiqul/vscode.nvim',
     config = function()
