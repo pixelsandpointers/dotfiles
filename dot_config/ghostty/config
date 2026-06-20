@@ -44,12 +44,12 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-theme = Carbonfox
-#background-opacity = 0.8
+theme = Cyberdream
+background-opacity = 1.0
 font-family = FiraCode Nerd Font
 window-inherit-font-size = false
 font-size = 13
-#background-image = "./bg-blurred.png"
+background-image = "./bg-blurred.png"
 #command = /run/current-system/sw/bin/nu -l
 
 keybind = alt+left=unbind

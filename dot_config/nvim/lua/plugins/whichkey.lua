@@ -4,6 +4,9 @@ return {
     event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
     opts = {
       preset = 'helix',
+      icons = {
+        rules = false,
+      },
       spec = {
         -- Document existing key chains
         { '<leader>a', name = 'Claude' },

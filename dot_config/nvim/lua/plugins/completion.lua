@@ -38,6 +38,7 @@ return {
 
       cmdline = {
         enabled = true,
+        completion = { menu = { auto_show = true } },
       },
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -54,9 +55,35 @@ return {
             enabled = true,
           },
         },
+        menu = {
+          scrollbar = false,
+          auto_show = true,
+          border = {
+            { '󱐋', 'WarningMsg' },
+            '─',
+            '╮',
+            '│',
+            '╯',
+            '─',
+            '╰',
+            '│',
+          },
+        },
         documentation = {
           auto_show = true,
           auto_show_delay_ms = 500,
+          window = {
+            border = {
+              { '', 'DiagnosticHint' },
+              '─',
+              '╮',
+              '│',
+              '╯',
+              '─',
+              '╰',
+              '│',
+            },
+          },
         },
         ghost_text = {
           enabled = true,
@@ -81,7 +108,7 @@ return {
       },
 
       signature = {
-        enabled = true,
+        enabled = false,
       },
 
       -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
