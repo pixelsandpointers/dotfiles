@@ -17,13 +17,13 @@ local mode_map = {
 }
 
 local mode_hl_map = {
-  ['NORMAL'] = 'Directory',
-  ['VISUAL'] = 'Number',
-  ['V-LINE'] = 'Number',
-  ['V-BLOCK'] = 'Number',
-  ['INSERT'] = 'String',
-  ['COMMAND'] = 'Keyword',
-  ['TERMINAL'] = 'Keyword',
+  ['NORMAL'] = 'StatuslineModeNormal',
+  ['VISUAL'] = 'StatuslineModeVisual',
+  ['V-LINE'] = 'StatuslineModeVisual',
+  ['V-BLOCK'] = 'StatuslineModeVisual',
+  ['INSERT'] = 'StatuslineModeInsert',
+  ['COMMAND'] = 'StatuslineModeCommand',
+  ['TERMINAL'] = 'StatuslineModeCommand',
 }
 
 -- Helper functions
@@ -101,19 +101,31 @@ M.git_branch = function(hl)
 end
 
 --- Git diff component - current buffer, depends on gitsigns.nvim
---- @param hl string The highlight group to use
 --- @return string
-M.git_diff = function(hl)
-  local summary = vim.b.gitsigns_status
-  if not summary or summary == '' then
+M.git_diff = function()
+  local status = vim.b.gitsigns_status_dict
+  if not status then
     return ''
   end
 
-  summary = summary:gsub('+', ' ')
-  summary = summary:gsub('-', ' ')
-  summary = summary:gsub('~', ' ')
+  local specs = {
+    { count = status.added, icon = ' ', hl = 'StatuslineGitAdded' },
+    { count = status.changed, icon = ' ', hl = 'DiagnosticWarn' },
+    { count = status.removed, icon = ' ', hl = 'StatuslineGitRemoved' },
+  }
 
-  return format_component(summary, hl)
+  local parts = {}
+  for _, spec in ipairs(specs) do
+    if spec.count and spec.count > 0 then
+      table.insert(parts, format_component(spec.icon .. spec.count, spec.hl, '', ''))
+    end
+  end
+
+  if #parts == 0 then
+    return ''
+  end
+
+  return ' ' .. table.concat(parts, ' ') .. ' '
 end
 
 --- Buffer diagnostics component
@@ -185,6 +197,29 @@ M.copilot_status = function()
 
   local status = require('copilot.status').data.status
   return format_component(' ', copilot_highlights[status])
+end
+
+--- LSP status component - show names of clients attached to the current buffer
+--- @param hl string|nil The highlight group to use
+--- @return string
+M.lsp_status = function(hl)
+  local ok, clients = pcall(vim.lsp.get_clients, { bufnr = 0 })
+  if not ok or #clients == 0 then
+    return ''
+  end
+
+  local names = {}
+  for _, client in ipairs(clients) do
+    if client.name ~= 'copilot' then
+      table.insert(names, client.name)
+    end
+  end
+
+  if #names == 0 then
+    return ''
+  end
+
+  return format_component(' ' .. table.concat(names, ', '), hl)
 end
 
 --- Search count component - show current and total search matches when searching a buffer
@@ -279,21 +314,18 @@ end
 -- Statusline components
 local components = {
   component 'mode',
-  component('git_branch', 'Changed'),
-  component('git_diff', 'Type'),
+  component('git_branch', 'StatuslineGitBranch'),
+  component 'git_diff',
   component 'diagnostics',
   '%<', -- mark general truncate point
   component('navic', 'Comment'),
   '%=', -- mark end of left alignment
   component 'status_messages',
   component('lazy_updates', 'String'),
-  component 'copilot_status',
   component('search_count', 'Directory'),
+  component('lsp_status', 'Comment'),
   component('file_name', 'Normal'),
   component('other_buffers', 'Comment'),
-  component('progress', 'Special'),
-  component('location', 'Changed'),
-  component('clock', 'Conceal'),
 }
 
 --- Return the statusline as a concatenated string - use with vim.opt.statusline to set
