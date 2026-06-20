@@ -69,6 +69,25 @@ return {
           for group, fg in pairs(statusline_groups) do
             vim.api.nvim_set_hl(0, group, { fg = fg })
           end
+
+          -- monochrome.nvim's default comment color (gray3) is too close to
+          -- the background to read comfortably; bump it a few shades lighter.
+          vim.api.nvim_set_hl(0, 'Comment', { fg = colors.gray6, italic = true })
+          vim.api.nvim_set_hl(0, 'TSComment', { fg = colors.gray6, italic = true })
+
+          -- Same for keywords (gray4 -> gray7).
+          local keyword_groups = {
+            'Keyword',
+            'TSKeyword',
+            'TSKeywordFunction',
+            'TSKeywordOperator',
+            'TSKeywordReturn',
+            'TSConditional',
+            'TSRepeat',
+          }
+          for _, group in ipairs(keyword_groups) do
+            vim.api.nvim_set_hl(0, group, { fg = colors.gray7 })
+          end
         end,
       })
       vim.opt.fillchars:append {
