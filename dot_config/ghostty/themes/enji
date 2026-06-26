@@ -1,0 +1,55 @@
+# ============================================================================
+# enji — 臙脂 — Ghostty theme
+# Palette renamed to traditional Japanese color names: the primary red
+# landed almost exactly on enji-iro (cochineal red), so the whole theme
+# took its name. Gold is yamabuki (golden yellow), cyan is mizu/asagi
+# (water/light blue), structural greys lean rikyū-nezumi.
+# Dark-mode first, built for transparency.
+# ============================================================================
+
+# --- Core ---
+background = #0e0d11
+foreground = #e9e4dc
+
+# Cursor — mizu (water blue) highlight
+cursor-color = #8fd9d4
+cursor-text  = #0e0d11
+cursor-style = block
+
+# Selection — enji, low-key
+selection-background = #5a1f24
+selection-foreground = #f4efe7
+
+# --- Transparency & blur ---
+background-opacity = 0.85
+background-blur = 20
+
+# --- Window chrome ---
+unfocused-split-opacity = 0.7
+window-padding-x = 10
+window-padding-y = 8
+
+# --- 16-color palette ---
+# 0-7: normal, 8-15: bright
+# black/red/green/yellow/blue/magenta/cyan/white
+
+palette = 0=#1a1820
+palette = 1=#9b2c30
+palette = 2=#7a8a6b
+palette = 3=#c9a24b
+palette = 4=#7e8aa8
+palette = 5=#8a6a8f
+palette = 6=#6fa8a3
+palette = 7=#c9c2b8
+
+palette = 8=#3a3640
+palette = 9=#c1393f
+palette = 10=#9bb389
+palette = 11=#e0bb5e
+palette = 12=#a3b0d6
+palette = 13=#b08bb8
+palette = 14=#8fd9d4
+palette = 15=#f4efe7
+
+# --- Misc UI ---
+mouse-hide-while-typing = true

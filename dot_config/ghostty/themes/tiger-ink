@@ -1,0 +1,57 @@
+# ============================================================================
+# Tiger Ink — Ghostty theme
+# Sibling to Oxblood Chassis, derived from the back-view of the same concept
+# art: grey tiger tattoo linework over white plating, gold lightning-bolt
+# frame around a red core, dual pistols glowing orange-red and cyan-blue.
+# Dark-mode first, built for transparency.
+# ============================================================================
+
+# --- Core ---
+background = #100f14
+foreground = #e7e6ea
+
+# Cursor — gold lightning-bolt frame
+cursor-color = #d9b14a
+cursor-text  = #100f14
+cursor-style = block
+
+# Selection — cool ink-grey, low-key
+selection-background = #2e3640
+selection-foreground = #f2f1f4
+
+# --- Transparency & blur ---
+# Near-black gunmetal background reads as smoked glass.
+# Lower background-opacity (e.g. 0.78) for more see-through, raise toward
+# 0.92 if text legibility suffers on a busy desktop.
+background-opacity = 0.85
+background-blur = 20
+
+# --- Window chrome ---
+unfocused-split-opacity = 0.7
+window-padding-x = 10
+window-padding-y = 8
+
+# --- 16-color palette ---
+# 0-7: normal, 8-15: bright
+# black/red/green/yellow/blue/magenta/cyan/white
+
+palette = 0=#1c1b22
+palette = 1=#c45a3d
+palette = 2=#7a9a82
+palette = 3=#d9b14a
+palette = 4=#4a8fae
+palette = 5=#9b6a7a
+palette = 6=#4fb3c2
+palette = 7=#c6c4cc
+
+palette = 8=#3f3d48
+palette = 9=#e0734f
+palette = 10=#9bc2a3
+palette = 11=#f0c869
+palette = 12=#6fb3d6
+palette = 13=#bb8a9a
+palette = 14=#6fd6e6
+palette = 15=#f2f1f4
+
+# --- Misc UI ---
+mouse-hide-while-typing = true
